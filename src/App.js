@@ -9,6 +9,7 @@ import SignupPage from "./components/pages/SignupPage";
 import ConfirmationPage from "./components/pages/ConfirmationPage";
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
+import CardsPage from "./components/pages/CardsPage";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 import TopNavigation from "./components/navigation/TopNavigation";
@@ -27,6 +28,12 @@ const App = ({ location, isAuthenticated }) => (
       path="/confirmation/:token"
       exact
       component={ConfirmationPage}
+    />
+    <Route
+      location={location}
+      path="/cards"
+      exact
+      component={CardsPage}
     />
     <GuestRoute 
       location={location} 
