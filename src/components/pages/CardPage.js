@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Loader } from 'semantic-ui-react';
+
 import PokemonCard from '../cards/PokemonCard';
-// import TrainerEnergyCard from '../cards/TrainerEnergyCard';
+import TrainerEnergyCard from '../cards/TrainerEnergyCard';
 
 class CardPage extends React.Component {
     state = {
@@ -20,15 +22,11 @@ class CardPage extends React.Component {
         const { loading, card } = this.state;
         return (
             <div>
-                { loading && <p>Loading</p>}
-                { !loading && <PokemonCard card={card}  />}
+                {loading && <Loader active/>}
+                {!loading && this.state.card.supertype === "Pokémon" && <PokemonCard card={card}  />}
+                {!loading && this.state.card.supertype !== "Pokémon" && <TrainerEnergyCard card={card}  />}
             </div>
         );
-        
-        // else if (this.state.card.supertype === "Pokémon") {
-        //     return < PokemonCard card={this.state.card} />
-        // } 
-            // return <TrainerEnergyCard card={this.state.card} />
     }
 }
 
