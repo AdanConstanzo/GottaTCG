@@ -6,12 +6,15 @@ import Ability from "../PokemonCard/Ability";
 import RessWeak from "../PokemonCard/RessWeak";
 import Energy from "../PokemonCard/Energy";
 import style from './PokemonCardCSS';
+import AddCard from "../forms/AddCard";
 
 const PokemonCard = (props) => (
     <Grid centered >
         <Grid.Row>
             <Grid.Column width={5} >
-                <img style={style.card} src={props.card.imageUrl} alt={props.card.name} />
+                <img style={style.card.image} src={props.card.imageUrl} alt={props.card.name} />
+                <br />
+                <AddCard card={props.card.id} />
             </Grid.Column>
             <Grid.Column width={7} >
                 <Grid columns={3} divided>
@@ -107,7 +110,8 @@ PokemonCard.propTypes = {
                 value: PropTypes.string,
                 type: PropTypes.string
             }).isRequired
-        ).isRequired
+        ).isRequired,
+        id: PropTypes.string.isRequired
     }).isRequired
 };
 

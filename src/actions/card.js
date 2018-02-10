@@ -1,4 +1,4 @@
-import { GET_CARDS } from "../types";
+import { GET_CARDS, GET_CARD } from "../types";
 import api from '../api';
 
 export const SetCards = cards => ({
@@ -6,6 +6,13 @@ export const SetCards = cards => ({
     cards
 });
 
+export const SetCard = card => ({
+    type: GET_CARD, 
+    card
+});
+
+export const SetCurrentCard = cardId => dispatch =>
+    dispatch(SetCard(cardId));
 
 export const GetCardsBySet = setCode => dispatch =>
     api.cards.getCardsFromSet(setCode)

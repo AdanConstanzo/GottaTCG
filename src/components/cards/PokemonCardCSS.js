@@ -10,6 +10,8 @@ export default {
     card: {
         image: {
             width: "inherits",
+            margin: "auto",
+            display: "block"
         },
         div: {
             "display": "inline-block"

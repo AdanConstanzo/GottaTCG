@@ -24,12 +24,12 @@ class CardsPage extends React.Component {
     
     
     render() {
-        const {card} = this.props
+        const {cards} = this.props
         const style = {
             cards:{
                 "overflowY": "scroll",
                 "overflowX": "hidden",
-                "height": "35em"
+                "height": "80vh"
             }
         }
         return(
@@ -40,8 +40,8 @@ class CardsPage extends React.Component {
                     </Grid.Row>
                     <Grid.Row style={style.cards}>
                         {/* Set must have more than 2. */}
-                        {card.length > 1  &&
-                            (card.map((val, count) => <Grid.Column key={count} ><PokemonCardImage alt={val.id} src={val.imageUrl} /></Grid.Column>))}
+                        {cards.length > 1  &&
+                            (cards.map((val, count) => <Grid.Column key={count} ><PokemonCardImage alt={val.id} src={val.imageUrl} /></Grid.Column>))}
                     </Grid.Row>
                 </Grid>
             </div>
@@ -51,13 +51,13 @@ class CardsPage extends React.Component {
 }
 
 CardsPage.propTypes = {
-    card: PropTypes.arrayOf(PropTypes.object).isRequired
+    cards: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 
 function mapStateToProps(state){
     return {
-        card: state.card
+        cards: state.cards
     };
 }
 
