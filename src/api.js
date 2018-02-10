@@ -20,5 +20,11 @@ export default {
       axios
         .get(`/api/cards/findSetByCode?setCode=${set}`)
         .then(res => res.data.cards)      
+  },
+  card: {
+    setValueToCard: cardId =>
+      axios
+        .post('/api/card/setValueToCard', cardId)
+        .then(res => res.data.card)
   }
 };

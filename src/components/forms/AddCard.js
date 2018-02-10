@@ -16,7 +16,7 @@ class AddCard extends React.Component {
                         Please Log In to Add to Collection
                     </Segment>
                 ): <div>
-                        <Form>
+                        <Form  >
                             <Form.Field>
                                 <Accordion styled>
                                     <Accordion.Title>
