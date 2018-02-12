@@ -21,7 +21,7 @@ class AddCard extends React.Component {
             );
     }
 
-    onChange = e => {
+    onBlur = e => {
         if (e.target.value) {
             this.handleCollection(e.target.value);
         }
@@ -29,6 +29,7 @@ class AddCard extends React.Component {
 
     handleCollection = val => {
         const { collectionId } = this.state.Collection
+
         if (this.state.Collection.collectionId) {
             this.props.SetValueToCardCollection({
                 quantity: val,
@@ -41,10 +42,10 @@ class AddCard extends React.Component {
                 quantity: val,
                 id: this.props.card
             })
-                .then(res => {
-                    console.log(res)
-                })
+                .then(res => res.collection)
+                .then(Collection => this.setState({ Collection }));
         }
+    
     }
 
     render(){
@@ -65,7 +66,7 @@ class AddCard extends React.Component {
                                         Add to Your Collection.
                                     </Accordion.Title>
                                     <Accordion.Content>
-                                        <input type="number" onChange={this.onChange} placeholder={quantity} />
+                                        <input type="number" onBlur={this.onBlur} placeholder={quantity} />
                                     </Accordion.Content>
                                 </Accordion>
                             </Form.Field>
