@@ -21,10 +21,18 @@ export default {
         .get(`/api/cards/findSetByCode?setCode=${set}`)
         .then(res => res.data.cards)      
   },
-  card: {
-    setValueToCard: cardId =>
+  collection: {
+    setValueToCard: collectionObj =>
       axios
-        .post('/api/card/setValueToCard', cardId)
-        .then(res => res.data.card)
+        .post('/api/collection/setValueToCard', collectionObj)
+        .then(res => res.data.collection),
+    GetCollectionQuantity: cardId =>
+      axios
+        .get(`/api/collection/getQuantity?id=${cardId}`)
+        .then(res => res.data.collection),
+    CreateCollection: collectionObj =>
+      axios
+        .post('/api/collection/createCollection/', collectionObj)
+        .then(res => res.data.collection)
   }
 };

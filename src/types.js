@@ -3,4 +3,4 @@ export const USER_LOGGED_OUT = "USER_LOGGED_OUT";
 export const SET_CODE = "SET_CODE";
 export const GET_CARDS = "GET_CARDS";
 export const GET_CARD = "GET_CARD";
-export const CARD_VALUE = "CARD_VALUE";
+export const CARD_QUANTITY_VALUE = "CARD_QUANTITY_VALUE";

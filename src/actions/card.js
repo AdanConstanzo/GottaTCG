@@ -1,4 +1,4 @@
-import { GET_CARDS, GET_CARD, CARD_VALUE } from "../types";
+import { GET_CARDS, GET_CARD } from "../types";
 import api from '../api';
 
 export const SetCards = cards => ({
@@ -11,14 +11,6 @@ export const SetCard = card => ({
     card
 });
 
-export const CardValue = cardValue => ({
-    type: CARD_VALUE,
-    cardValue
-})
-
-export const SetValueToCard = cardId => dispatch =>
-    api.card.setValueToCard(cardId)
-        .then(cardVal => dispatch(cardVal));
 
 export const SetCurrentCard = cardId => dispatch =>
     dispatch(SetCard(cardId));
