@@ -1,23 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/LoginPage";
-import DashboardPage from "./components/pages/DashboardPage";
 import SignupPage from "./components/pages/SignupPage";
 import ConfirmationPage from "./components/pages/ConfirmationPage";
 import CardPage from "./components/pages/CardPage"
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
+import CollectionPage from "./components/pages/CollectionPage";
 import CardsPage from "./components/pages/CardsPage";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
-import TopNavigation from "./components/navigation/TopNavigation";
+import WebNav from './components/navigation/Nav';
 
-const App = ({ location, isAuthenticated }) => (
+const App = ({ location }) => (
   <div className="ui container">
-    {isAuthenticated && <TopNavigation />}
+    <WebNav />
     <Route 
       location={location} 
       path="/" 
@@ -67,9 +66,9 @@ const App = ({ location, isAuthenticated }) => (
     />
     <UserRoute
       location={location}
-      path="/dashboard"
+      path="/my_collection"
       exact
-      component={DashboardPage}
+      component={CollectionPage}
     />
   </div>
 );
@@ -77,14 +76,7 @@ const App = ({ location, isAuthenticated }) => (
 App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
-  }).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  }).isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    isAuthenticated: !!state.user.email
-  };
-}
-
-export default connect(mapStateToProps)(App);
+export default App;
