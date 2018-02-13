@@ -33,6 +33,10 @@ export default {
     CreateCollection: collectionObj =>
       axios
         .post('/api/collection/createCollection/', collectionObj)
+        .then(res => res.data.collection),
+    getCollection: () =>
+      axios
+        .get('/api/collection/getCollection')
         .then(res => res.data.collection)
   }
 };
