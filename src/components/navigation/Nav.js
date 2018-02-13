@@ -23,12 +23,12 @@ class Nav extends React.Component {
         return (
             <Menu pointing>
                 <Menu.Item name='home' onClick={this.handleItemClick}  ><img alt="pokeball" src='/images/website/pokeball.png' /></Menu.Item>
-                <Menu.Item name='cards' onClick={this.handleItemClick} />
+                <Menu.Item href='/cards' >Cards</Menu.Item>
                 <Menu.Menu position='right'>
                     {isAuthenticated && (
                         <Dropdown item text='Profile'>
                             <Dropdown.Menu>
-                                <Dropdown.Item name='my_collection' onClick={this.handleItemClick} >My Collection</Dropdown.Item>
+                                <Dropdown.Item href="/my_collection" >My Collection</Dropdown.Item>
                                 <hr />
                                 <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
                             </Dropdown.Menu>
