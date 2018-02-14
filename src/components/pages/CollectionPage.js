@@ -7,11 +7,10 @@ import { connect } from 'react-redux';
 import api from '../../api'
 import CollectionCard from '../cards/CollectionCard';
 import PSet from '../forms/PSet'; 
-import { CreateCollection } from '../../actions/my_collection';
+import { SetCollections } from '../../actions/my_collection';
 
 class CollectionPage extends React.Component {
     state = {
-        collection: [],
         loading: true,
         sets: []
     };
@@ -19,8 +18,7 @@ class CollectionPage extends React.Component {
     componentDidMount() {
         api.collection.getCollection()
             .then(collection => {
-                this.setState({collection});
-                this.props.CreateCollection({all: collection});
+                this.props.SetCollections({all: collection});
         });
         axios
             .get("/api/sets/getAll")
@@ -33,14 +31,14 @@ class CollectionPage extends React.Component {
 
     render(){
 
-        const { collection, loading, sets } = this.state;
-
+        const { loading, sets } = this.state;
+        const { myCollection }  = this.props;
         return (
             <div>
                 {!loading && <PSet sets={sets} />}
                 <Card.Group itemsPerRow={6} >
-                    {(collection.length > 0) && (
-                        collection.map((col, i) => <CollectionCard collection={col} key={i} /> )
+                    {(Object.keys(myCollection[0]).length ) && (
+                        myCollection.map((col, i) => <CollectionCard collection={col} key={i} /> )
                     )}
                 </Card.Group>
             </div>
@@ -49,8 +47,16 @@ class CollectionPage extends React.Component {
 }
 
 CollectionPage.propTypes = {
-    CreateCollection: PropTypes.func.isRequired
+    SetCollections: PropTypes.func.isRequired,
+    myCollection: PropTypes.arrayOf(
+        PropTypes.object.isRequired
+    ).isRequired
 };
 
+function mapStateToProps(state){
+    return {
+        myCollection: state.myCollection
+    }
+}
 
-export default connect(null, { CreateCollection })(CollectionPage);
+export default connect(mapStateToProps, { SetCollections })(CollectionPage);

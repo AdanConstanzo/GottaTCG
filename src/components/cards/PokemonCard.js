@@ -14,7 +14,7 @@ const PokemonCard = (props) => (
             <Grid.Column width={5} >
                 <img style={style.card.image} src={props.card.imageUrl} alt={props.card.name} />
                 <br />
-                <AddCard card={props.card.id} />
+                <AddCard card={props.card} />
             </Grid.Column>
             <Grid.Column width={7} >
                 <Grid columns={3} divided>

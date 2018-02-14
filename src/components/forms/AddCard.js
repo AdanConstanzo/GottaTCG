@@ -14,7 +14,7 @@ class AddCard extends React.Component {
     };
 
     componentDidMount(){
-        this.props.GetCollectionQuantity(this.props.card)
+        this.props.GetCollectionQuantity(this.props.card.id)
             .then(Collection => {
                 this.setState({ Collection: Collection.collection });
             }
@@ -29,7 +29,7 @@ class AddCard extends React.Component {
 
     handleCollection = val => {
         const { collectionId } = this.state.Collection
-
+        const { id, setCode, imageUrl, name }  = this.props.card;
         if (this.state.Collection.collectionId) {
             this.props.SetValueToCardCollection({
                 quantity: val,
@@ -40,7 +40,10 @@ class AddCard extends React.Component {
         } else {
             this.props.CreateCollection({
                 quantity: val,
-                id: this.props.card
+                id,
+                setCode,
+                imageUrl,
+                name
             })
                 .then(res => res.collection)
                 .then(Collection => this.setState({ Collection }));
@@ -83,7 +86,12 @@ AddCard.propTypes = {
     GetCollectionQuantity: PropTypes.func.isRequired,
     CreateCollection: PropTypes.func.isRequired,
     SetValueToCardCollection: PropTypes.func.isRequired,
-    card: PropTypes.string.isRequired
+    card: PropTypes.shape({
+        imageUrl: PropTypes.string.isRequired,
+        setCode: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired
+    }).isRequired
 };
 
 

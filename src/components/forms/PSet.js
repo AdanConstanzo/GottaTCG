@@ -11,9 +11,7 @@ class PSet extends React.Component {
     }
 
     assign = (e, data) => {
-        console.log(this.props.Collection);
-        console.log(data.data)
-        this.props.AddToCollection(this.props.Collection,data.data);
+        this.props.AddToCollection(this.props.collectionDB,data.data);
         this.setState({ focus: data.children });
     }
 
@@ -33,14 +31,14 @@ PSet.propTypes = {
         PropTypes.object
     ).isRequired,
     AddToCollection: PropTypes.func.isRequired,
-    Collection: PropTypes.arrayOf(
-        PropTypes.object
-    ).isRequired
+    collectionDB: PropTypes.shape({
+        all: PropTypes.array
+    }).isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        Collection: state.myCollection
+        collectionDB: state.collectionDB
     }
 }
 
