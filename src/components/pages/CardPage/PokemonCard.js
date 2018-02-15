@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { Grid } from "semantic-ui-react";
-import Attack from "../PokemonCard/Attack";
-import Ability from "../PokemonCard/Ability";
-import RessWeak from "../PokemonCard/RessWeak";
-import Energy from "../PokemonCard/Energy";
+import Attack from "../../PokemonCard/Attack";
+import Ability from "../../PokemonCard/Ability";
+import RessWeak from "../../PokemonCard/RessWeak";
+import Energy from "../../PokemonCard/Energy";
 import style from './PokemonCardCSS';
-import AddCard from "../forms/AddCard";
+import AddCard from "../../forms/AddCard";
 
 const PokemonCard = (props) => (
     <Grid centered >

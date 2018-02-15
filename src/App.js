@@ -5,11 +5,11 @@ import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/LoginPage";
 import SignupPage from "./components/pages/SignupPage";
 import ConfirmationPage from "./components/pages/ConfirmationPage";
-import CardPage from "./components/pages/CardPage"
+import CardPage from "./components/pages/CardPage/index"
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
-import CollectionPage from "./components/pages/CollectionPage";
-import CardsPage from "./components/pages/CardsPage";
+import CollectionPage from "./components/pages/CollectionPage/index";
+import CardsPage from "./components/pages/CardsPage/index";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 import WebNav from './components/navigation/Nav';

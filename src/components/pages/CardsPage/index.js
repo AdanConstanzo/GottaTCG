@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 
-import PokemonSet from '../forms/PokemonSet';
-import PokemonCardImage from '../cards/cardImage';
+import PokemonSet from '../..//forms/PokemonSet';
+import PokemonCardImage from './cardImage';
 
 class CardsPage extends React.Component {
     state = {

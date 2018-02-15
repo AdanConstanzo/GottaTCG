@@ -4,9 +4,9 @@ import axios from 'axios';
 import { Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-import { SetCard } from '../../actions/card';
-import PokemonCard from '../cards/PokemonCard';
-import TrainerEnergyCard from '../cards/TrainerEnergyCard';
+import { SetCard } from '../../../actions/card';
+import PokemonCard from './PokemonCard';
+import TrainerEnergyCard from './TrainerEnergyCard';
 
 class CardPage extends React.Component {
     state = {

@@ -4,7 +4,7 @@ import { Card, Image } from 'semantic-ui-react';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { SetValueToCardCollection } from '../../actions/collection';
+import { SetValueToCardCollection } from '../../../actions/collection';
 
 class CollectionCard extends React.Component {
     

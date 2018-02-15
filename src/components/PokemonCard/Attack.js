@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Accordion, Grid } from 'semantic-ui-react';
-import style from '../cards/PokemonCardCSS';
+import style from '../pages/CardPage/PokemonCardCSS';
 
 import Energy from '../PokemonCard/Energy';
 

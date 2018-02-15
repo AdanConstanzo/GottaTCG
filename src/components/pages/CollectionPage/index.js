@@ -4,10 +4,10 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import api from '../../api'
-import CollectionCard from '../cards/CollectionCard';
-import PSet from '../forms/PSet'; 
-import { SetCollections } from '../../actions/my_collection';
+import api from '../../../api'
+import CollectionCard from './CollectionCard';
+import PSet from '../../forms/PSet'; 
+import { SetCollections } from '../../../actions/my_collection';
 
 class CollectionPage extends React.Component {
     state = {
