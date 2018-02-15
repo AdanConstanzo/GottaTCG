@@ -19,15 +19,22 @@ export const SetCollections = collection => dispatch =>{
 
 function addCollection(collection,filter,code){
     const col = collection;
-    col[code] = filter;
+
+    if(filter.length === 0)
+        col[code] = [{}];
+    else 
+        col[code] = filter;
     return col;
 }
 
 export const AddToCollection = (collection,setCode) => dispatch => {
     // Adding to Collection
     if (!collection[setCode]) {
-        dispatch(CollectionDB(addCollection(collection,_.filter(collection.all, { setCode }),setCode)))
-        dispatch(MyCollection(_.filter(collection.all, { setCode })));
+        let col = _.filter(collection.all, { setCode });
+        if (col.length === 0)
+            col = [{}];
+        dispatch(CollectionDB(addCollection(collection, col, setCode)));
+        dispatch(MyCollection(col));
     } 
     // Setting Current Collection.
     else {

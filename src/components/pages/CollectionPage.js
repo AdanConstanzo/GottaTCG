@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Loader, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import { SetCollections } from '../../actions/my_collection';
 class CollectionPage extends React.Component {
     state = {
         loading: true,
-        sets: []
+        sets: [],
     };
 
     componentDidMount() {
@@ -33,15 +33,26 @@ class CollectionPage extends React.Component {
 
         const { loading, sets } = this.state;
         const { myCollection }  = this.props;
+        
         return (
-            <div>
-                {!loading && <PSet sets={sets} />}
-                <Card.Group itemsPerRow={6} >
-                    {(Object.keys(myCollection[0]).length ) && (
-                        myCollection.map((col, i) => <CollectionCard collection={col} key={i} /> )
-                    )}
-                </Card.Group>
-            </div>
+            <Grid>
+                <Grid.Row>
+                    {loading && <Loader inline active />}
+                    {!loading && <PSet sets={sets} />}
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column>
+                        {(Object.keys(myCollection[0]).length !== 0) &&
+                            (<Card.Group itemsPerRow={6} >
+                                {myCollection.map((col, i) => <CollectionCard collection={col} key={i} />)}
+                            </Card.Group>
+                        )}
+                        {(Object.keys(myCollection[0]).length === 0) && (
+                            <p>Empty set of collection.</p>
+                        )}
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         )
     }
 }

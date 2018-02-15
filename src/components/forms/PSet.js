@@ -17,7 +17,7 @@ class PSet extends React.Component {
 
     render(){
         return (
-            <Dropdown scrolling trigger={<span>{this.state.focus}</span>}>
+            <Dropdown scrolling button trigger={<span>{this.state.focus}</span>}>
                 <Dropdown.Menu >
                     {this.props.sets.map((set, i) => <Dropdown.Item key={i} onClick={this.assign} data={set.code}>{set.name}</Dropdown.Item>)}
                 </Dropdown.Menu>
