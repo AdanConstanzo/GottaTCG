@@ -24,6 +24,7 @@ class Nav extends React.Component {
             <Menu pointing>
                 <Menu.Item name='home' onClick={this.handleItemClick}  ><img alt="pokeball" src='/images/website/pokeball.png' /></Menu.Item>
                 <Menu.Item href='/cards' >Cards</Menu.Item>
+                <Menu.Item href='/deck_builder' >Deck Builder</Menu.Item>
                 <Menu.Menu position='right'>
                     {isAuthenticated && (
                         <Dropdown item text='Profile'>
