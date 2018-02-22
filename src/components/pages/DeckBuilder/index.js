@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Slider from 'react-slick'
 
 import PokemonSet from '../../forms/PokemonSet';
 
@@ -20,22 +21,33 @@ class index extends React.Component {
             })
     }
 
+    
+    
     render(){
 
         const { cards } = this.props;
-
+        
+        const settings = {
+            dots: true,
+            arrows: true,
+            draggable: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 6,
+            slidesToScroll: 6,
+        };
         return (
             <div>
                 <Grid columns={5} >
                     <Grid.Row>
                         {!this.state.loading && <PokemonSet sets={this.state.sets} />}
                     </Grid.Row>
-                    <Grid.Row>
-                        {/* Set must have more than 2. */}
-                        {cards.length > 1 &&
-                            (cards.map((val, count) => <img src={val.imageUrl} alt={val.name} />))}
-                    </Grid.Row>
                 </Grid>
+                { cards.length > 1 && (
+                    <Slider {...settings}>
+                        {cards.map((val, count) => <div key={count}><img src={val.imageUrl} alt={val.name} /></div>)}
+                    </Slider>
+                )}
             </div>
         )
     }
