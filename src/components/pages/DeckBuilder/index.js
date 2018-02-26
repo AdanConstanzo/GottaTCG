@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Slider from 'react-slick'
 
 import PokemonSet from '../../forms/PokemonSet';
+import CardSelector from './cardSelector';
+import CardSlider  from './cardSlider'; 
 
 class index extends React.Component {
     state = {
@@ -21,7 +22,9 @@ class index extends React.Component {
             })
     }
 
-    
+    onCardClick = (e) => {
+        console.log(e.target);
+    }
     
     render(){
 
@@ -36,6 +39,7 @@ class index extends React.Component {
             slidesToShow: 6,
             slidesToScroll: 6,
         };
+
         return (
             <div>
                 <Grid columns={5} >
@@ -43,11 +47,22 @@ class index extends React.Component {
                         {!this.state.loading && <PokemonSet sets={this.state.sets} />}
                     </Grid.Row>
                 </Grid>
-                { cards.length > 1 && (
-                    <Slider {...settings}>
-                        {cards.map((val, count) => <div key={count}><img src={val.imageUrl} alt={val.name} /></div>)}
-                    </Slider>
-                )}
+                <div style={{marginBottom: "5em", marginTop: "2em"}}>
+                    {Object.keys(cards[0]).length > 0 && (
+                        <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
+                    )}
+                </div>
+                <Grid columns={3} divided >
+                    <Grid.Column>
+                        <CardSelector selection="Pokémons" />
+                    </Grid.Column>
+                    <Grid.Column>
+                        <CardSelector selection="Trainers" />
+                    </Grid.Column>
+                    <Grid.Column>
+                        <CardSelector selection="Energy" />
+                    </Grid.Column>
+                </Grid>
             </div>
         )
     }
