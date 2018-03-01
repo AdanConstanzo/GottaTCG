@@ -7,10 +7,14 @@ import { connect } from 'react-redux';
 import PokemonSet from '../../forms/PokemonSet';
 import CardSelector from './cardSelector';
 import CardSlider  from './cardSlider'; 
+import { AddCard } from '../../../actions/deckbuilder';
 
 class index extends React.Component {
     state = {
-        loading: true
+        loading: true,
+        Pokémon: {},
+        Trainer: {},
+        Energy: {}
     };
 
     componentDidMount() {
@@ -23,13 +27,24 @@ class index extends React.Component {
     }
 
     onCardClick = (e) => {
-        console.log(e.target);
+        const { deckbuilder } = this.props;
+        const { src, alt } = e.target;
+        const type = e.target.getAttribute('type');
+        const id = e.target.getAttribute("data");
+        const obj = {
+            src,
+            alt,
+            type,
+            id
+        }
+        this.props.AddCard(obj, deckbuilder);
+        this.setState({ deckbuilder });
     }
-    
+
     render(){
 
-        const { cards } = this.props;
-        
+        const { cards, deckbuilder } = this.props;
+        const { Pokémon, Trainer, Energy } = deckbuilder;
         const settings = {
             dots: true,
             arrows: true,
@@ -54,13 +69,13 @@ class index extends React.Component {
                 </div>
                 <Grid columns={3} divided >
                     <Grid.Column>
-                        <CardSelector selection="Pokémons" />
+                        <CardSelector selection="Pokémons" cards={Pokémon}  />
                     </Grid.Column>
                     <Grid.Column>
-                        <CardSelector selection="Trainers" />
+                        <CardSelector selection="Trainers" cards={Trainer}  />
                     </Grid.Column>
                     <Grid.Column>
-                        <CardSelector selection="Energy" />
+                        <CardSelector selection="Energy" cards={Energy}  />
                     </Grid.Column>
                 </Grid>
             </div>
@@ -70,12 +85,15 @@ class index extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        cards: state.cards
+        cards: state.cards,
+        deckbuilder: state.deckbuilder,
     }
 }
 
 index.propTypes = {
-    cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
+    cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    AddCard: PropTypes.func.isRequired,
+    deckbuilder: PropTypes.shape({}).isRequired
 };
 
-export default connect(mapStateToProps)(index);
+export default connect(mapStateToProps, { AddCard })(index);

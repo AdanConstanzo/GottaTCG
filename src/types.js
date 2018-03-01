@@ -6,4 +6,6 @@ export const GET_CARD = "GET_CARD";
 export const CARD_QUANTITY_VALUE = "CARD_QUANTITY_VALUE";
 export const COLLECTION_SET = "COLLECTION_SET";
 export const COLLECTION_DB_ADD = "COLLECTION_DB_ADD";
-
+export const ADD_CARD = "ADD_CARD";
+export const REMOVE_CARD = "REMOVE_CARD";
+export const SUBTRACT_CARD = "SUBTRACT_CARD";

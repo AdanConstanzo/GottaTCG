@@ -7,6 +7,7 @@ import card from './reducers/card';
 import collection from './reducers/collection';
 import myCollection from './reducers/my_collection';
 import collectionDB from './reducers/collectionDB';
+import deckbuilder from './reducers/deckbuilder';
 
 export default combineReducers({
   user,
@@ -15,5 +16,6 @@ export default combineReducers({
   card,
   collection,
   myCollection,
-  collectionDB
+  collectionDB,
+  deckbuilder
 });
