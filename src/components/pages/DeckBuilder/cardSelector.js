@@ -1,28 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class cardSelector extends React.Component {
-    state = {
+import CardLI from './cardLi';
 
-    };
-   
-    
-
-    render(){
-        const { selection, cards } = this.props;
-        return (
-            <div>
-                <h1>{selection}</h1>
-                <hr />
-                {Object.keys(cards).length > 0 && 
-                    Object.keys(cards)
-                    .map(val => <p key={cards[val].id}>{cards[val].id} x {cards[val].quantity}</p>)
-                }
-            </div>
-        )
-    };}
-
-
+const cardSelector = (props) => (
+    <div>
+        <h1>{props.selection}</h1>
+        <hr />
+        <ul>
+        {Object.keys(props.cards).length > 0 &&
+            Object.keys(props.cards)
+                .map(val => 
+                    <CardLI 
+                        key={props.cards[val].id}
+                        id={props.cards[val].id}
+                        quantity={props.cards[val].quantity}
+                    />)
+        }
+        </ul>
+    </div>
+);
 cardSelector.propTypes = {
     selection: PropTypes.string.isRequired,
     cards: PropTypes.shape({}).isRequired
