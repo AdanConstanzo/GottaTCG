@@ -1,33 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
 import CardLI from './cardLi';
 
-const cardSelector = (props) => (
-    <div>
-        <h1>{props.selection} x {props.count}</h1>
-        <hr />
-        <List celled >
-        {Object.keys(props.cards).length > 0 &&
-            Object.keys(props.cards)
-                .map(val => 
-                    <CardLI 
-                        key={props.cards[val].id}
-                        id={props.cards[val].id}
-                        quantity={props.cards[val].quantity}
-                        alt={props.cards[val].alt}
-                        src={props.cards[val].src}
-                        type={props.cards[val].type}
-                    />)
-        }
-        </List>
-    </div>
-);
+class cardSelector extends React.Component {
+    state = {};
+    render(){
+
+        const { cards, selection, type, deckbuilder } = this.props
+        const count = deckbuilder.Count[type];
+        return (
+            <div>
+                <h1>{selection} x {count}</h1>
+                <hr />
+                <List celled >
+                    {Object.keys(cards).length > 0 &&
+                        Object.keys(cards)
+                            .map(val =>
+                                <CardLI
+                                    key={cards[val].id}
+                                    id={cards[val].id}
+                                    alt={cards[val].alt}
+                                    src={cards[val].src}
+                                    type={cards[val].type}
+                                />)
+                    }
+                </List>
+            </div>
+        )
+    }
+}
+
+function mapStateToProps(state){
+    return {
+        deckbuilder: state.deckbuilder
+    }
+}
+
 cardSelector.propTypes = {
     selection: PropTypes.string.isRequired,
     cards: PropTypes.shape({}).isRequired,
-    count: PropTypes.number.isRequired
+    type: PropTypes.string.isRequired,
+    deckbuilder: PropTypes.shape({}).isRequired
+
 };
 
-export default cardSelector;
+export default connect(mapStateToProps)(cardSelector);

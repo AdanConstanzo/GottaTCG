@@ -18,14 +18,14 @@ export const Subtract = deckbuilder => ({
 
 export const RemoveCard = (CardType,State) => 
     dispatch => {
-        const ConstState = State;
+        const ConstState = Object.assign({}, State);
         delete ConstState[CardType.type][CardType.id]
         dispatch(Remove(ConstState));
     }
 
 export const SubtractCard = (CardType,State) => 
     dispatch => {
-        const ConstState = State;
+        const ConstState = Object.assign({}, State);
         const ConstCardType = CardType;
         ConstState.Count[CardType.type] -= 1;
         if (ConstState[CardType.type][CardType.id].quantity === 1)
@@ -39,7 +39,7 @@ export const SubtractCard = (CardType,State) =>
 
 export const AddCard = (CardType,State) => 
     dispatch => {
-        const ConstState = State;
+        const ConstState = Object.assign({}, State);
         const ConstCardType = CardType;
         ConstState.Count[CardType.type] += 1;
         if (ConstState[CardType.type][CardType.id] ) {

@@ -40,13 +40,13 @@ class cardLi extends React.Component {
     }
 
     render(){
-        const { name, id, deckbuilder, type } = this.props;
+        const { alt, id, deckbuilder, type } = this.props;
         const { display } = this.state;
         if (display) {
             return (
                 <List.Item>
                     <List.Content>
-                        <List.Header>{name}</List.Header>
+                        <List.Header>{alt}</List.Header>
                         {id} x {deckbuilder[type][id].quantity}
                         <Button onClick={this.addCard} icon>
                             <Icon name='plus' />
@@ -70,8 +70,12 @@ function mapStateToProps(state){
 
 cardLi.propTypes = {
     id: PropTypes.string.isRequired,
-    quantity: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
+    deckbuilder: PropTypes.shape({}).isRequired,
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    AddCard: PropTypes.func.isRequired,
+    SubtractCard: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, { AddCard, SubtractCard })(cardLi);

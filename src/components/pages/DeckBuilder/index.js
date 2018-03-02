@@ -74,13 +74,13 @@ class index extends React.Component {
                 <h1>Total Cards: {Total}</h1>
                 <Grid columns={3} divided >
                     <Grid.Column>
-                        <CardSelector selection="Pokémons" count={PCount} cards={Pokémon}  />
+                        <CardSelector selection="Pokémons" type='Pokémon' count={PCount} cards={Pokémon}  />
                     </Grid.Column>
                     <Grid.Column>
-                        <CardSelector selection="Trainers" count={TCount} cards={Trainer}  />
+                        <CardSelector selection="Trainers" type='Trainer' count={TCount} cards={Trainer}  />
                     </Grid.Column>
                     <Grid.Column>
-                        <CardSelector selection="Energy" count={ECount} cards={Energy}  />
+                        <CardSelector selection="Energy" type='Energy' count={ECount} cards={Energy}  />
                     </Grid.Column>
                 </Grid>
             </div>
