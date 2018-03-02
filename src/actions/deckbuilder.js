@@ -27,18 +27,21 @@ export const SubtractCard = (CardType,State) =>
     dispatch => {
         const ConstState = State;
         const ConstCardType = CardType;
-        if (ConstState[CardType.type][CardType.id] === 1)
+        ConstState.Count[CardType.type] -= 1;
+        if (ConstState[CardType.type][CardType.id].quantity === 1)
             dispatch(RemoveCard(ConstCardType,ConstState));
         else {
-            ConstState[CardType.type][CardType.id].quantity += -1;
+            ConstState[CardType.type][CardType.id].quantity -= 1;
             dispatch(Subtract(ConstState));
         }
+        
     }
 
 export const AddCard = (CardType,State) => 
     dispatch => {
         const ConstState = State;
         const ConstCardType = CardType;
+        ConstState.Count[CardType.type] += 1;
         if (ConstState[CardType.type][CardType.id] ) {
             ConstState[CardType.type][CardType.id].quantity += 1;
         } else {

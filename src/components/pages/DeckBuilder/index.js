@@ -45,6 +45,10 @@ class index extends React.Component {
 
         const { cards, deckbuilder } = this.props;
         const { Pokémon, Trainer, Energy } = deckbuilder;
+        const PCount = deckbuilder.Count.Pokémon;
+        const TCount = deckbuilder.Count.Trainer;
+        const ECount = deckbuilder.Count.Energy;
+        const Total = PCount + TCount + ECount;
         const settings = {
             dots: true,
             arrows: true,
@@ -67,15 +71,16 @@ class index extends React.Component {
                         <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
                     )}
                 </div>
+                <h1>Total Cards: {Total}</h1>
                 <Grid columns={3} divided >
                     <Grid.Column>
-                        <CardSelector selection="Pokémons" cards={Pokémon}  />
+                        <CardSelector selection="Pokémons" count={PCount} cards={Pokémon}  />
                     </Grid.Column>
                     <Grid.Column>
-                        <CardSelector selection="Trainers" cards={Trainer}  />
+                        <CardSelector selection="Trainers" count={TCount} cards={Trainer}  />
                     </Grid.Column>
                     <Grid.Column>
-                        <CardSelector selection="Energy" cards={Energy}  />
+                        <CardSelector selection="Energy" count={ECount} cards={Energy}  />
                     </Grid.Column>
                 </Grid>
             </div>
@@ -93,7 +98,7 @@ function mapStateToProps(state) {
 index.propTypes = {
     cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     AddCard: PropTypes.func.isRequired,
-    deckbuilder: PropTypes.shape({}).isRequired
+    deckbuilder: PropTypes.shape({}).isRequired,
 };
 
 export default connect(mapStateToProps, { AddCard })(index);
