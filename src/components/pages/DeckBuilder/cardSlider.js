@@ -2,28 +2,24 @@ import React from 'react';
 import Slider from 'react-slick'
 import PropTypes from 'prop-types';
 
+import CreateImage from './CreateImage';
+
 class cardSlider extends React.Component {
-    onMouseEnter = (e) => {
-        console.log(e.target)
-        // get card data here and show.
-        // set a time? maybe 200ms?
+    state={
+        isHover: false
     }
+
+    onMouseLeave = () => this.setState({ isHover: false });
+    
     render(){
         const { settings, cards, onCardClick } = this.props;
         return (
             <Slider {...settings} >
-                {cards.map((val, count) =>
+                {cards.map((val,count) =>
                     <div key={count}>
-                        <img
-                            onMouseEnter={this.onMouseEnter} 
-                            style={{ width: "8em" }} 
-                            onClick={onCardClick} 
-                            type={val.supertype} 
-                            data={val.id} 
-                            src={val.imageUrl} 
-                            alt={val.name} 
-                        />
-                    </div>)
+                        <CreateImage onClick={onCardClick} card={val} />
+                    </div>
+                )
                 }
             </Slider>
         )
