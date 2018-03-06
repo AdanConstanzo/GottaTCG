@@ -59,6 +59,16 @@ class CreateImage extends React.Component {
                 >
                     <p>count: {deckbuilder[card.supertype][card.id].quantity} </p>
                     <RenderImage />
+                {display && (<Button onClick={this.details('blurring')} >Card Details</Button>)}
+                    <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
+                        <Modal.Header>{lCard.name}</Modal.Header>
+                        <Modal.Content>
+                            {Object.keys(lCard).length > 0 && lCard.supertype === "Pokémon" &&
+                            <PokemonCard addCard={false} card={lCard}/> }
+                            {Object.keys(lCard).length > 0 && (lCard.supertype === "Trainer" || lCard.supertype === "Energy" ) &&
+                            <TrainerCard addCard={false} card={lCard}/> }
+                        </Modal.Content>
+                    </Modal>
                 </div>
             ) 
         }
