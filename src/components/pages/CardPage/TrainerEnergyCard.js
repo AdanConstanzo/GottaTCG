@@ -10,7 +10,7 @@ const TrainerEnergyCard = (props) => (
             <Grid.Column width={5} >
                 <img src={props.card.imageUrl} alt={props.card.name} />
                 <br />
-                <AddCard card={props.card} />
+                {props.addCard  && <AddCard card={props.card} />}
             </Grid.Column>
             <Grid.Column width={7} >
                 <h4>{props.card.name}</h4>
@@ -25,7 +25,8 @@ TrainerEnergyCard.propTypes = {
         imageUrl: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         text: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    addCard: PropTypes.bool.isRequired
 };
 
 export default TrainerEnergyCard;

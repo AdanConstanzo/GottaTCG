@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Modal, Button } from 'semantic-ui-react';
 
 import PokemonCard from '../CardPage/PokemonCard';
+import TrainerCard from '../CardPage/TrainerEnergyCard';
 
 class CreateImage extends React.Component {
 
@@ -30,10 +31,7 @@ class CreateImage extends React.Component {
     details = dimmer => () => {
         axios.get(`/api/cards/findCardById?id=${this.props.card.id}`)
             .then(res => res.data.card)
-            .then(card => {
-                console.log(card);
-                this.setState({ lCard: card });
-            });
+            .then(card => this.setState({ lCard: card }));
         this.setState({ dimmer, open: true })
     }
 
@@ -72,16 +70,13 @@ class CreateImage extends React.Component {
                 <RenderImage />
                 {display && (<Button onClick={this.details('blurring')} >Card Details</Button>)}
                 <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
-                    <Modal.Header>Select a Photo</Modal.Header>
+                    <Modal.Header>{lCard.name}</Modal.Header>
                     <Modal.Content>
-                        <p>Yo can I see thing?</p>
+                        {Object.keys(lCard).length > 0 && lCard.supertype === "Pokémon" &&
+                        <PokemonCard addCard={false} card={lCard}/> }
+                         {Object.keys(lCard).length > 0 && (lCard.supertype === "Trainer" || lCard.supertype === "Energy" ) &&
+                        <TrainerCard addCard={false} card={lCard}/> }
                     </Modal.Content>
-                    <Modal.Actions>
-                        <Button color='black' onClick={this.close}>
-                            Nope
-                        </Button>
-                        <Button positive icon='checkmark' labelPosition='right' content="Yep, that's me" onClick={this.close} />
-                    </Modal.Actions>
                 </Modal>
             </div>
         ) 

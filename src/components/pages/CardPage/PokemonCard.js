@@ -14,7 +14,7 @@ const PokemonCard = (props) => (
             <Grid.Column width={5} >
                 <img style={style.card.image} src={props.card.imageUrl} alt={props.card.name} />
                 <br />
-                <AddCard card={props.card} />
+                {props.addCard && <AddCard card={props.card} /> }
             </Grid.Column>
             <Grid.Column width={7} >
                 <Grid columns={3} divided>
@@ -112,7 +112,8 @@ PokemonCard.propTypes = {
             }).isRequired
         ).isRequired,
         id: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    addCard: PropTypes.bool.isRequired
 };
 
 export default PokemonCard;

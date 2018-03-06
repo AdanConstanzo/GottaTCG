@@ -26,8 +26,8 @@ class CardPage extends React.Component {
         return (
             <div>
                 {loading && <Loader active/>}
-                {!loading && this.state.card.supertype === "Pokémon" && <PokemonCard card={card}  />}
-                {!loading && this.state.card.supertype !== "Pokémon" && <TrainerEnergyCard card={card}  />}
+                {!loading && this.state.card.supertype === "Pokémon" && <PokemonCard addCard={true} card={card}  />}
+                {!loading && this.state.card.supertype !== "Pokémon" && <TrainerEnergyCard addCard={true} card={card}  />}
             </div>
         );
     }
