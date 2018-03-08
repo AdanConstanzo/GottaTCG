@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Button, Icon } from 'semantic-ui-react';
+import { Grid, List, Button, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -7,7 +7,7 @@ import { AddCard, SubtractCard } from '../../../actions/deckbuilder';
 
 class cardLi extends React.Component {
     state = {
-        display: true
+        display: true,
     };
 
     addCard = () => {
@@ -40,20 +40,36 @@ class cardLi extends React.Component {
     }
 
     render(){
-        const { alt, id, deckbuilder, type } = this.props;
+        const { src, alt, id, deckbuilder, type } = this.props;
         const { display } = this.state;
         if (display) {
             return (
                 <List.Item>
                     <List.Content>
                         <List.Header>{alt}</List.Header>
-                        {id} x {deckbuilder[type][id].quantity}
-                        <Button onClick={this.addCard} icon>
-                            <Icon name='plus' />
-                        </Button>
-                        <Button onClick={this.subCard} icon>
-                            <Icon name='minus' />
-                        </Button>
+                            <Grid columns={4} >
+                                <Grid.Column>
+                                    {id} x {deckbuilder[type][id].quantity}
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <img 
+                                        onMouseOver={this.enlarge}
+                                        style={{width: "70%"}}
+                                        src={src}
+                                        alt={alt}
+                                    />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Button onClick={this.addCard} icon>
+                                        <Icon name='plus' />
+                                    </Button>
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Button onClick={this.subCard} icon>
+                                        <Icon name='minus' />
+                                    </Button>
+                                </Grid.Column>
+                            </Grid>
                     </List.Content>
                 </List.Item>
             )

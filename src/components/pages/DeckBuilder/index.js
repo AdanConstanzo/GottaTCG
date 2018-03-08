@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Input, Select, Form, Modal, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import api from '../../../api';
 import PokemonSet from '../../forms/PokemonSet';
 import CardSelector from './cardSelector';
 import CardSlider  from './cardSlider'; 
@@ -14,7 +15,12 @@ class index extends React.Component {
         loading: true,
         Pokémon: {},
         Trainer: {},
-        Energy: {}
+        Energy: {},
+        open: false,
+        dimmer: null,
+        name: "",
+        rotation: "",
+        deckSubmitted: false
     };
 
     componentDidMount() {
@@ -41,6 +47,26 @@ class index extends React.Component {
         this.setState({ deckbuilder });
     }
 
+    onButtonSubmit = dimmer => () => this.setState({ dimmer, open: true});
+    
+
+    close = () => this.setState({ open: false });
+
+    submitDeck = () => {
+        const { deckbuilder } = this.props;
+        const { name, rotation } = this.state;
+        api.deck.CreateDeck({
+            deckbuilder,
+            name,
+            rotation
+        })
+        .then((data)=> {
+            console.log(data);
+        })   
+    }
+
+    onChange = (e, { name, value }) => this.setState({ [name]: value })
+
     render(){
 
         const { cards, deckbuilder } = this.props;
@@ -58,7 +84,12 @@ class index extends React.Component {
             slidesToShow: 6,
             slidesToScroll: 6,
         };
-
+        const options = [
+            { key: 'S', text: 'Standard', value: 'Standard' },
+            { key: 'E', text: 'Expanded', value: 'Expanded' },
+            { key: 'U', text: 'Unlimited', value: 'Unlimited' },
+        ]
+        const { open, dimmer, rotation, name }  = this.state;
         return (
             <div>
                 <Grid columns={5} >
@@ -71,7 +102,16 @@ class index extends React.Component {
                         <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
                     )}
                 </div>
-                <h1>Total Cards: {Total}</h1>
+                <Grid columns={2}>
+                    <Grid.Column>
+                        <h3>Total Cards: {Total}</h3>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Button onClick={this.onButtonSubmit('blurring')} >Submit Deck</Button>
+                    </Grid.Column>
+
+                </Grid>
                 <Grid columns={3} divided >
                     <Grid.Column>
                         <CardSelector 
@@ -98,6 +138,19 @@ class index extends React.Component {
                         />
                     </Grid.Column>
                 </Grid>
+                <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
+                    <Modal.Content>
+                        <Form size="massive" >
+                            <Form.Group widths='equal' >
+                                <Form.Field onChange={this.onChange} control={Input} name="name"  value={name} label='Deck Name' placeholder='Deck Name' />
+                                <Form.Field control={Select} label='Rotation' name="rotation" value={rotation} onChange={this.onChange} options={options} placeholder='Rotation' />
+                            </Form.Group>
+                                <Button onClick={this.submitDeck} type='submit'>Submit</Button>
+                        </Form>
+                    </Modal.Content>
+                </Modal>
+
+
             </div>
         )
     }

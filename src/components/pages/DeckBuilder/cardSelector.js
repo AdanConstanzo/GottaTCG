@@ -13,7 +13,7 @@ class cardSelector extends React.Component {
         const count = deckbuilder.Count[type];
         return (
             <div>
-                <h1>{selection} x {count}</h1>
+                <h3>{selection} x {count}</h3>
                 <hr />
                 <List celled >
                     {Object.keys(cards).length > 0 &&

@@ -38,5 +38,11 @@ export default {
       axios
         .get('/api/collection/getCollection')
         .then(res => res.data.collection)
+  },
+  deck: {
+    CreateDeck: deckObject =>
+      axios
+        .post('/api/decks/', deckObject)
+        .then(res => res.data.deck)
   }
 };
