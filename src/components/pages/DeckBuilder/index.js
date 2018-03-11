@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Grid, Input, Select, Form, Modal, Button } from 'semantic-ui-react';
+import { Grid, Input, Select, Form, Modal, Message, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -20,7 +20,10 @@ class index extends React.Component {
         dimmer: null,
         name: "",
         rotation: "",
-        deckSubmitted: false
+        deckSubmitted: false,
+        deckInfo: null,
+        error: false,
+        success: false
     };
 
     componentDidMount() {
@@ -49,24 +52,26 @@ class index extends React.Component {
 
     onButtonSubmit = dimmer => () => this.setState({ dimmer, open: true});
     
-
-    close = () => this.setState({ open: false });
-
+    onChange = (e, { name, value }) => this.setState({ [name]: value })
+    
     submitDeck = () => {
         const { deckbuilder } = this.props;
         const { name, rotation } = this.state;
+        this.setState({deckSubmitted: true, error: false});
         api.deck.CreateDeck({
             deckbuilder,
             name,
             rotation
         })
-        .then((data)=> {
-            console.log(data);
-        })   
+            .then((data) => this.setState({ deckInfo: data, success: true }))
+            .catch((error) => {
+                this.setState({ error: true, global: error.response.data.error.global, deckSubmitted: false })
+                }) 
     }
-
-    onChange = (e, { name, value }) => this.setState({ [name]: value })
-
+    
+    
+    close = () => this.setState({ open: false });
+    
     render(){
 
         const { cards, deckbuilder } = this.props;
@@ -89,7 +94,7 @@ class index extends React.Component {
             { key: 'E', text: 'Expanded', value: 'Expanded' },
             { key: 'U', text: 'Unlimited', value: 'Unlimited' },
         ]
-        const { open, dimmer, rotation, name }  = this.state;
+        const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global }  = this.state;
         return (
             <div>
                 <Grid columns={5} >
@@ -140,12 +145,32 @@ class index extends React.Component {
                 </Grid>
                 <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
                     <Modal.Content>
-                        <Form size="massive" >
+                        <Form error={error} success={success}  size="massive" >
                             <Form.Group widths='equal' >
                                 <Form.Field onChange={this.onChange} control={Input} name="name"  value={name} label='Deck Name' placeholder='Deck Name' />
                                 <Form.Field control={Select} label='Rotation' name="rotation" value={rotation} onChange={this.onChange} options={options} placeholder='Rotation' />
                             </Form.Group>
-                                <Button onClick={this.submitDeck} type='submit'>Submit</Button>
+                                <Button disabled={deckSubmitted} onClick={this.submitDeck} type='submit'>Submit</Button>
+                            <Message error >
+                                <Message.Header>
+                                    An error has occured
+                                </Message.Header>
+                                <Message.Content>
+                                    Message: {global}
+                                </Message.Content>
+                            </Message>
+                            {deckInfo && (
+                                <Message success>
+                                    <Message.Header>
+                                        Success
+                                    </Message.Header>
+                                    <Message.Content>
+                                        {`Your deck: ${deckInfo.name} was made! Check it out in the link below!`}
+                                        <br />
+                                        <a href={`deck?id=${deckInfo._id}`}>{deckInfo.name}</a>
+                                    </Message.Content>
+                                </Message>
+                            )}
                         </Form>
                     </Modal.Content>
                 </Modal>
