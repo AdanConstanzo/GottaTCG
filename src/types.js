@@ -9,3 +9,4 @@ export const COLLECTION_DB_ADD = "COLLECTION_DB_ADD";
 export const ADD_CARD = "ADD_CARD";
 export const REMOVE_CARD = "REMOVE_CARD";
 export const SUBTRACT_CARD = "SUBTRACT_CARD";
+export const CLEAR_DECK_STATE = "CLEAR_DECK_STATE";

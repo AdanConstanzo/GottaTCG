@@ -1,4 +1,4 @@
-import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD } from "../types";
+import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE } from "../types";
 
 export const Code = deckbuilder => ({
     type: ADD_CARD,
@@ -15,6 +15,24 @@ export const Subtract = deckbuilder => ({
     deckbuilder
 });
 
+export const Clear = deckbuilder => ({
+    type: CLEAR_DECK_STATE,
+    deckbuilder
+}) 
+
+export const ClearState = () => dispatch =>{
+    const empty = {
+        'Pokémon': {},
+        'Trainer': {},
+        'Energy': {},
+        'Count': {
+            'Pokémon': 0,
+            'Trainer': 0,
+            'Energy': 0
+        }
+    }
+    dispatch(Clear(empty))
+}
 
 export const RemoveCard = (CardType,State) => 
     dispatch => {

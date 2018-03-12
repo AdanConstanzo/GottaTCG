@@ -8,7 +8,7 @@ import api from '../../../api';
 import PokemonSet from '../../forms/PokemonSet';
 import CardSelector from './cardSelector';
 import CardSlider  from './cardSlider'; 
-import { AddCard } from '../../../actions/deckbuilder';
+import { ClearState, AddCard } from '../../../actions/deckbuilder';
 
 class index extends React.Component {
     state = {
@@ -51,9 +51,14 @@ class index extends React.Component {
     }
 
     onButtonSubmit = dimmer => () => this.setState({ dimmer, open: true});
-    
+
     onChange = (e, { name, value }) => this.setState({ [name]: value })
     
+    clearEntries = () => {
+        this.props.ClearState();
+        this.setState({ name: "", rotation: "", deckSubmitted: false });
+    }
+
     submitDeck = () => {
         const { deckbuilder } = this.props;
         const { name, rotation } = this.state;
@@ -63,14 +68,17 @@ class index extends React.Component {
             name,
             rotation
         })
-            .then((data) => this.setState({ deckInfo: data, success: true }))
+            .then((data) => {
+                this.clearEntries();
+                this.setState({ deckInfo: data, success: true })
+            })
             .catch((error) => {
                 this.setState({ error: true, global: error.response.data.error.global, deckSubmitted: false })
                 }) 
     }
     
     
-    close = () => this.setState({ open: false });
+    close = () => this.setState({ open: false, error: false, success: false });
     
     render(){
 
@@ -143,7 +151,13 @@ class index extends React.Component {
                         />
                     </Grid.Column>
                 </Grid>
-                <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
+                <Modal 
+                    dimmer={dimmer}
+                    style={{marginTop:"0px"}}
+                    size="fullscreen"
+                    open={open}
+                    onClose={this.close}
+                >
                     <Modal.Content>
                         <Form error={error} success={success}  size="massive" >
                             <Form.Group widths='equal' >
@@ -192,6 +206,8 @@ index.propTypes = {
     cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     AddCard: PropTypes.func.isRequired,
     deckbuilder: PropTypes.shape({}).isRequired,
+    ClearState: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { AddCard })(index);
+export default connect(mapStateToProps, { AddCard, ClearState })(index);
+
