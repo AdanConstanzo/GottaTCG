@@ -43,6 +43,14 @@ export default {
     CreateDeck: deckObject =>
       axios
         .post('/api/decks/', deckObject)
-        .then(res => res.data.deck)
+        .then(res => res.data.deck),
+    GetLoginDeck: () =>
+      axios
+        .get('/api/decks/getAllDecks')
+        .then(res => res.data.decks),
+    GetUsersDecks: (UserId) => 
+      axios
+        .get(`/api/decks/getUserDecks?userId=${UserId}`)
+        .then(res => res.data.decks)
   }
 };

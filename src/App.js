@@ -9,6 +9,7 @@ import CardPage from "./components/pages/CardPage/index"
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import CollectionPage from "./components/pages/CollectionPage/index";
+import MyDecksPage from "./components/pages/MyDecksPage/index";
 import DeckBuilder from "./components/pages/DeckBuilder/index";
 import CardsPage from "./components/pages/CardsPage/index";
 import UserRoute from "./components/routes/UserRoute";
@@ -71,6 +72,13 @@ const App = ({ location }) => (
       exact
       component={CollectionPage}
     />
+    <UserRoute
+      location={location}
+      path="/my_decks"
+      exact
+      component={MyDecksPage}
+    />
+
     <UserRoute
       location={location}
       path="/deck_builder"
