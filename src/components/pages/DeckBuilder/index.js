@@ -181,7 +181,7 @@ class index extends React.Component {
                                     <Message.Content>
                                         {`Your deck: ${deckInfo.name} was made! Check it out in the link below!`}
                                         <br />
-                                        <a href={`deck?id=${deckInfo._id}`}>{deckInfo.name}</a>
+                                        <a href={`deck/${deckInfo._id}`}>{deckInfo.name}</a>
                                     </Message.Content>
                                 </Message>
                             )}

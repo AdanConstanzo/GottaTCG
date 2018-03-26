@@ -21,13 +21,14 @@ class index extends React.Component {
         const { decks } = this.state
         return (
             <div>
-                <h1>Hey look are your decks!</h1>
                 {decks.length > 0 && (
                     decks.map((deck, i) => 
                         <DeckNav 
                             key={i}
                             name={deck.name}
                             deckId={deck._id}
+                            cardCount={deck.cardCount}
+                            rotation={deck.rotation}
                         />)
                 )}
             </div>

@@ -11,6 +11,7 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import CollectionPage from "./components/pages/CollectionPage/index";
 import MyDecksPage from "./components/pages/MyDecksPage/index";
 import DeckBuilder from "./components/pages/DeckBuilder/index";
+import DeckPage from "./components/pages/DeckPage/index";
 import CardsPage from "./components/pages/CardsPage/index";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
@@ -78,7 +79,12 @@ const App = ({ location }) => (
       exact
       component={MyDecksPage}
     />
-
+    <Route
+      location={location}
+      path="/deck/:id"
+      exact
+      component={DeckPage}
+    />
     <UserRoute
       location={location}
       path="/deck_builder"

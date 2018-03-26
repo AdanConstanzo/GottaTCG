@@ -13,7 +13,11 @@ export default {
     resetPasswordRequest: email =>
       axios.post("/api/auth/reset_password_request", { email }),
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
-    resetPassword: data => axios.post("/api/auth/reset_password", { data })
+    resetPassword: data => axios.post("/api/auth/reset_password", { data }),
+    publicData: userId => 
+      axios
+        .get(`/api/users/public?id=${userId}`)
+        .then(res => res.data)
   },
   cards: {
     getCardsFromSet: set => 
@@ -51,6 +55,10 @@ export default {
     GetUsersDecks: (UserId) => 
       axios
         .get(`/api/decks/getUserDecks?userId=${UserId}`)
-        .then(res => res.data.decks)
+        .then(res => res.data.decks),
+    GetDeckById: (DeckId) =>
+      axios
+        .get(`/api/decks/findById?id=${DeckId}`)
+        .then(res => res.data.deck)
   }
 };

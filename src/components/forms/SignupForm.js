@@ -8,7 +8,8 @@ class SignupForm extends React.Component {
   state = {
     data: {
       email: "",
-      password: ""
+      password: "",
+      username: "",
     },
     loading: false,
     errors: {}
@@ -71,6 +72,17 @@ class SignupForm extends React.Component {
             onChange={this.onChange}
           />
           {errors.password && <InlineError text={errors.password} />}
+        </Form.Field>
+
+        <Form.Field error={!!errors.username}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={data.username}
+            onChange={this.onChange}
+          />
         </Form.Field>
 
         <Button primary>Sign Up</Button>
