@@ -20,9 +20,9 @@ export const Clear = deckbuilder => ({
     deckbuilder
 })
 
-export const DeckEnergyView = deckenergyview => ({
+export const DeckEnergyView = deckbuilder => ({
     type: CHANGE_DECK_ENERGY_VIEW,
-    deckenergyview
+    deckbuilder
 })
 
 export const ClearState = () => dispatch =>{

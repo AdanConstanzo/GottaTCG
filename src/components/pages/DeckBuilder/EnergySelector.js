@@ -4,36 +4,36 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import api from '../../../api';
+import { SetDeckEnergyView } from '../../../actions/deckbuilder';
 
 class EnergySelector extends React.Component {
     state = {
         types: null,
-        selected: null,
         activated: false,
     };
 
     componentDidMount(){
         api.pokemonType.getAllTypes()
-            .then(types => this.setState({types, selected: types[2]}))
+            .then(types => this.setState({types}))
     }
 
     onClick = () => this.setState({activated: !this.state.activated})
 
-    selectImage = (val) => (e) =>{
-        this.setState({selected: val});
+    selectImage = (val) => () =>{
+        this.props.SetDeckEnergyView(val,this.props.deckbuilder);
         this.onClick();
-        console.log(this.state.selected);
     }
 
     render(){
-        const { types, selected, activated } = this.state;
+        const { types, activated } = this.state;
+        const { Energy } = this.props;
         if (types) {
             if(!activated){
                 return(
                     <Grid>
                         <Grid.Row>
                             <Grid.Column>
-                                <img style={{ width: "50px" }} src={selected.imageUrl} alt={selected.pokemonType} />
+                                <img style={{ width: "50px" }} src={Energy.imageUrl} alt={Energy.pokemonType} />
                             </Grid.Column>
                             <Grid.Column>
                                 <Icon onClick={this.onClick} bordered name="chevron right" />
@@ -57,7 +57,8 @@ class EnergySelector extends React.Component {
 
 function mapStateToProps (state) {
     return{
-        Energy: state.deckbuilder.DeckEnergyView
+        Energy: state.deckbuilder.DeckEnergyView,
+        deckbuilder: state.deckbuilder
     }
 }
 
@@ -65,7 +66,9 @@ EnergySelector.propTypes = {
     Energy: PropTypes.shape({
         imageUrl: PropTypes.string.isRequired,
         pokemonType: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    deckbuilder: PropTypes.shape({}).isRequired,
+    SetDeckEnergyView: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps)(EnergySelector);
+export default connect(mapStateToProps, { SetDeckEnergyView })(EnergySelector);
