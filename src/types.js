@@ -10,3 +10,4 @@ export const ADD_CARD = "ADD_CARD";
 export const REMOVE_CARD = "REMOVE_CARD";
 export const SUBTRACT_CARD = "SUBTRACT_CARD";
 export const CLEAR_DECK_STATE = "CLEAR_DECK_STATE";
+export const CHANGE_DECK_ENERGY_VIEW = "CHANGE_DECK_ENERGY_VIEW";

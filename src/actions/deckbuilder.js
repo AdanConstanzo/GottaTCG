@@ -1,4 +1,4 @@
-import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE } from "../types";
+import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, CHANGE_DECK_ENERGY_VIEW } from "../types";
 
 export const Code = deckbuilder => ({
     type: ADD_CARD,
@@ -18,7 +18,12 @@ export const Subtract = deckbuilder => ({
 export const Clear = deckbuilder => ({
     type: CLEAR_DECK_STATE,
     deckbuilder
-}) 
+})
+
+export const DeckEnergyView = deckenergyview => ({
+    type: CHANGE_DECK_ENERGY_VIEW,
+    deckenergyview
+})
 
 export const ClearState = () => dispatch =>{
     const empty = {
@@ -29,10 +34,21 @@ export const ClearState = () => dispatch =>{
             'Pokémon': 0,
             'Trainer': 0,
             'Energy': 0
+        },
+        'DeckEnergyView': {
+            "imageUrl": "/images/type/Dragon.png",
+            "pokemonType": "Dragon",
         }
     }
     dispatch(Clear(empty))
 }
+
+export const SetDeckEnergyView = (EnergyObj, State) =>
+    dispatch => {
+        const ConstState = Object.assign({}, State);
+        ConstState.DeckEnergyView = EnergyObj;
+        dispatch(DeckEnergyView(ConstState));
+    }
 
 export const RemoveCard = (CardType,State) => 
     dispatch => {

@@ -43,6 +43,11 @@ export default {
         .get('/api/collection/getCollection')
         .then(res => res.data.collection)
   },
+  pokemonType: {
+    getAllTypes: () => axios
+      .get('/api/types/all')
+      .then(res => res.data.types)
+  },
   deck: {
     CreateDeck: deckObject =>
       axios

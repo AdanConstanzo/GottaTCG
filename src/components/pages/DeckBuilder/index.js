@@ -9,6 +9,7 @@ import PokemonSet from '../../forms/PokemonSet';
 import CardSelector from './cardSelector';
 import CardSlider  from './cardSlider'; 
 import { ClearState, AddCard } from '../../../actions/deckbuilder';
+import EnergySelector from './EnergySelector';
 
 class index extends React.Component {
     state = {
@@ -105,7 +106,8 @@ class index extends React.Component {
         const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global }  = this.state;
         return (
             <div>
-                <Grid columns={5} >
+                <EnergySelector />
+                {/* <Grid columns={5} >
                     <Grid.Row>
                         {!this.state.loading && <PokemonSet sets={this.state.sets} />}
                     </Grid.Row>
@@ -165,6 +167,7 @@ class index extends React.Component {
                                 <Form.Field control={Select} label='Rotation' name="rotation" value={rotation} onChange={this.onChange} options={options} placeholder='Rotation' />
                             </Form.Group>
                                 <Button disabled={deckSubmitted} onClick={this.submitDeck} type='submit'>Submit</Button>
+                            <EnergySelector />
                             <Message error >
                                 <Message.Header>
                                     An error has occured
@@ -187,7 +190,7 @@ class index extends React.Component {
                             )}
                         </Form>
                     </Modal.Content>
-                </Modal>
+                </Modal> */}
 
 
             </div>
