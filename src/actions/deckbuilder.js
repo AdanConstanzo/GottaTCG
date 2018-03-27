@@ -20,9 +20,9 @@ export const Clear = deckbuilder => ({
     deckbuilder
 })
 
-export const DeckEnergyView = deckbuilder => ({
+export const DeckEnergyView = deckEnergyView => ({
     type: CHANGE_DECK_ENERGY_VIEW,
-    deckbuilder
+    deckEnergyView
 })
 
 export const ClearState = () => dispatch =>{
@@ -34,21 +34,13 @@ export const ClearState = () => dispatch =>{
             'Pokémon': 0,
             'Trainer': 0,
             'Energy': 0
-        },
-        'DeckEnergyView': {
-            "imageUrl": "/images/type/Dragon.png",
-            "pokemonType": "Dragon",
         }
     }
     dispatch(Clear(empty))
 }
 
-export const SetDeckEnergyView = (EnergyObj, State) =>
-    dispatch => {
-        const ConstState = Object.assign({}, State);
-        ConstState.DeckEnergyView = EnergyObj;
-        dispatch(DeckEnergyView(ConstState));
-    }
+export const SetDeckEnergyView = (EnergyObj) =>
+    dispatch => dispatch(DeckEnergyView(EnergyObj));
 
 export const RemoveCard = (CardType,State) => 
     dispatch => {

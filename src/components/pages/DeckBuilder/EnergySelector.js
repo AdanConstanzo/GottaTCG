@@ -20,7 +20,7 @@ class EnergySelector extends React.Component {
     onClick = () => this.setState({activated: !this.state.activated})
 
     selectImage = (val) => () =>{
-        this.props.SetDeckEnergyView(val,this.props.deckbuilder);
+        this.props.SetDeckEnergyView(val);
         this.onClick();
     }
 
@@ -57,8 +57,7 @@ class EnergySelector extends React.Component {
 
 function mapStateToProps (state) {
     return{
-        Energy: state.deckbuilder.DeckEnergyView,
-        deckbuilder: state.deckbuilder
+        Energy: state.deckEnergyView
     }
 }
 
@@ -67,7 +66,6 @@ EnergySelector.propTypes = {
         imageUrl: PropTypes.string.isRequired,
         pokemonType: PropTypes.string.isRequired
     }).isRequired,
-    deckbuilder: PropTypes.shape({}).isRequired,
     SetDeckEnergyView: PropTypes.func.isRequired
 };
 

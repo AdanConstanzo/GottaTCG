@@ -10,6 +10,7 @@ import CardSelector from './cardSelector';
 import CardSlider  from './cardSlider'; 
 import { ClearState, AddCard } from '../../../actions/deckbuilder';
 import EnergySelector from './EnergySelector';
+import QuillEditor from './quillEditor';
 
 class index extends React.Component {
     state = {
@@ -64,12 +65,15 @@ class index extends React.Component {
         const { deckbuilder } = this.props;
         const { name, rotation } = this.state;
         this.setState({deckSubmitted: true, error: false});
+        deckbuilder.quill = this.props.quill;
+        deckbuilder.deckEnergyView = this.props.deckEnergyView;
         api.deck.CreateDeck({
             deckbuilder,
             name,
             rotation
         })
             .then((data) => {
+                console.log(deckbuilder);
                 this.clearEntries();
                 this.setState({ deckInfo: data, success: true })
             })
@@ -106,8 +110,7 @@ class index extends React.Component {
         const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global }  = this.state;
         return (
             <div>
-                <EnergySelector />
-                {/* <Grid columns={5} >
+                <Grid columns={5} >
                     <Grid.Row>
                         {!this.state.loading && <PokemonSet sets={this.state.sets} />}
                     </Grid.Row>
@@ -166,8 +169,12 @@ class index extends React.Component {
                                 <Form.Field onChange={this.onChange} control={Input} name="name"  value={name} label='Deck Name' placeholder='Deck Name' />
                                 <Form.Field control={Select} label='Rotation' name="rotation" value={rotation} onChange={this.onChange} options={options} placeholder='Rotation' />
                             </Form.Group>
+                                <h3>Select the most dominate type.</h3>
+                                <EnergySelector />
+                                <br />
+                                <p> Take some time to describe your deck. </p>
+                                <QuillEditor />
                                 <Button disabled={deckSubmitted} onClick={this.submitDeck} type='submit'>Submit</Button>
-                            <EnergySelector />
                             <Message error >
                                 <Message.Header>
                                     An error has occured
@@ -190,9 +197,7 @@ class index extends React.Component {
                             )}
                         </Form>
                     </Modal.Content>
-                </Modal> */}
-
-
+                </Modal>
             </div>
         )
     }
@@ -202,6 +207,8 @@ function mapStateToProps(state) {
     return {
         cards: state.cards,
         deckbuilder: state.deckbuilder,
+        quill: state.quill,
+        deckEnergyView: state.deckEnergyView
     }
 }
 
@@ -209,7 +216,9 @@ index.propTypes = {
     cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     AddCard: PropTypes.func.isRequired,
     deckbuilder: PropTypes.shape({}).isRequired,
-    ClearState: PropTypes.func.isRequired
+    ClearState: PropTypes.func.isRequired,
+    deckEnergyView: PropTypes.shape({}).isRequired,
+    quill: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, { AddCard, ClearState })(index);

@@ -8,6 +8,10 @@ import collection from './reducers/collection';
 import myCollection from './reducers/my_collection';
 import collectionDB from './reducers/collectionDB';
 import deckbuilder from './reducers/deckbuilder';
+import quill from './reducers/quill';
+import deckEnergyView from './reducers/deckEnergyView';
+
+
 
 export default combineReducers({
   user,
@@ -17,5 +21,7 @@ export default combineReducers({
   collection,
   myCollection,
   collectionDB,
-  deckbuilder
+  deckbuilder,
+  quill,
+  deckEnergyView
 });
