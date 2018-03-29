@@ -64,6 +64,14 @@ export default {
     GetDeckById: (DeckId) =>
       axios
         .get(`/api/decks/findById?id=${DeckId}`)
-        .then(res => res.data.deck)
+        .then(res => res.data.deck),
+    GetAllDecks: ()  => 
+      axios
+        .get('/api/decks/getAll')
+        .then(res => res.data.decks),
+    GetAllDecksByType: (type) =>
+      axios
+        .get(`/api/decks/getAllByType?pokemonType=${type}`)
+        .then(res => res.data.decks)
   }
 };

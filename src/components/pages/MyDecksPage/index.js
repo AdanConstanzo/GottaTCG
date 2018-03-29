@@ -21,7 +21,7 @@ class index extends React.Component {
     render(){
         const { decks } = this.state
         return (
-                <Card.Group itemsPerRow={6} stackable >
+                <Card.Group itemsPerRow={5} stackable >
                     {decks.length > 0 && (
                         decks.map((deck, i) =>
                             <DeckNav
