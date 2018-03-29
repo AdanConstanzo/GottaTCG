@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Image } from 'semantic-ui-react';
+import { Grid, Image, Message } from 'semantic-ui-react';
 
 import DeckCollumn from './DeckCollumn';
 import api from '../../../api';
@@ -46,9 +46,12 @@ class index extends React.Component {
                     </Grid.Row>
                     <Grid.Row centered>
                         <Grid.Column width={10} >
-                            <div>
-                                {deck.deck.quill}
-                            </div>
+                        {deck.deck.quill && (<div dangerouslySetInnerHTML={{ __html: deck.deck.quill }} />)}
+                        {deck.deck.quill === "" && 
+                            <Message warning >
+                                <Message.Header>No Deck Description Given.</Message.Header>
+                            </Message>
+                        }
                         </Grid.Column>
                         <Grid.Column width={6} >
                             {(Object.keys(deck).length > 0) && (
