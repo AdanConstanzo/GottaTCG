@@ -1,27 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Card } from 'semantic-ui-react';
+import { Card, Message } from 'semantic-ui-react';
 
 import * as actions from "../../actions/auth";
 import api from '../../api';
 import DeckNav from './MyDecksPage/DeckNav'; 
+import EnergySelector from './DeckBuilder/EnergySelector';
+
+import { GetDecksBasedOnType } from '../../actions/decks';
 
 class HomePage extends React.Component {
   state = {
     allDecks: null,
-    typeDecks: null,
+    typeDecks: null
   };
   componentDidMount(){
     api.deck.GetAllDecks()
       .then(decks => this.setState({ allDecks: decks }));
-    api.deck.GetAllDecksByType('Grass')
-      .then(decks => this.setState({typeDecks: decks}));
+    this.props.GetDecksBasedOnType("Grass");
   }
   render(){
-    // const { isAuthenticated, logout } = this.props;
-    const { allDecks, typeDecks } = this.state;
+    const { allDecks } = this.state;
+    const { typeDecks, energyType } = this.props;
     return (
       <div>
         <h3>Top Decks</h3>
@@ -36,45 +37,45 @@ class HomePage extends React.Component {
                   cardCount={deck.cardCount}
                   rotation={deck.rotation}
                   energyView={deck.deck.deckEnergyView}
+                  date={deck.date}
                 />)
             )}
         </Card.Group>
         <h3>Decks by type</h3>
+        <EnergySelector setSearch="decks" />
+        
         <Card.Group itemsPerRow={10} >
-          {typeDecks &&
-            (typeDecks
-              .map((deck, i) =>
-                <DeckNav
-                  key={i}
-                  name={deck.name}
-                  deckId={deck._id}
-                  cardCount={deck.cardCount}
-                  rotation={deck.rotation}
-                  energyView={deck.deck.deckEnergyView}
-                />)
-            )}
+          {((energyType && typeDecks[energyType.pokemonType]) && (typeDecks[energyType.pokemonType].length > 0)) ? 
+            typeDecks[energyType.pokemonType].map((deck,i) =>
+              <DeckNav
+                key={i}
+                name={deck.name}
+                deckId={deck._id}
+                cardCount={deck.cardCount}
+                rotation={deck.rotation}
+                energyView={deck.deck.deckEnergyView}
+                date={deck.date}
+              /> 
+          ): <Message info > There are no {energyType.pokemonType} type decks. </Message> }
+          
         </Card.Group>
-        {/* {isAuthenticated ? (
-            <button onClick={() => logout()}>Logout</button>
-          ) : (
-              <div>
-                <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link>
-              </div>
-            )} */}
       </div>
     )
   }
 }
 
 HomePage.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
+  typeDecks: PropTypes.shape({}).isRequired,
+  GetDecksBasedOnType: PropTypes.func.isRequired,
+  energyType: PropTypes.shape({}).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: !!state.user.token
+    isAuthenticated: !!state.user.token,
+    typeDecks: state.decks,
+    energyType: state.deckEnergyView
   };
 }
 
-export default connect(mapStateToProps, { logout: actions.logout })(HomePage);
+export default connect(mapStateToProps, { logout: actions.logout, GetDecksBasedOnType })(HomePage);

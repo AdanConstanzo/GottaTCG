@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import api from '../../../api';
 import { SetDeckEnergyView } from '../../../actions/deckbuilder';
+import { GetDecksBasedOnType } from '../../../actions/decks';
 
 class EnergySelector extends React.Component {
     state = {
@@ -20,6 +21,13 @@ class EnergySelector extends React.Component {
     onClick = () => this.setState({activated: !this.state.activated})
 
     selectImage = (val) => () =>{
+        const { setSearch, Energy } = this.props;
+        /* if setSearch is assigned to decks and redux's state
+        ** deckEnergyView is not equal to the selected energy value
+        */
+        if (setSearch === "decks" &&  Energy.pokemonType !== val.pokemonType) 
+            this.props.GetDecksBasedOnType(val.pokemonType);
+        
         this.props.SetDeckEnergyView(val);
         this.onClick();
     }
@@ -66,7 +74,9 @@ EnergySelector.propTypes = {
         imageUrl: PropTypes.string.isRequired,
         pokemonType: PropTypes.string.isRequired
     }).isRequired,
-    SetDeckEnergyView: PropTypes.func.isRequired
+    setSearch: PropTypes.string.isRequired,
+    SetDeckEnergyView: PropTypes.func.isRequired,
+    GetDecksBasedOnType: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { SetDeckEnergyView })(EnergySelector);
+export default connect(mapStateToProps, { SetDeckEnergyView, GetDecksBasedOnType })(EnergySelector);

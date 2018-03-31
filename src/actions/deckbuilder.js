@@ -76,3 +76,10 @@ export const AddCard = (CardType,State) =>
         }
         dispatch(Code(ConstState));
     }
+
+export const returnDate = (isoDate) =>{
+    const date = new Date(isoDate);
+    console.log(date);
+    console.log(isoDate);
+    return (date.getMonth()+1) + "/" +date.getDate() + "/" + date.getFullYear();
+}

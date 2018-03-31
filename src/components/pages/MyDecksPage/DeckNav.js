@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Card } from 'semantic-ui-react';
 
+import { returnDate } from '../../../actions/deckbuilder';
+
 const reduceSize = (string) => string.substring(0,9).concat('...');
+
+const getDate = (isoDate) => returnDate(isoDate);
 
 const DeckNav = (props) => (
     <Card>
@@ -13,7 +17,7 @@ const DeckNav = (props) => (
             </Card.Header>
             <Card.Meta>
                 <span className='date'>
-                    <p>date created</p>
+                    <p>{getDate(props.date)}</p>
                 </span>
             </Card.Meta>
             <Card.Description>
@@ -30,7 +34,8 @@ DeckNav.propTypes = {
    energyView: PropTypes.shape({
        pokemonType: PropTypes.string.isRequired,
        imageUrl: PropTypes.string.isRequired
-   }).isRequired
+   }).isRequired,
+   date: PropTypes.string.isRequired
 };
 
 export default DeckNav;

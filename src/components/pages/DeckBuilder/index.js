@@ -170,7 +170,7 @@ class index extends React.Component {
                                 <Form.Field control={Select} label='Rotation' name="rotation" value={rotation} onChange={this.onChange} options={options} placeholder='Rotation' />
                             </Form.Group>
                                 <h3>Select the most dominate type.</h3>
-                                <EnergySelector />
+                                <EnergySelector setSearch="" />
                                 <br />
                                 <p> Take some time to describe your deck. </p>
                                 <QuillEditor />

@@ -10,6 +10,7 @@ import collectionDB from './reducers/collectionDB';
 import deckbuilder from './reducers/deckbuilder';
 import quill from './reducers/quill';
 import deckEnergyView from './reducers/deckEnergyView';
+import decks from './reducers/decks';
 
 
 
@@ -23,5 +24,6 @@ export default combineReducers({
   collectionDB,
   deckbuilder,
   quill,
-  deckEnergyView
+  deckEnergyView,
+  decks
 });
