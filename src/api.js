@@ -72,6 +72,14 @@ export default {
     GetAllDecksByType: (type) =>
       axios
         .get(`/api/decks/getAllByType?pokemonType=${type}`)
-        .then(res => res.data.decks)
+        .then(res => res.data.decks),
+    GetAllTypesByLimit: (limit) =>
+      limit ? 
+        axios
+          .get(`api/decks/getAllTypesByLimit?limit=${limit}`)
+          .then(res => res.data.Decks) :
+        axios
+          .get('api/decks/getAllTypesByLimit')
+          .then(res => res.data.Decks)
   }
 };

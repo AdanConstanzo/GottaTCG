@@ -12,16 +12,13 @@ class index extends React.Component {
 
     componentDidMount() {
         api.deck.GetLoginDeck()
-            .then(decks => {
-                console.log(decks[0]);
-                this.setState({decks, loading: false})
-            })
+            .then(decks => this.setState({ decks, loading: false }));
     }
 
     render(){
         const { decks } = this.state
         return (
-                <Card.Group itemsPerRow={5} stackable >
+                <Card.Group itemsPerRow={10} stackable >
                     {decks.length > 0 && (
                         decks.map((deck, i) =>
                             <DeckNav
@@ -31,6 +28,7 @@ class index extends React.Component {
                                 cardCount={deck.cardCount}
                                 rotation={deck.rotation}
                                 energyView={deck.deck.deckEnergyView}
+                                date={deck.date}
                             />)
                     )}
                 </Card.Group>
