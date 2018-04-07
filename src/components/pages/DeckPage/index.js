@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Image, Message, Segment } from 'semantic-ui-react';
+import { Grid, Image, Message, Segment, Icon } from 'semantic-ui-react';
 
 import DeckCollumn from './DeckCollumn';
 import api from '../../../api';
 import { returnDate } from '../../../actions/deckbuilder';
-
+import RaitingArrow from './RaitingArrow';
 
 class index extends React.Component {
     state = {
@@ -36,8 +36,8 @@ class index extends React.Component {
                 <Grid>
                     <Grid.Row divided >
                         <Grid.Column width={2}>
-                            <Image size="small" src={deck.deck.deckEnergyView.imageUrl} alt={deck.deck.deckEnergyView.pokemonType} />
-                            {/* add upvote, number of raiting, downvote here */}
+                            <Image style={{ width: "4vw", margin:" 0 auto" }} src={deck.deck.deckEnergyView.imageUrl} alt={deck.deck.deckEnergyView.pokemonType} />
+                            <RaitingArrow raiting={deck.vote} />
                         </Grid.Column>
                         <Grid.Column width={7}>
                             <Segment>
