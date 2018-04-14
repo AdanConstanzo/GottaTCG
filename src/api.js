@@ -76,10 +76,24 @@ export default {
     GetAllTypesByLimit: (limit) =>
       limit ? 
         axios
-          .get(`api/decks/getAllTypesByLimit?limit=${limit}`)
+          .get(`/api/decks/getAllTypesByLimit?limit=${limit}`)
           .then(res => res.data.Decks) :
         axios
           .get('api/decks/getAllTypesByLimit')
           .then(res => res.data.Decks)
+  },
+  voting: {
+    LookVote: (deckId) =>
+      axios
+        .get(`/api/voting/lookVote?deckId=${deckId}`)
+        .then(res => res.data.vote),
+    SetVote: (deckId, vote) =>
+      axios
+        .post(`/api/voting/vote?deckId=${deckId}&value=${vote}`)
+        .then(res => res.data.vote),
+    VoteCount: (deckId) =>
+      axios
+        .get(`/api/voting/voteCount?deckId=${deckId}`)
+        .then(res => res.data.count)
   }
 };

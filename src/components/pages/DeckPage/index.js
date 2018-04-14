@@ -16,7 +16,7 @@ class index extends React.Component {
     
     componentDidMount(){
         api.deck.GetDeckById(this.props.match.params.id)
-            .then(deck=>{
+            .then(deck=>{                
                 api.user.publicData(deck.userId)
                     .then(user => this.setState({ username: user.username })); 
                 this.setState({ loading: false, deck })
@@ -37,7 +37,7 @@ class index extends React.Component {
                     <Grid.Row divided >
                         <Grid.Column width={2}>
                             <Image style={{ width: "4vw", margin:" 0 auto" }} src={deck.deck.deckEnergyView.imageUrl} alt={deck.deck.deckEnergyView.pokemonType} />
-                            <RaitingArrow raiting={deck.vote} />
+                        <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} />
                         </Grid.Column>
                         <Grid.Column width={7}>
                             <Segment>

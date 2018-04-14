@@ -1,26 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
+import api from '../../../api';
 import './RaitingArrow.css';
 
 class RaitingArrow extends React.Component {
     state = {
-        upvote: false,
-        downvote: false,
+        vote: null,
+        starVote: null,
+        number: null,
+        setNum: null
     };
 
-    onUp = () => this.state.upvote ? this.setVotes(false, false) :
-        this.setVotes(true, false)
+    componentDidMount() {
+        api.voting.VoteCount(this.props.deckId)
+            .then(number => this.setState({number, setNum: number}));
+        api.voting.LookVote(this.props.deckId)
+            .then(vote => this.setState({ vote: vote.value, starVote: vote.value }));
+    }
+
+    onUp = () => this.state.vote ? this.setVotes(null) : this.setVotes(true);
     
-    onDown = () => this.state.downvote ? this.setVotes(false,false) :
-            this.setVotes(false,true);
+    onDown = () => this.state.vote === false ? this.setVotes(null) : this.setVotes(false);
             
-    setVotes = (up,down) => this.setState({ upvote: up, downvote: down })
+    setVotes = (vote) => {
+        const { deckId } = this.props;
+        const { setNum, starVote } = this.state;
+        if (starVote === true && vote === null) {
+            this.setState({ number: setNum - 1 });
+        } else if (starVote === true && vote === false) {
+            this.setState({ number: setNum - 2 });
+        } else if (starVote === false && vote === null) {
+            this.setState({ number: setNum + 1 });
+        } else if (starVote === false && vote === true) {
+            this.setState({ number: setNum + 2 });
+        } else if (starVote === null && vote === true) { 
+            this.setState({ number: setNum + 1 });
+        } else if (starVote === null && vote === false) {
+            this.setState({ number: setNum - 1 });
+        } else {
+            this.setState({ number: setNum })
+        }
+        api.voting.SetVote(deckId,vote);
+        this.setState({ vote });
+    }
 
     render(){
-        const { raiting } = this.props;
-        const { upvote, downvote } = this.state;
+        // const { raiting } = this.props;
+        const { vote, number } = this.state;
         return (
             <div>
                 <Button 
@@ -28,14 +56,14 @@ class RaitingArrow extends React.Component {
                     style={{ marginLeft: "25%" }} 
                     id="u_vote" 
                     onClick={this.onUp} 
-                    color={upvote ? "green":"grey"}
+                    color={vote ? "green":"grey"}
                     icon= "arrow up" />
-                <p style={{ textAlign: "center", fontSize: "2vw" }} >{raiting}</p>
+                <p style={{ textAlign: "center", fontSize: "2vw" }} >{number}</p>
                 <Button 
                     name="arrow up" 
                     style={{ marginLeft: "25%" }} 
                     id="d_vote" 
-                    color={downvote ? "red" : "grey"}
+                    color={vote === false ? "red" : "grey"}
                     onClick={this.onDown} 
                     icon="arrow down" />
                     {/* <Icon
@@ -49,7 +77,8 @@ class RaitingArrow extends React.Component {
 }
 
 RaitingArrow.propTypes = {
-    raiting: PropTypes.number.isRequired
+    raiting: PropTypes.number.isRequired,
+    deckId: PropTypes.string.isRequired
 };
 
 export default RaitingArrow;
