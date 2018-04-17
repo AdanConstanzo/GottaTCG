@@ -10,7 +10,8 @@ class RaitingArrow extends React.Component {
         vote: null,
         starVote: null,
         number: null,
-        setNum: null
+        setNum: null,
+        authMessage: false
     };
 
     componentDidMount() {
@@ -46,9 +47,34 @@ class RaitingArrow extends React.Component {
         this.setState({ vote });
     }
 
+    logIn = () => this.setState({ authMessage: true })
+
     render(){
         // const { raiting } = this.props;
-        const { vote, number } = this.state;
+        const { vote, number, authMessage } = this.state;
+        const { disabled } = this.props;
+        if (disabled) {
+            return (
+                <div>
+                    <Button
+                        name="arrow up"
+                        style={{ marginLeft: "25%" }}
+                        id="u_vote"
+                        onClick={this.logIn}
+                        color={vote ? "green" : "grey"}
+                        icon="arrow up" />
+                    <p style={{ textAlign: "center", fontSize: "2vw" }} >{number}</p>
+                    <Button
+                        name="arrow up"
+                        style={{ marginLeft: "25%" }}
+                        id="d_vote"
+                        color={vote === false ? "red" : "grey"}
+                        onClick={this.logIn}
+                        icon="arrow down" />
+                    {authMessage && (<p>Please Login to Vote.</p>)}
+                </div>
+            )
+        }
         return (
             <div>
                 <Button 
@@ -66,11 +92,6 @@ class RaitingArrow extends React.Component {
                     color={vote === false ? "red" : "grey"}
                     onClick={this.onDown} 
                     icon="arrow down" />
-                    {/* <Icon
-                        className="icon-vote"
-                        color={downvote ? "red": "grey"}
-                        name="arrow down"
-                    /> */}
             </div>
         )
     }
@@ -78,7 +99,8 @@ class RaitingArrow extends React.Component {
 
 RaitingArrow.propTypes = {
     raiting: PropTypes.number.isRequired,
-    deckId: PropTypes.string.isRequired
+    deckId: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired
 };
 
 export default RaitingArrow;

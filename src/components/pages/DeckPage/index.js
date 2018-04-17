@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Image, Message, Segment, Icon } from 'semantic-ui-react';
+import { Grid, Image, Message, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
 import DeckCollumn from './DeckCollumn';
 import api from '../../../api';
@@ -25,6 +26,7 @@ class index extends React.Component {
 
     render(){
         const { loading, deck, username } = this.state;
+        const { auth } = this.props;
         if (loading) {
             return (
                 <div>
@@ -37,7 +39,9 @@ class index extends React.Component {
                     <Grid.Row divided >
                         <Grid.Column width={2}>
                             <Image style={{ width: "4vw", margin:" 0 auto" }} src={deck.deck.deckEnergyView.imageUrl} alt={deck.deck.deckEnergyView.pokemonType} />
-                        <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} />
+                        {Object.keys(auth).length > 0 ? 
+                            <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} />
+                            : <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} disabled />}
                         </Grid.Column>
                         <Grid.Column width={7}>
                             <Segment>
@@ -53,15 +57,6 @@ class index extends React.Component {
                             </Segment>
                             {/* Render Deck Information in terms of Money/Stats */}
                         </Grid.Column>
-                        {/* <Grid.Column>
-                            <h1>{deck.name} by <a href={`user/${username}`} >{username}</a></h1>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <h3 >Dominate Color: <Image size="mini" src={deck.deck.deckEnergyView.imageUrl} alt={deck.deck.deckEnergyView.pokemonType} /></h3>  
-                        </Grid.Column>
-                        <Grid.Column>
-                            <h3>Rotation: {deck.rotation}</h3>
-                        </Grid.Column> */}
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column>
@@ -98,7 +93,18 @@ index.propTypes = {
         params: PropTypes.shape({
             id: PropTypes.string.isRequired
         }).isRequired
+    }).isRequired,
+    auth: PropTypes.shape({
+        token: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        confirmed: PropTypes.bool.isRequired
     }).isRequired
 };
 
-export default index;
+function mapStateToProps(state) {
+    return {
+        auth: state.user
+    }
+}
+
+export default connect(mapStateToProps)(index);
