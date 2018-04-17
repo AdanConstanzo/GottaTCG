@@ -40,7 +40,7 @@ class index extends React.Component {
                         <Grid.Column width={2}>
                             <Image style={{ width: "4vw", margin:" 0 auto" }} src={deck.deck.deckEnergyView.imageUrl} alt={deck.deck.deckEnergyView.pokemonType} />
                         {Object.keys(auth).length > 0 ? 
-                            <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} />
+                            <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} disabled={false} />
                             : <RaitingArrow deckId={this.props.match.params.id} raiting={deck.vote} disabled />}
                         </Grid.Column>
                         <Grid.Column width={7}>
