@@ -17,7 +17,11 @@ export default {
     publicData: userId => 
       axios
         .get(`/api/users/public?id=${userId}`)
-        .then(res => res.data)
+        .then(res => res.data),
+    userAcount: () => 
+      axios
+        .get("/api/users/")
+        .then(res => res.data.user)
   },
   cards: {
     getCardsFromSet: set => 

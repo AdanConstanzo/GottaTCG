@@ -80,5 +80,5 @@ export const AddCard = (CardType,State) =>
 export const returnDate = (isoDate) =>{
     const date = new Date(isoDate);
     const string = "";
-    return string.concat(date.getMonth() + 1, "/", date.getDate(), "/", date.getFullYear());;
+    return string.concat(date.getMonth() + 1, "/", date.getDate(), "/", date.getFullYear());
 }

@@ -13,6 +13,7 @@ import MyDecksPage from "./components/pages/MyDecksPage/index";
 import DeckBuilder from "./components/pages/DeckBuilder/index";
 import DeckPage from "./components/pages/DeckPage/index";
 import CardsPage from "./components/pages/CardsPage/index";
+import MyAccountPage from "./components/pages/MyAccountPage/index";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 import WebNav from './components/navigation/Nav';
@@ -78,6 +79,12 @@ const App = ({ location }) => (
       path="/my_decks"
       exact
       component={MyDecksPage}
+    />
+    <UserRoute
+      location={location}
+      path="/my_account"
+      exact
+      component={MyAccountPage}
     />
     <Route
       location={location}

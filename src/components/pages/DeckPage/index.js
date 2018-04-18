@@ -25,7 +25,7 @@ class index extends React.Component {
     }
 
     render(){
-        const { loading, deck, username } = this.state;
+        const { loading, deck } = this.state;
         const { auth } = this.props;
         if (loading) {
             return (
