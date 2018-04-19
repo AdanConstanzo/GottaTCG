@@ -12,6 +12,7 @@ class SignupForm extends React.Component {
       username: "",
     },
     loading: false,
+    image: "http://via.placeholder.com/250x250",
     errors: {}
   };
 
@@ -35,6 +36,16 @@ class SignupForm extends React.Component {
     }
   };
 
+  handlePicture = e => {
+    if ( e.target.files && e.target.files[0] ) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.setState({image: e.target.result});
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  }
+
   validate = data => {
     const errors = {};
 
@@ -45,7 +56,7 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const { data, errors, loading } = this.state;
+    const { data, errors, loading, image } = this.state;
 
     return (
       <Form onSubmit={this.onSubmit} loading={loading}>
@@ -84,7 +95,8 @@ class SignupForm extends React.Component {
             onChange={this.onChange}
           />
         </Form.Field>
-
+        <img style={{maxHeight: "250px", maxWidth:"250px"}} src={image} alt="place" />
+        <input type="file" onChange={this.handlePicture} />
         <Button primary>Sign Up</Button>
       </Form>
     );
