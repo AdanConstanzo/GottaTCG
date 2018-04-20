@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Grid } from "semantic-ui-react";
 import isEmail from "validator/lib/isEmail";
 import InlineError from "../messages/InlineError";
 
@@ -13,7 +13,7 @@ class SignupForm extends React.Component {
       image: null
     },
     loading: false,
-    image: "http://via.placeholder.com/250x250",
+    image: "http://localhost:8080/images/website/empty_usr.png",
     errors: {}
   };
 
@@ -27,6 +27,7 @@ class SignupForm extends React.Component {
     e.preventDefault();
     const errors = this.validate(this.state.data);
     this.setState({ errors });
+    console.log(this.state);
     if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
       this.props
@@ -68,46 +69,53 @@ class SignupForm extends React.Component {
     const { data, errors, loading, image } = this.state;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        <Form.Field error={!!errors.email}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="email@email.com"
-            value={data.email}
-            onChange={this.onChange}
-          />
-          {errors.email && <InlineError text={errors.email} />}
-        </Form.Field>
+      <Grid columns={2}>
+        <Grid.Column>
+          <Form>
+            <Form.Field error={!!errors.email}>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="email@email.com"
+                value={data.email}
+                onChange={this.onChange}
+              />
+              {errors.email && <InlineError text={errors.email} />}
+            </Form.Field>
 
-        <Form.Field error={!!errors.password}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={data.password}
-            onChange={this.onChange}
-          />
-          {errors.password && <InlineError text={errors.password} />}
-        </Form.Field>
+            <Form.Field error={!!errors.password}>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={data.password}
+                onChange={this.onChange}
+              />
+              {errors.password && <InlineError text={errors.password} />}
+            </Form.Field>
 
-        <Form.Field error={!!errors.username}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={data.username}
-            onChange={this.onChange}
-          />
-        </Form.Field>
-        <img style={{maxHeight: "250px", maxWidth:"250px"}} src={image} alt="place" />
-        <input type="file" onChange={this.displayPicture} />
-        <Button primary>Sign Up</Button>
-      </Form>
+            <Form.Field error={!!errors.username}>
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={data.username}
+                onChange={this.onChange}
+              />
+            </Form.Field>
+          </Form>
+        </Grid.Column>
+        <Grid.Column>
+          <img style={{maxHeight: "250px", maxWidth:"250px"}} src={image} alt="place" />
+          <br />
+          <input type="file" onChange={this.displayPicture} />
+        </Grid.Column>
+          <Button onClick={this.onSubmit} primary>Sign Up</Button>
+      </Grid>
     );
   }
 }
