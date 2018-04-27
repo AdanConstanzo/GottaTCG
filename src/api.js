@@ -5,7 +5,7 @@ export default {
     login: credentials =>
       axios.post("/api/auth", { credentials }).then(res => res.data.user),
     signup: user =>
-      axios.post("/api/users", { user }).then(res => res.data.user),
+      axios.post("/api/users", { user }).then(res => res.data),
     confirm: token =>
       axios
         .post("/api/auth/confirmation", { token })
@@ -21,7 +21,11 @@ export default {
     userAcount: () => 
       axios
         .get("/api/users/")
-        .then(res => res.data.user)
+        .then(res => res.data.user),
+    UploadUserImage: (image,UserId) =>
+      axios
+        .post(`/api/users/userImage?UserId=${UserId}`,  image )
+        .then(res => res.data)
   },
   cards: {
     getCardsFromSet: set => 

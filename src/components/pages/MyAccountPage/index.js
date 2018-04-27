@@ -7,12 +7,20 @@ class index extends React.Component {
     state = {
         user: null,
         Username: "",
-        Email: ""
+        Email: "",
+        imageUrl: null
     };
 
     componentDidMount() {
         api.user.userAcount()
-            .then(user => this.setState({ user }));
+            .then(user => {
+                console.log(user);
+                if (user.profileImage) {
+                    const imageUrl = `http://localhost:8080/api/users/image/${user.profileImage}`;
+                    this.setState({ imageUrl });
+                }
+                this.setState({ user })
+            });
     }
 
     onChange = (e, { name, value }) => {
@@ -24,12 +32,14 @@ class index extends React.Component {
     }
 
     render(){
-        const { user } = this.state;
+        const { user, imageUrl } = this.state;
         if (user) {
             return (
                 <Grid columns={2} >
                     <Grid.Column>
-                        <img src="http://via.placeholder.com/250x250" alt="place" />
+                        { imageUrl ? <img style={{ width: "250px", height: "250px" }} src={imageUrl} alt="place" /> :
+                            <img style={{ width: "250px", height: "250px" }} alt="place" src="http://localhost:8080/images/website/empty_usr.png" />
+                        }
                     </Grid.Column>
                     <Grid.Column>
                         <Segment textAlign="center" >
