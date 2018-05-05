@@ -29,6 +29,7 @@ class Nav extends React.Component {
                     {isAuthenticated && (
                         <Dropdown item text='Profile'>
                             <Dropdown.Menu>
+                                <Dropdown.Item href="/my_account" >My Account</Dropdown.Item>
                                 <Dropdown.Item href="/my_collection" >My Collection</Dropdown.Item>
                                 <Dropdown.Item href="/my_decks" >My Decks</Dropdown.Item>
                                 <hr />
