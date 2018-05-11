@@ -9,3 +9,10 @@ export const signup = data => dispatch =>
     }
     dispatch(userLoggedIn(result.user));
   });
+
+
+export const edit = data => dispatch =>
+  api.user.Edit(data).then(result => {
+    localStorage.gottatcgJWT = result.user.token;
+    dispatch(userLoggedIn(result.user));
+  })

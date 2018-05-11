@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Segment, Grid } from 'semantic-ui-react';
+import { Button, Segment, Grid, Icon } from 'semantic-ui-react';
 
 import api from '../../../api';
 
@@ -8,7 +8,8 @@ class index extends React.Component {
         user: null,
         Username: "",
         Email: "",
-        imageUrl: null
+        imageUrl: null,
+        edit: false
     };
 
     componentDidMount() {
@@ -50,11 +51,13 @@ class index extends React.Component {
         }
     }
 
+    editInfo = () => this.setState({edit: !this.state.edit})
+
     render(){
-        const { user, imageUrl, image } = this.state;
+        const { user, imageUrl, image, edit } = this.state;
         if (user) {
             return (
-                <Grid columns={2} >
+                <Grid columns={3} centered >
                     <Grid.Column>
                         { image ? <img style={{ width: "250px", height: "250px" }} src={image} alt="place" /> :
                             <img style={{ width: "250px", height: "250px" }} alt="place" src="http://localhost:8080/images/website/empty_usr.png" />
@@ -65,10 +68,16 @@ class index extends React.Component {
                         <Button onClick={this.submitPhoto} > Submit Photo </Button>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment textAlign="center" >
+                        <Icon name="edit" size="big" onClick={this.editInfo} />
+                        {edit === false ? (
+                            <Segment textAlign="center" >
                             <p>Email: {user.email}</p>
                             <p>Username: {user.username}</p>
                         </Segment>
+                        ): <Segment>
+                                <p>Edit it me </p>
+                            </Segment>
+                        }
                     </Grid.Column>
                 </Grid>
             )

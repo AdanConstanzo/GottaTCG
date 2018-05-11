@@ -25,6 +25,10 @@ export default {
     UploadUserImage: (image,UserId) =>
       axios
         .post(`/api/users/userImage?UserId=${UserId}`,  image )
+        .then(res => res.data),
+    Edit: (user) =>
+      axios
+        .put('/api/users/', user)
         .then(res => res.data)
   },
   cards: {
