@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Segment, Grid, Icon } from 'semantic-ui-react';
+import { Button, Segment, Grid, Icon, Input } from 'semantic-ui-react';
 
 import api from '../../../api';
+import InlineError from "../../messages/InlineError";
+
 
 class index extends React.Component {
     state = {
@@ -9,7 +11,8 @@ class index extends React.Component {
         Username: "",
         Email: "",
         imageUrl: null,
-        edit: false
+        edit: false,
+        errors: {}
     };
 
     componentDidMount() {
@@ -25,7 +28,13 @@ class index extends React.Component {
     }
 
     onChange = (e, { name, value }) => {
-        this.setState({ [name]: value})
+        //this.setState({ [name]: value});
+        this.setState({
+            user: {
+                ...this.state.user,
+                [name]: value
+            }
+        });
     };
 
     submit = () => {
@@ -51,10 +60,26 @@ class index extends React.Component {
         }
     }
 
+    submitChange = () => {
+        const { username, email } = this.state.user;
+        let user = {username, email }
+        api.user.Edit({user})
+        .then(res => {
+            console.log(res);
+            if(res.user.token !== undefined) {
+                console.log("Change Token")
+                localStorage.setItem("gottatcgJWT", res.user.token);
+            }
+            this.setState({errors: {}});
+            this.editInfo();
+        })
+        .catch(err => this.setState({ errors: err.response.data.errors }))
+    }
+
     editInfo = () => this.setState({edit: !this.state.edit})
 
     render(){
-        const { user, imageUrl, image, edit } = this.state;
+        const { user, imageUrl, image, edit, errors } = this.state;
         if (user) {
             return (
                 <Grid columns={3} centered >
@@ -74,8 +99,12 @@ class index extends React.Component {
                             <p>Email: {user.email}</p>
                             <p>Username: {user.username}</p>
                         </Segment>
-                        ): <Segment>
-                                <p>Edit it me </p>
+                        ) : <Segment textAlign="center" >
+                                <p>Email: <Input type="text" name="email" value={user.email} onChange={this.onChange} /></p>
+                                {errors.email && <InlineError text={errors.email} />}
+                                <p>Username: <Input type="text" name="username" value={user.username} onChange={this.onChange} /></p>
+                                {errors.username && <InlineError text={errors.username} />}
+                                <Button onClick={this.submitChange} >Submit Changes</Button>
                             </Segment>
                         }
                     </Grid.Column>
