@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Form, Button, Grid } from "semantic-ui-react";
 import isEmail from "validator/lib/isEmail";
 import InlineError from "../messages/InlineError";
-import api from '../../api';
 
 class SignupForm extends React.Component {
   state = {
@@ -68,7 +67,7 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const { data, errors, loading, image } = this.state;
+    const { data, errors, image } = this.state;
 
     return (
       <Grid columns={2}>
