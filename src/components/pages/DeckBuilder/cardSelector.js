@@ -15,7 +15,7 @@ class cardSelector extends React.Component {
             <div>
                 <h3>{selection} x {count}</h3>
                 <hr />
-                <List celled >
+                <List style={{ maxHeight: "35vh", overflowY: "scroll", overflowX: "hidden" }} celled >
                     {Object.keys(cards).length > 0 &&
                         Object.keys(cards)
                             .map(val =>
