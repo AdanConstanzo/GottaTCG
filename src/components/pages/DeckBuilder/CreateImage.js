@@ -17,6 +17,15 @@ class CreateImage extends React.Component {
       cardCount: false,
   }
 
+  componentDidMount(){
+    const { deckbuilder, card } = this.props;
+    if (deckbuilder[card.supertype][card.id] !== undefined) {
+      setTimeout(() => {
+        this.setState({ hasCardCount: true })
+      }, 0);
+    } 
+  }
+
   componentWillReceiveProps(){
     const { deckbuilder, card } = this.props;
     if (deckbuilder[card.supertype][card.id] !== undefined) {
@@ -71,7 +80,8 @@ class CreateImage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-      deckbuilder: state.deckbuilder
+    deckbuilder: state.deckbuilder,
+    set: state.set
   }
 }
 
