@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Modal, Button } from 'semantic-ui-react';
+import { Modal, Button, Popup } from 'semantic-ui-react';
 
 import PokemonCard from '../CardPage/PokemonCard';
 import TrainerCard from '../CardPage/TrainerEnergyCard';
@@ -14,7 +14,7 @@ class CreateImage extends React.Component {
       display: false,
       open: false,
       lCard: {},
-      cardCount: false
+      cardCount: false,
   }
 
   componentWillReceiveProps(){
@@ -23,18 +23,6 @@ class CreateImage extends React.Component {
       this.setState({ hasCardCount: true });
     }
   }
-
-  onMouseEnter = () => {
-      const timeOut = setTimeout(this.show,500);
-      this.setState({timeOut});
-  }
-
-  onMouseLeave = () => {
-      clearTimeout(this.state.timeOut);
-      this.setState({ display: false });
-  }
-
-  show = () => this.setState({ display: true });
 
   details = dimmer => () => {
       axios.get(`/api/cards/findCardById?id=${this.props.card.id}`)
@@ -47,23 +35,26 @@ class CreateImage extends React.Component {
 
   render(){
       const { onClick, card, deckbuilder } = this.props;
-      const { display, open, dimmer, lCard, hasCardCount } = this.state;
-      const RenderImage = () =>
-          <img
-
-              style={{ width: "8em" }}
-              onClick={onClick}
-              type={card.supertype}
-              data={card.id}
-              src={card.imageUrl}
-              alt={card.name}
-          />
+      const { open, dimmer, lCard, hasCardCount } = this.state;
       return (
-        <div onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-            {/* <p style={{visibility:   deckbuilder[card.supertype][card.id] !== null ? "" : "hidden"}}> Count: {deckbuilder[card.supertype][card.id].quantity} </p> */}
+        <div>
+          <Popup
+            trigger={
+              <img 
+                style={{ width: "8em" }}
+                onClick={onClick}
+                type={card.supertype}
+                data={card.id}
+                src={card.imageUrl}
+                alt={card.name}
+              />
+            }
+            mouseEnterDelay={500}
+            flowing
+            hoverable >
+            <Button onClick={this.details('blurring')} >Card Details</Button>
+          </Popup>
           {hasCardCount ? <p>Count: {deckbuilder[card.supertype][card.id].quantity} </p> : <p style={{ visibility: "hidden" }} >Count</p>}
-          <RenderImage />
-          <Button style={{ visibility: display ? "" : "hidden" }} onClick={this.details('blurring')} >Card Details</Button>
           <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
               <Modal.Header>{lCard.name}</Modal.Header>
               <Modal.Content>
