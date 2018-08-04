@@ -25,7 +25,8 @@ class index extends React.Component {
         deckSubmitted: false,
         deckInfo: null,
         error: false,
-        success: false
+        success: false,
+        sliderView: true,
     };
 
     componentDidMount() {
@@ -82,6 +83,7 @@ class index extends React.Component {
                 }) 
     }
     
+    toggleSlider = () => this.setState((preState) => ({ sliderView: !preState.sliderView }))
     
     close = () => this.setState({ open: false, error: false, success: false });
     
@@ -108,15 +110,14 @@ class index extends React.Component {
             { key: 'E', text: 'Expanded', value: 'Expanded' },
             { key: 'U', text: 'Unlimited', value: 'Unlimited' },
         ]
-        const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global }  = this.state;
+        const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView }  = this.state;
         return (
-            <div>
+            <div style={{ paddingTop: "20px" }} >
                 <Grid columns={5} >
-                    <Grid.Row>
-                        {!this.state.loading && <PokemonSet sets={this.state.sets} />}
-                    </Grid.Row>
+                  {!this.state.loading && <PokemonSet sets={this.state.sets} />}
+                  {sliderView ? <Button onClick={this.toggleSlider} >Hide Slider</Button> : <Button onClick={this.toggleSlider}>Show Slider</Button>}
                 </Grid>
-                <div style={{marginBottom: "5em", marginTop: "2em"}}>
+                <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>
                     {Object.keys(cards[0]).length > 0 && (
                         <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
                     )}
@@ -138,6 +139,7 @@ class index extends React.Component {
                             type='Pokémon' 
                             count={PCount} 
                             cards={Pokémon}  
+                            sliderView={sliderView}
                         />
                     </Grid.Column>
                     <Grid.Column>
@@ -146,6 +148,7 @@ class index extends React.Component {
                             type='Trainer' 
                             count={TCount} 
                             cards={Trainer}  
+                            sliderView={sliderView}
                         />
                     </Grid.Column>
                     <Grid.Column>
@@ -154,6 +157,7 @@ class index extends React.Component {
                             type='Energy' 
                             count={ECount} 
                             cards={Energy}  
+                            sliderView={sliderView}
                         />
                     </Grid.Column>
                 </Grid>
