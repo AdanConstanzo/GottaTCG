@@ -101,6 +101,7 @@ class index extends React.Component {
             speed: 500,
             slidesToShow: 6,
             slidesToScroll: 6,
+            lazyLoad: "progressive"
         };
         const options = [
             { key: 'S', text: 'Standard', value: 'Standard' },
