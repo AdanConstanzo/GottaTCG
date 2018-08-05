@@ -14,23 +14,7 @@ class CreateImage extends React.Component {
       display: false,
       open: false,
       lCard: {},
-      cardCount: false,
-  }
-
-  componentDidMount(){
-    const { deckbuilder, card } = this.props;
-    if (deckbuilder[card.supertype][card.id] !== undefined) {
-      setTimeout(() => {
-        this.setState({ hasCardCount: true })
-      }, 0);
-    } 
-  }
-
-  componentWillReceiveProps(){
-    const { deckbuilder, card } = this.props;
-    if (deckbuilder[card.supertype][card.id] !== undefined) {
-      this.setState({ hasCardCount: true });
-    }
+      hasCardCount: false
   }
 
   details = dimmer => () => {
@@ -44,7 +28,7 @@ class CreateImage extends React.Component {
 
   render(){
       const { onClick, card, deckbuilder } = this.props;
-      const { open, dimmer, lCard, hasCardCount } = this.state;
+      const { open, dimmer, lCard } = this.state;
       return (
         <div>
           <Popup
@@ -63,7 +47,7 @@ class CreateImage extends React.Component {
             hoverable >
             <Button onClick={this.details('blurring')} >Card Details</Button>
           </Popup>
-          {hasCardCount ? <p>Count: {deckbuilder[card.supertype][card.id].quantity} </p> : <p style={{ visibility: "hidden" }} >Count</p>}
+          {deckbuilder[card.supertype][card.id] !== undefined ? <p>Count: {deckbuilder[card.supertype][card.id].quantity} </p> : <p style={{ visibility: "hidden" }} >Count</p>}
           <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
               <Modal.Header>{lCard.name}</Modal.Header>
               <Modal.Content>
@@ -81,7 +65,6 @@ class CreateImage extends React.Component {
 function mapStateToProps(state) {
   return {
     deckbuilder: state.deckbuilder,
-    set: state.set
   }
 }
 
