@@ -7,9 +7,13 @@ import { GetCardsBySet } from '../../actions/card';
 
 
 class PokemonSet extends React.Component {
-    state = {
-        focus: this.props.sets[0].name
+  constructor(props){
+    super(props)
+    this.state = {
+      focus: props.sets[0].name
     }
+  }
+    
 
     componentDidMount() {
         this.props.SetCode({ set: this.props.sets[0].code });
@@ -44,10 +48,10 @@ PokemonSet.propTypes = {
         "code": PropTypes.string.isRequired,
         "name": PropTypes.string.isRequired,
         "series": PropTypes.string.isRequired,
-        "totalCards": PropTypes.number.isRequired,
-        "standardLegal": PropTypes.bool.isRequired,
-        "expandedLegal": PropTypes.bool.isRequired,
-        "releaseDate": PropTypes.string.isRequired,
+        "total_cards": PropTypes.number.isRequired,
+        "standard_legal": PropTypes.bool.isRequired,
+        "expanded_legal": PropTypes.bool.isRequired,
+        "release_date": PropTypes.string.isRequired,
     }).isRequired).isRequired,
     SetCode: PropTypes.func.isRequired,
     GetCardsBySet: PropTypes.func.isRequired

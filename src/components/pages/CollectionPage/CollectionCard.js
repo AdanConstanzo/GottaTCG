@@ -29,11 +29,11 @@ class CollectionCard extends React.Component {
     
     render(){
 
-        const { quantity, name, imageUrl } = this.props.collection;
+        const { quantity, name, image_url } = this.props.collection;
 
         return (
             <Card>
-                <Image src={imageUrl} onClick={this.onClick} />
+                <Image src={image_url} onClick={this.onClick} />
                 <Card.Content>
                     <Card.Header>{name}</Card.Header>
                     <Card.Description><input type="number" onBlur={this.onBlur} placeholder={quantity} /></Card.Description>
@@ -48,7 +48,7 @@ CollectionCard.propTypes = {
         id: PropTypes.string.isRequired,
         quantity: PropTypes.number.isRequired,
         UserId: PropTypes.string.isRequired,
-        imageUrl: PropTypes.string.isRequired,
+        image_url: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         _id: PropTypes.string.isRequired
     }).isRequired,

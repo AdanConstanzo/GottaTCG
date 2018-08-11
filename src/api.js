@@ -34,7 +34,7 @@ export default {
   cards: {
     getCardsFromSet: set => 
       axios
-        .get(`/api/cards/findSetByCode?setCode=${set}`)
+        .get(`/api/cards/findSetByCode?set_code=${set}`)
         .then(res => res.data.cards)      
   },
   collection: {

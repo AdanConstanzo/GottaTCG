@@ -38,7 +38,7 @@ class CreateImage extends React.Component {
                 onClick={onClick}
                 type={card.supertype}
                 data={card.id}
-                src={card.imageUrl}
+                src={card.image_url}
                 alt={card.name}
               />
             }
@@ -73,7 +73,7 @@ CreateImage.propTypes = {
   card: PropTypes.shape({
       supertype: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
-      imageUrl: PropTypes.string.isRequired,
+      image_url: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
   }).isRequired,
   deckbuilder: PropTypes.shape({

@@ -18,7 +18,10 @@ class CardPage extends React.Component {
         this.props.SetCard(this.props.match.params.id);
         axios.get(`/api/cards/findCardById?id=${this.props.match.params.id}`)
             .then(res => res.data.card)
-            .then(card => this.setState({ loading: false, card }));
+            .then(card => {
+              console.log(card)
+              this.setState({ loading: false, card })
+            });
     }
 
     render() {

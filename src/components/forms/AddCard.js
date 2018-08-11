@@ -29,7 +29,7 @@ class AddCard extends React.Component {
 
     handleCollection = val => {
         const { collectionId } = this.state.Collection
-        const { id, setCode, imageUrl, name }  = this.props.card;
+        const { id, set_code, image_url, name }  = this.props.card;
         if (this.state.Collection.collectionId) {
             this.props.SetValueToCardCollection({
                 quantity: val,
@@ -41,8 +41,8 @@ class AddCard extends React.Component {
             this.props.CreateCollection({
                 quantity: val,
                 id,
-                setCode,
-                imageUrl,
+                set_code,
+                image_url,
                 name
             })
                 .then(res => res.collection)
@@ -87,8 +87,8 @@ AddCard.propTypes = {
     CreateCollection: PropTypes.func.isRequired,
     SetValueToCardCollection: PropTypes.func.isRequired,
     card: PropTypes.shape({
-        imageUrl: PropTypes.string.isRequired,
-        setCode: PropTypes.string.isRequired,
+        image_url: PropTypes.string.isRequired,
+        set_code: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired
     }).isRequired

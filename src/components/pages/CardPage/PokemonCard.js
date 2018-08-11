@@ -12,7 +12,7 @@ const PokemonCard = (props) => (
     <Grid centered >
         <Grid.Row>
             <Grid.Column width={5} >
-                <img style={style.card.image} src={props.card.imageUrl} alt={props.card.name} />
+                <img style={style.card.image} src={props.card.image_url} alt={props.card.name} />
                 <br />
                 {props.addCard && <AddCard card={props.card} /> }
             </Grid.Column>
@@ -30,7 +30,7 @@ const PokemonCard = (props) => (
                     </Grid.Row>
                 </Grid>
                 <hr />
-                {props.card.ability.length > 0 &&
+                {props.card.ability &&
                     <div>
                     <Grid>
                         <Grid.Column width={2}>
@@ -54,15 +54,15 @@ const PokemonCard = (props) => (
                 <Grid columns={3} >
                     <Grid.Column>
                         <p>Weakness</p>
-                        {props.card.weaknesses.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
+                        {props.card.weaknesses && props.card.weaknesses.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
                     </Grid.Column>
                     <Grid.Column>
                         <p>Resistance</p>
-                        {props.card.resistances.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
+                        {props.card.resistances && props.card.resistances.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
                     </Grid.Column>
                     <Grid.Column>
                         <p>Retreat Cost</p>
-                        {props.card.retreatCost.map((type, i) => <Energy type={type} style={style.attackImage} key={i} />)}
+                        {props.card.retreatCost && props.card.retreatCost.map((type, i) => <Energy type={type} style={style.attackImage} key={i} />)}
                     </Grid.Column>
                 </Grid>
 
@@ -73,7 +73,7 @@ const PokemonCard = (props) => (
 
 PokemonCard.propTypes = {
     card: PropTypes.shape({
-        imageUrl: PropTypes.string.isRequired,
+        image_url: PropTypes.string.isRequired,
         types: PropTypes.arrayOf(
             PropTypes.string.isRequired
         ).isRequired,
@@ -85,7 +85,7 @@ PokemonCard.propTypes = {
                 type: PropTypes.string.isRequired,
                 text: PropTypes.string.isRequired
             }).isRequired
-        ).isRequired,
+        ),
         attacks: PropTypes.arrayOf(
             PropTypes.shape({
                 damage: PropTypes.string,
@@ -104,13 +104,13 @@ PokemonCard.propTypes = {
                 value: PropTypes.string,
                 type: PropTypes.string
             }).isRequired
-        ).isRequired,
+        ),
         resistances: PropTypes.arrayOf(
             PropTypes.shape({
                 value: PropTypes.string,
                 type: PropTypes.string
             }).isRequired
-        ).isRequired,
+        ),
         id: PropTypes.string.isRequired
     }).isRequired,
     addCard: PropTypes.bool.isRequired
