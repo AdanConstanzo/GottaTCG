@@ -41,7 +41,7 @@ class CardsPage extends React.Component {
                     <Grid.Row style={style.cards}>
                         {/* Set must have more than 2. */}
                         {cards.length > 1  &&
-                            (cards.map((val, count) => <Grid.Column key={count} ><PokemonCardImage alt={val.id} src={val.image_url} /></Grid.Column>))}
+                            (cards.map((card, count) => <Grid.Column key={count} ><PokemonCardImage card={card} /></Grid.Column>))}
                     </Grid.Row>
                 </Grid>
             </div>

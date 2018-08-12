@@ -8,7 +8,7 @@ const TrainerEnergyCard = (props) => (
     <Grid centered >
         <Grid.Row>
             <Grid.Column width={5} >
-                <img src={props.card.imageUrl} alt={props.card.name} />
+                <img src={props.card.image_url} alt={props.card.name} />
                 <br />
                 {props.addCard  && <AddCard card={props.card} />}
             </Grid.Column>
@@ -22,7 +22,7 @@ const TrainerEnergyCard = (props) => (
 
 TrainerEnergyCard.propTypes = {
     card: PropTypes.shape({
-        imageUrl: PropTypes.string.isRequired,
+        image_url: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         text: PropTypes.string
     }).isRequired,

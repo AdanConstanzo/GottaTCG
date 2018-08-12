@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Modal, Button, Popup } from 'semantic-ui-react';
+import { Button, Popup } from 'semantic-ui-react';
 
-import PokemonCard from '../CardPage/PokemonCard';
-import TrainerCard from '../CardPage/TrainerEnergyCard';
+import PokemonModal from '../../PokemonCard/PokemonModal';
+
 
 class CreateImage extends React.Component {
 
@@ -13,22 +13,22 @@ class CreateImage extends React.Component {
       timeOut: null,
       display: false,
       open: false,
-      lCard: {},
+      lCard: null,
       hasCardCount: false
   }
 
-  details = dimmer => () => {
+  details = () => {
       axios.get(`/api/cards/findCardById?id=${this.props.card.id}`)
           .then(res => res.data.card)
           .then(card => this.setState({ lCard: card }));
-      this.setState({ dimmer, open: true })
+      this.setState({ open: true })
   }
 
   close = () => this.setState({ open: false });
 
   render(){
       const { onClick, card, deckbuilder } = this.props;
-      const { open, dimmer, lCard } = this.state;
+      const { open, lCard } = this.state;
       return (
         <div>
           <Popup
@@ -45,18 +45,10 @@ class CreateImage extends React.Component {
             mouseEnterDelay={500}
             flowing
             hoverable >
-            <Button onClick={this.details('blurring')} >Card Details</Button>
+            <Button onClick={this.details} >Card Details</Button>
           </Popup>
           {deckbuilder[card.supertype][card.id] !== undefined ? <p>Count: {deckbuilder[card.supertype][card.id].quantity} </p> : <p style={{ visibility: "hidden" }} >Count</p>}
-          <Modal dimmer={dimmer} style={{marginTop:"0px"}} size="fullscreen" open={open} onClose={this.close}>
-              <Modal.Header>{lCard.name}</Modal.Header>
-              <Modal.Content>
-                  {Object.keys(lCard).length > 0 && lCard.supertype === "Pokémon" &&
-                  <PokemonCard addCard={false} card={lCard}/> }
-                    {Object.keys(lCard).length > 0 && (lCard.supertype === "Trainer" || lCard.supertype === "Energy" ) &&
-                  <TrainerCard addCard={false} card={lCard}/> }
-              </Modal.Content>
-          </Modal>
+          {lCard && <PokemonModal open={open} close={this.close} card={lCard} />}
         </div>
       ) 
   }
