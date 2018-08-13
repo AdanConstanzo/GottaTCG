@@ -35,7 +35,11 @@ export default {
     getCardsFromSet: set => 
       axios
         .get(`/api/cards/findSetByCode?set_code=${set}`)
-        .then(res => res.data.cards)      
+        .then(res => res.data.cards),
+    doesCardExist: id =>
+      axios
+        .get(`/api/cards/doesCardExist?id=${id}`)
+        .then(res => res.data.exist)  
   },
   collection: {
     setValueToCard: collectionObj =>
