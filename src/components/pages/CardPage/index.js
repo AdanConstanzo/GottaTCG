@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Loader, Button, Icon } from 'semantic-ui-react';
+import { Loader, Grid, Button, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { SetCard } from '../../../actions/card';
@@ -51,22 +51,28 @@ class CardPage extends React.Component {
     return (
         <div>
             {loading && <Loader active/>}
-            {lCard !== false && 
-              <Button href={`/card/${lCard}`} style={{ float: "left" }} animated>
-                <Button.Content visible>{lCard}</Button.Content>
-                <Button.Content hidden>
-                  <Icon name='arrow left' />
-                </Button.Content>
-              </Button>
-            }
-            {rCard !== false && 
-              <Button href={`/card/${rCard}`} style={{ float: "right" }} animated>
-                <Button.Content visible>{rCard}</Button.Content>
-                <Button.Content hidden>
-                  <Icon name='arrow right' />
-                </Button.Content>
-              </Button>
-            }
+            <Grid>
+              {lCard !== false && 
+                <Grid.Column floated="left" width={2}>
+                  <Button href={`/card/${lCard}`} style={{ float: "left" }} animated>
+                    <Button.Content visible>{lCard}</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name='arrow left' />
+                    </Button.Content>
+                  </Button>
+                </Grid.Column>
+              }
+              {rCard !== false && 
+                <Grid.Column floated="right" width={2} >
+                  <Button href={`/card/${rCard}`} style={{ float: "right" }} animated>
+                    <Button.Content visible>{rCard}</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name='arrow right' />
+                    </Button.Content>
+                  </Button>
+                </Grid.Column>
+              }
+            </Grid>
             <br style={{float: "clear"}} />
             {!loading && this.state.card.supertype === "Pokémon" && <PokemonCard addCard={true} card={card}  />}
             {!loading && this.state.card.supertype !== "Pokémon" && <TrainerEnergyCard addCard={true} card={card}  />}

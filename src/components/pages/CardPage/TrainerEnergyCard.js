@@ -3,22 +3,22 @@ import { Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import AddCard from '../../forms/AddCard';
+import style from './PokemonCardCSS';
+
 
 const TrainerEnergyCard = (props) => (
-    <Grid centered >
-        <Grid.Row>
-            <Grid.Column width={5} >
-                <img src={props.card.image_url} alt={props.card.name} />
-                <br />
-                {props.card.price && <p>Average Price: {props.card.price}</p>}
-                {props.addCard  && <AddCard card={props.card} />}
-            </Grid.Column>
-            <Grid.Column width={7} >
-                <h4>{props.card.name}</h4>
-                <h5>{props.card.text}</h5>
-            </Grid.Column>
-        </Grid.Row>
-    </Grid>
+  <Grid>
+    <Grid.Column width={6} >
+      <img style={style.card.image} src={props.card.image_url} alt={props.card.name} />
+      <br />
+      {props.card.price && <center><p>Average Price: {props.card.price}</p><br/></center>}
+      {props.addCard  && <AddCard card={props.card} />}
+    </Grid.Column>
+    <Grid.Column width={10} >
+      <h1>{props.card.name}</h1>
+      <h3>{props.card.text}</h3>
+    </Grid.Column>
+  </Grid>
 );
 
 TrainerEnergyCard.propTypes = {

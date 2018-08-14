@@ -9,67 +9,66 @@ import style from './PokemonCardCSS';
 import AddCard from "../../forms/AddCard";
 
 const PokemonCard = (props) => (
-    <Grid centered >
-        <Grid.Row>
-            <Grid.Column width={5} >
-                <img style={style.card.image} src={props.card.image_url} alt={props.card.name} />
-                <br />
-                {props.card.price && <p>Average Price: {props.card.price}</p>}
-                {props.addCard && <AddCard card={props.card} /> }
+  <Grid>
+    <Grid.Column width={6} >
+      <img style={style.card.image} src={props.card.image_url} alt={props.card.name} />
+      <br />
+      {props.card.price && <center><p>Average Price: {props.card.price}</p><br/></center>}
+      {props.addCard && <AddCard card={props.card} /> }
+    </Grid.Column>
+    <Grid.Column width={10} >
+        <Grid columns={3} divided>
+            <Grid.Row>
+                <Grid.Column>
+                    <h1> {props.card.name} </h1>
+                </Grid.Column>
+                <Grid.Column>
+                    {props.card.types.map((obj, i) => <Energy type={obj} style={style.energyImage} key={i} />)}
+                </Grid.Column>
+                <Grid.Column>
+                    <h1>{props.card.hp}</h1>                        
+                </Grid.Column>
+            </Grid.Row>
+        </Grid>
+        <hr />
+        {props.card.ability &&
+            <div>
+            <Grid>
+                <Grid.Column width={2}>
+                    <h5>Ability</h5>
+                </Grid.Column>
+                <Grid.Column width={14}>
+                    {props.card.ability.map((obj, i) => <Ability ability={obj} key={i} />)}
+                </Grid.Column>
+            </Grid>
+            <hr />
+            </div>
+        }
+        <Grid>
+            <Grid.Column width={2} >
+                <h5>Attacks</h5>
             </Grid.Column>
-            <Grid.Column width={7} >
-                <Grid columns={3} divided>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <h1> {props.card.name} </h1>                        </Grid.Column>
-                        <Grid.Column>
-                            {props.card.types.map((obj, i) => <Energy type={obj} style={style.energyImage} key={i} />)}
-                        </Grid.Column>
-                        <Grid.Column>
-                            <h1>{props.card.hp}</h1>                        
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-                <hr />
-                {props.card.ability &&
-                    <div>
-                    <Grid>
-                        <Grid.Column width={2}>
-                            <h5>Ability</h5>
-                        </Grid.Column>
-                        <Grid.Column width={14}>
-                            {props.card.ability.map((obj, i) => <Ability ability={obj} key={i} />)}
-                        </Grid.Column>
-                    </Grid>
-                    <hr />
-                    </div>
-                }
-                <Grid>
-                    <Grid.Column width={2} >
-                        <h5>Attacks</h5>
-                    </Grid.Column>
-                    <Grid.Column width={14} >
-                        {props.card.attacks.map((obj, i) => <Attack attack={obj} key={i} />)}
-                    </Grid.Column>
-                </Grid>
-                <Grid columns={3} >
-                    <Grid.Column>
-                        <p>Weakness</p>
-                        {props.card.weaknesses && props.card.weaknesses.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
-                    </Grid.Column>
-                    <Grid.Column>
-                        <p>Resistance</p>
-                        {props.card.resistances && props.card.resistances.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
-                    </Grid.Column>
-                    <Grid.Column>
-                        <p>Retreat Cost</p>
-                        {props.card.retreatCost && props.card.retreatCost.map((type, i) => <Energy type={type} style={style.attackImage} key={i} />)}
-                    </Grid.Column>
-                </Grid>
+            <Grid.Column width={14} >
+                {props.card.attacks.map((obj, i) => <Attack attack={obj} key={i} />)}
+            </Grid.Column>
+        </Grid>
+        <Grid columns={3} >
+            <Grid.Column>
+                <p>Weakness</p>
+                {props.card.weaknesses && props.card.weaknesses.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
+            </Grid.Column>
+            <Grid.Column>
+                <p>Resistance</p>
+                {props.card.resistances && props.card.resistances.map((obj, i) => <RessWeak type={obj.type} style={style.attackImage} value={obj.value} key={i} />)}
+            </Grid.Column>
+            <Grid.Column>
+                <p>Retreat Cost</p>
+                {props.card.retreatCost && props.card.retreatCost.map((type, i) => <Energy type={type} style={style.attackImage} key={i} />)}
+            </Grid.Column>
+        </Grid>
 
-            </Grid.Column>
-        </Grid.Row>
-    </Grid>
+    </Grid.Column>
+  </Grid>
 );
 
 PokemonCard.propTypes = {
