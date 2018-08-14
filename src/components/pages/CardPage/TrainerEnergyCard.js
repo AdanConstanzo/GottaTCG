@@ -10,6 +10,7 @@ const TrainerEnergyCard = (props) => (
             <Grid.Column width={5} >
                 <img src={props.card.image_url} alt={props.card.name} />
                 <br />
+                {props.card.price && <p>Average Price: {props.card.price}</p>}
                 {props.addCard  && <AddCard card={props.card} />}
             </Grid.Column>
             <Grid.Column width={7} >
@@ -24,7 +25,8 @@ TrainerEnergyCard.propTypes = {
     card: PropTypes.shape({
         image_url: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        text: PropTypes.string
+        text: PropTypes.string,
+        price: PropTypes.number
     }).isRequired,
     addCard: PropTypes.bool.isRequired
 };

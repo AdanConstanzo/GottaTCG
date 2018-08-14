@@ -14,6 +14,7 @@ const PokemonCard = (props) => (
             <Grid.Column width={5} >
                 <img style={style.card.image} src={props.card.image_url} alt={props.card.name} />
                 <br />
+                {props.card.price && <p>Average Price: {props.card.price}</p>}
                 {props.addCard && <AddCard card={props.card} /> }
             </Grid.Column>
             <Grid.Column width={7} >
@@ -111,7 +112,8 @@ PokemonCard.propTypes = {
                 type: PropTypes.string
             }).isRequired
         ),
-        id: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired,
+        price: PropTypes.number
     }).isRequired,
     addCard: PropTypes.bool.isRequired
 };
