@@ -21,10 +21,7 @@ class cardSelector extends React.Component {
                             .map(val =>
                                 <CardLI
                                     key={cards[val].id}
-                                    id={cards[val].id}
-                                    alt={cards[val].alt}
-                                    src={cards[val].src}
-                                    type={cards[val].type}
+                                    card={cards[val]}
                                 />)
                     }
                 </List>
