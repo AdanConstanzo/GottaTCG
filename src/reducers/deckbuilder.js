@@ -8,7 +8,8 @@ const empty = {
         'Pokémon': 0,
         'Trainer': 0,
         'Energy': 0
-    }
+    },
+    'Cost': 0
 }
 
 export default function user(state = empty, action = {}) {

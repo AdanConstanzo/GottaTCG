@@ -18,12 +18,13 @@ class cardLi extends React.Component {
     
   addCard = () => {
     const { deckbuilder, card} = this.props;
-    const { src, alt, type, id } = card;
+    const { src, alt, type, id, price } = card;
     const obj = {
       src,
       alt,
       type,
-      id
+      id,
+      price
     }
     this.props.AddCard(obj, deckbuilder);
     this.setState({ deckbuilder });
@@ -32,7 +33,7 @@ class cardLi extends React.Component {
   subCard = () => {
 
     const { deckbuilder, card} = this.props;
-    const { src, alt, type, id } = card;
+    const { src, alt, type, id, price } = card;
 
     if (deckbuilder[type][id].quantity === 1)
       this.setState({ display: false });
@@ -41,7 +42,8 @@ class cardLi extends React.Component {
       src,
       alt,
       type,
-      id
+      id,
+      price
     }
     this.props.SubtractCard(obj, deckbuilder);
     this.setState({ deckbuilder });  
@@ -52,7 +54,7 @@ class cardLi extends React.Component {
 
   render(){
       const { deckbuilder, card } = this.props;
-      const { src, alt, id, type }  = card;
+      const { src, alt, id, type, price }  = card;
       const { display, open } = this.state;
       if (display) {
           return (
@@ -61,7 +63,7 @@ class cardLi extends React.Component {
                       <List.Header>{alt}</List.Header>
                           <Grid columns={4} >
                               <Grid.Column>
-                                  {id} x {deckbuilder[type][id].quantity}
+                              {deckbuilder[type][id].quantity} x {id}  @ {price} 
                               </Grid.Column>
                               <Grid.Column>
                                   <img 

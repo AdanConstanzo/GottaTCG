@@ -49,12 +49,15 @@ class index extends React.Component {
     const { src, alt } = e.target;
     const type = e.target.getAttribute('type');
     const id = e.target.getAttribute("data");
+    const price = e.target.getAttribute("data-price");
     const obj = {
         src,
         alt,
         type,
-        id
+        id,
+        price
     }
+
     this.props.AddCard(obj, deckbuilder);
     this.setState({ deckbuilder });
   }
@@ -96,7 +99,7 @@ class index extends React.Component {
   render(){
 
     const { cards, deckbuilder } = this.props;
-    const { Pokémon, Trainer, Energy } = deckbuilder;
+    const { Pokémon, Trainer, Energy, Cost } = deckbuilder;
     const PCount = deckbuilder.Count.Pokémon;
     const TCount = deckbuilder.Count.Trainer;
     const ECount = deckbuilder.Count.Energy;
@@ -128,11 +131,13 @@ class index extends React.Component {
                 <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
             )}
         </div>
-        <Grid columns={2}>
+        <Grid columns={3}>
             <Grid.Column>
                 <h3>Total Cards: {Total}</h3>
             </Grid.Column>
-
+            <Grid.Column>
+              <h3>Average Price: {Cost}</h3>
+            </Grid.Column>
             <Grid.Column>
                 <Button onClick={this.onButtonSubmit('blurring')} >Submit Deck</Button>
             </Grid.Column>

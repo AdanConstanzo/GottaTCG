@@ -40,6 +40,7 @@ class CreateImage extends React.Component {
                 data={card.id}
                 src={card.image_url}
                 alt={card.name}
+                data-price={card.price}
               />
             }
             mouseEnterDelay={500}

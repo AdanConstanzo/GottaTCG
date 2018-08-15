@@ -34,7 +34,8 @@ export const ClearState = () => dispatch =>{
             'Pokémon': 0,
             'Trainer': 0,
             'Energy': 0
-        }
+        },
+        'Cost': 0
     }
     dispatch(Clear(empty))
 }
@@ -54,6 +55,7 @@ export const SubtractCard = (CardType,State) =>
         const ConstState = Object.assign({}, State);
         const ConstCardType = CardType;
         ConstState.Count[CardType.type] -= 1;
+        ConstState.Cost = +(Number(ConstState.Cost) - Number(CardType.price)).toFixed(12)
         if (ConstState[CardType.type][CardType.id].quantity === 1)
             dispatch(RemoveCard(ConstCardType,ConstState));
         else {
@@ -68,6 +70,7 @@ export const AddCard = (CardType,State) =>
         const ConstState = Object.assign({}, State);
         const ConstCardType = CardType;
         ConstState.Count[CardType.type] += 1;
+        ConstState.Cost = +(Number(ConstState.Cost) + Number(CardType.price)).toFixed(12)
         if (ConstState[CardType.type][CardType.id] ) {
             ConstState[CardType.type][CardType.id].quantity += 1;
         } else {
