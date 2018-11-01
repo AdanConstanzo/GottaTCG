@@ -39,7 +39,11 @@ export default {
     doesCardExist: id =>
       axios
         .get(`/api/cards/doesCardExist?id=${id}`)
-        .then(res => res.data.exist)  
+        .then(res => res.data.exist),
+    getCardById: id =>
+      axios
+        .get(`/api/cards/findCardById?id=${id}`)
+        .then(res => res.data.card)
   },
   collection: {
     setValueToCard: collectionObj =>

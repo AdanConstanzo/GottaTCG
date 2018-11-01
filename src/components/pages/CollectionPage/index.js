@@ -13,6 +13,7 @@ class CollectionPage extends React.Component {
     state = {
         loading: true,
         sets: [],
+        open: false,
     };
 
     componentDidMount() {
