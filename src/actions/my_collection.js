@@ -30,7 +30,8 @@ function addCollection(collection,filter,code){
 export const AddToCollection = (collection,setCode) => dispatch => {
     // Adding to Collection
     if (!collection[setCode]) {
-        let col = _.filter(collection.all, { setCode });
+        let col = _.filter(collection.all, { set_code: setCode });
+        
         if (col.length === 0)
             col = [{}];
         dispatch(CollectionDB(addCollection(collection, col, setCode)));

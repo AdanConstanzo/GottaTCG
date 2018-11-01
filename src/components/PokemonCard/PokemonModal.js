@@ -6,7 +6,7 @@ import PokemonCard from "../pages/CardPage/PokemonCard";
 import TrainerCard from "../pages/CardPage/TrainerEnergyCard";
 
 const PokemonModal = (props) => (
-  <Modal dimmer="blurring" style={{marginTop:"0px"}} size="fullscreen" open={props.open} onClose={props.close}>
+  <Modal dimmer="blurring" style={{marginTop:"0px"}} size="fullscreen" open={props.open} onClose={props.close} closeIcon >
       <Modal.Header>{props.card.name}</Modal.Header>
       <Modal.Content>
         {Object.keys(props.card).length > 0 && props.card.supertype === "Pokémon" &&

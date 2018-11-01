@@ -11,6 +11,7 @@ class PSet extends React.Component {
     }
 
     assign = (e, data) => {
+        console.log(data);
         this.props.AddToCollection(this.props.collectionDB,data.data);
         this.setState({ focus: data.children });
     }

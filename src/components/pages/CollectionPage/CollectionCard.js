@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Image, Input } from 'semantic-ui-react';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
@@ -33,10 +33,14 @@ class CollectionCard extends React.Component {
 
         return (
             <Card>
-                <Image src={image_url} onClick={this.onClick} />
                 <Card.Content>
                     <Card.Header>{name}</Card.Header>
-                    <Card.Description><input type="number" onBlur={this.onBlur} placeholder={quantity} /></Card.Description>
+                    <Card.Description textAlign="center" >
+                        <Image centered src={image_url} onClick={this.onClick} />
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <Input type="number" fluid onBlur={this.onBlur} placeholder={quantity} />                        
                 </Card.Content>
             </Card>
         )
