@@ -79,9 +79,7 @@ class DeckNav extends React.Component {
       <Card link onClick={this.openModal} >
           <Image size="small" centered alt={deck.deckEnergyView.pokemonType} src={deck.deckEnergyView.imageUrl} />
           <Card.Content>
-              <Card.Header>
-                {name.length > 12 ? <h3>{reduceSize(name)}</h3> : <h3>{name}</h3> }
-              </Card.Header>
+              <Card.Header textAlign="left" content={name.length > 12 ? reduceSize(name) : name} />
               <Card.Meta>
                   <span className='date'>
                       <p>{getDate(date)}</p>

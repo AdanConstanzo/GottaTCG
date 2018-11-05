@@ -26,35 +26,25 @@ class HomePage extends React.Component {
     return (
       <div>
         <h3>Top Decks</h3>
-        <Card.Group itemsPerRow={10} >
+        <Card.Group stackable itemsPerRow={6} >
           {allDecks &&
             (allDecks
-              .map((deck, i) =>
+              .map((deck) =>
                 <DeckNav
-                  key={i}
-                  name={deck.name}
-                  deckId={deck._id}
-                  cardCount={deck.cardCount}
-                  rotation={deck.rotation}
-                  energyView={deck.deck.deckEnergyView}
-                  date={deck.date}
+                  key={deck._id}
+                  deck={deck}
                 />)
             )}
         </Card.Group>
         <h3>Decks by type</h3>
         <EnergySelector setSearch="decks" />
         
-        <Card.Group itemsPerRow={10} >
+        <Card.Group stackable itemsPerRow={6} >
           {((energyType && typeDecks[energyType.pokemonType]) && (typeDecks[energyType.pokemonType].length > 0)) ? 
-            typeDecks[energyType.pokemonType].map((deck,i) =>
+            typeDecks[energyType.pokemonType].map((deck) =>
               <DeckNav
-                key={i}
-                name={deck.name}
-                deckId={deck._id}
-                cardCount={deck.cardCount}
-                rotation={deck.rotation}
-                energyView={deck.deck.deckEnergyView}
-                date={deck.date}
+                key={deck._id}
+                deck={deck}
               /> 
           ): <Message info > There are no {energyType.pokemonType} type decks. </Message> }
           
