@@ -33,6 +33,7 @@ class HomePage extends React.Component {
                 <DeckNav
                   key={deck._id}
                   deck={deck}
+                  info={false}
                 />)
             )}
         </Card.Group>
@@ -45,6 +46,7 @@ class HomePage extends React.Component {
               <DeckNav
                 key={deck._id}
                 deck={deck}
+                info={false}
               /> 
           ): <Message info > There are no {energyType.pokemonType} type decks. </Message> }
           

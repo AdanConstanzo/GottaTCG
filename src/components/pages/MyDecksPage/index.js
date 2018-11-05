@@ -12,10 +12,7 @@ class index extends React.Component {
 
     componentDidMount() {
         api.deck.GetLoginDeck()
-            .then(decks => {
-              this.setState({ decks, loading: false })
-              console.log(decks);
-            });
+            .then(decks => this.setState({ decks, loading: false }));
     }
 
     render(){
@@ -27,6 +24,7 @@ class index extends React.Component {
                             <DeckNav
                                 key={deck._id}
                                 deck={deck}
+                                info={true}
                             />)
                     )}
                 </Card.Group>

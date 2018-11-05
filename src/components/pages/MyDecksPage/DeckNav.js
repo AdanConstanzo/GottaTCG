@@ -33,7 +33,7 @@ const ModalExampleCloseIcon = (props) => (
       <Button href={`deck/${props.deck._id}`} color='green' >
         <Icon name='computer' /> Visit Deck Page
       </Button>
-      <Button color='blue'>
+      <Button href={`deck/edit/${props.deck._id}`} color='blue'>
         <Icon name='edit' /> Edit
       </Button>
     </Modal.Actions>
@@ -73,10 +73,11 @@ class DeckNav extends React.Component {
   closeModal = () => this.setState({ open: false });
 
   render() {
-    const { deck, name, date, rotation } = this.props.deck;
+    const { info } = this.props;
+    const { deck, name, date, rotation, _id } = this.props.deck;
     const { open } = this.state;
     return (
-      <Card link onClick={this.openModal} >
+      <Card link href={!info ? `deck/${_id}`: null}  onClick={info ? this.openModal : null} >
           <Image size="small" centered alt={deck.deckEnergyView.pokemonType} src={deck.deckEnergyView.imageUrl} />
           <Card.Content>
               <Card.Header textAlign="left" content={name.length > 12 ? reduceSize(name) : name} />
@@ -89,7 +90,7 @@ class DeckNav extends React.Component {
                   <p>{rotation}</p>
               </Card.Description>
           </Card.Content>
-          <ModalExampleCloseIcon deck={this.props.deck} open={open} close={this.closeModal}  />
+          { info && <ModalExampleCloseIcon deck={this.props.deck} open={open} close={this.closeModal}  /> }
       </Card>
     )
   }
@@ -107,7 +108,8 @@ DeckNav.propTypes = {
         imageUrl: PropTypes.string.isRequired
       })
     })
-  }).isRequired
+  }).isRequired,
+  info: PropTypes.bool.isRequired
 };
 
 
