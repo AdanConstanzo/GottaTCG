@@ -5,15 +5,26 @@ import { connect } from 'react-redux';
 
 import { AddCard, SubtractCard } from '../../../actions/deckbuilder';
 import PokemonModal from "../../PokemonCard/PokemonModal";
+import api from '../../../api';
 
 class cardLi extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    // check to see if card is currently in card props (redux). (mainly used for edit deckbuilder)
+    if (this.props.cards.filter(ele => ele.id === this.props.card.id)[0] === undefined) {
+      api.cards.getCardById(this.props.card.id).then(card => this.setState({ card }));
+      this.state = {
         display: true,
         open: false,
-        card: props.cards.filter(ele => ele.id === this.props.card.id)[0]
-    };
+        card: null
+      };
+    } else {
+      this.state = {
+        display: true,
+        open: false,
+        card: this.props.cards.filter(ele => ele.id === this.props.card.id)[0]  
+      };
+    }
   }
     
   addCard = () => {
@@ -72,7 +83,7 @@ class cardLi extends React.Component {
                                       src={src}
                                       alt={alt}
                                   />
-                                  <PokemonModal card={this.state.card} open={open} close={this.close} />
+                                  {this.state.card !== null && <PokemonModal card={this.state.card} open={open} close={this.close} />}
                               </Grid.Column>
                               <Grid.Column>
                                   <Button onClick={this.addCard} icon>

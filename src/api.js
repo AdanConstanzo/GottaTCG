@@ -115,5 +115,11 @@ export default {
       axios
         .get(`/api/voting/voteCount?deckId=${deckId}`)
         .then(res => res.data.count)
+  },
+  sets: {
+    getAll : () =>
+      axios
+        .get("/api/sets/getAll")
+        .then(res => res.data.sets)
   }
 };

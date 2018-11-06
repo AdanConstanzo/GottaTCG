@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import CreateImage from './CreateImage';
 
+import './slick.css';
+
 class cardSlider extends React.Component {
   state={
       isHover: false

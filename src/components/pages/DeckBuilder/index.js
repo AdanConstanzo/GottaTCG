@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Grid, Input, Select, Form, Modal, Message, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -36,12 +35,8 @@ class index extends React.Component {
   }
 
   componentDidMount() {
-      axios
-          .get("/api/sets/getAll")
-          .then(res => res.data.sets)
-          .then(sets => {
-              this.setState({ loading: false, sets });
-          })
+    api.sets.getAll()
+      .then(sets => this.setState({ loading: false, sets }))
   }
 
   onCardClick = (e) => {
