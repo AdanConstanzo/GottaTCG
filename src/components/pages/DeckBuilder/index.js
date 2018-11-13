@@ -184,7 +184,7 @@ class index extends React.Component {
               <EnergySelector setSearch="" />
               <br />
               <p> Take some time to describe your deck. </p>
-              <QuillEditor />
+              <QuillEditor CurrentText={undefined} />
               <Button disabled={deckSubmitted} onClick={this.submitDeck} type='submit'>Submit</Button>
               <Message error >
                   <Message.Header>

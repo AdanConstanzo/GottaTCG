@@ -11,7 +11,7 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import CollectionPage from "./components/pages/CollectionPage/index";
 import MyDecksPage from "./components/pages/MyDecksPage/index";
 import DeckBuilder from "./components/pages/DeckBuilder/index";
-import EditPage from "./components/pages/EditPage/index";
+import EditPage from "./components/pages/EditPage/edit_page_index";
 import DeckPage from "./components/pages/DeckPage/index";
 import CardsPage from "./components/pages/CardsPage/index";
 import MyAccountPage from "./components/pages/MyAccountPage/index";

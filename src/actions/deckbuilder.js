@@ -1,4 +1,4 @@
-import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, CHANGE_DECK_ENERGY_VIEW } from "../types";
+import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, CHANGE_DECK_ENERGY_VIEW, SET_COST } from "../types";
 
 export const Code = deckbuilder => ({
   type: ADD_CARD,
@@ -23,6 +23,11 @@ export const Clear = deckbuilder => ({
 export const DeckEnergyView = deckEnergyView => ({
   type: CHANGE_DECK_ENERGY_VIEW,
   deckEnergyView
+})
+
+export const SettingCost = deckbuilder => ({
+  type: SET_COST,
+  deckbuilder
 })
 
 export const ClearState = () => dispatch =>{
@@ -84,11 +89,16 @@ export const SetCard = (Card, Count, State) =>
   dispatch => {
     const ConstState = Object.assign({}, State);
     const ConstCardType = Card;
-    ConstState.Count[Card.type] += Number(Count);
-    ConstState.Cost = +(Number(ConstState.Cost) + (Number(Card.price)).toFixed(12) * Number(Count))
+    ConstState.Count[Card.type] += Number(Count); 
     ConstCardType.quantity = Number(Count);
     ConstState[Card.type][Card.id] = ConstCardType;
     dispatch(Code(ConstState));
+  }
+export const SetCost = (Cost, State) =>
+  dispatch => {
+    const ConstState = Object.assign({}, State);
+    ConstState.Cost = Cost;
+    dispatch(SettingCost(ConstState));
   }
 
 export const returnDate = (isoDate) =>{

@@ -1,4 +1,4 @@
-import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE } from "../types";
+import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, SET_COST } from "../types";
 
 const empty = {
     'Pokémon': {},
@@ -18,6 +18,7 @@ export default function user(state = empty, action = {}) {
         case REMOVE_CARD:
         case SUBTRACT_CARD:
         case CLEAR_DECK_STATE:
+        case SET_COST:
             return action.deckbuilder;
         default:
             return state;

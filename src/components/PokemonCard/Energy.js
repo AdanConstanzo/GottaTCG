@@ -10,7 +10,6 @@ class Energy extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props.type);
 		axios.get(`/api/types/one?type=${this.props.type}`)
 			.then(res => res.data.type)
 			.then(type =>  this.setState({ loading: false, type }));
