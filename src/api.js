@@ -100,7 +100,11 @@ export default {
           .then(res => res.data.Decks) :
         axios
           .get('api/decks/getAllTypesByLimit')
-          .then(res => res.data.Decks)
+          .then(res => res.data.Decks),
+    UpdateDeck: deckObject => 
+      axios
+        .put('/api/decks/', deckObject)
+        .then(res => res.data.deck)
   },
   voting: {
     LookVote: (deckId) =>

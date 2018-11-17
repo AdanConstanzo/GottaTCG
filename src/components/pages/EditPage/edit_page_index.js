@@ -108,12 +108,14 @@ class index extends React.Component {
   editDeck = () => {
     const { deckbuilder } = this.props;
     const { name, rotation } = this.state;
+    this.setState({ deckSubmitted: true });
     deckbuilder.quill = this.props.quill;
     deckbuilder.deckEnergyView = this.props.deckEnergyView;
     api.deck.UpdateDeck({
       deckbuilder,
       name,
-      rotation
+      rotation,
+      _id: this.state.deck._id
     }).then((data) => {
       this.setState({ deckInfo: data, success: true } )
     }, error => {
@@ -130,7 +132,7 @@ class index extends React.Component {
 
   render(){
 
-    const { deck, sliderView, sets, deckInfo, deckSubmitted, dimmer, error, success, rotation, open, name } = this.state;
+    const { deck, sliderView, sets, deckInfo, deckSubmitted, dimmer, error, success, rotation, open, name, global } = this.state;
     const { cards, deckbuilder } = this.props;
     const { Pokémon, Trainer, Energy, Cost } = deckbuilder;
     const PCount = deckbuilder.Count.Pokémon;
@@ -218,7 +220,7 @@ class index extends React.Component {
             onClose={this.close}
         >
           <Modal.Content>
-            <Form size="massive">
+            <Form error={error} success={success}  size="massive">
               <Form.Group widths='equal'>
                 <Form.Field onChange={this.onChange} control={Input} name="name"  value={name} label='Deck Name' placeholder='Deck Name' />
                 <Form.Field control={Select} name="rotation" label="Rotation"  value={rotation} options={options} onChange={this.onChange} placeholder='Rotation' />
@@ -226,8 +228,28 @@ class index extends React.Component {
               <h3>Select the most dominate type.</h3>
               <EnergySelector setSearch="" />
               <p> Take some time to describe your deck. </p>
-            <QuillEditor CurrentText={this.props.quill}  />
-            <Button onClick={this.editDeck} type="submit">Edit Deck</Button>
+              <QuillEditor CurrentText={this.props.quill}  />
+              <Button disabled={deckSubmitted} onClick={this.editDeck} type="submit">Edit Deck</Button>
+              <Message error >
+                  <Message.Header>
+                      An error has occured
+                  </Message.Header>
+                  <Message.Content>
+                      Message: {global}
+                  </Message.Content>
+              </Message>
+              {deckInfo && (
+                    <Message success>
+                        <Message.Header>
+                            Success
+                        </Message.Header>
+                        <Message.Content>
+                            {`Your deck: ${deckInfo.name} was edited! Check it out in the link below!`}
+                            <br />
+                            <a href={`/deck/${deckInfo._id}`}>{deckInfo.name}</a>
+                        </Message.Content>
+                    </Message>
+                )}
             </Form>
           </Modal.Content>
         </Modal>
