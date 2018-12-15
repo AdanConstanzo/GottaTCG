@@ -119,7 +119,7 @@ class index extends React.Component {
       <div style={{ paddingTop: "20px" }} >
         <Grid columns={5} >
           {!this.state.loading && <PokemonSet sets={this.state.sets} />}
-          {sliderView ? <Button onClick={this.toggleSlider} >Hide Slider</Button> : <Button onClick={this.toggleSlider}>Show Slider</Button>}
+          {sliderView ? <Button onClick={this.toggleSlider} >Hide Cards</Button> : <Button onClick={this.toggleSlider}>Show Cards</Button>}
         </Grid>
         <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>
             {Object.keys(cards[0]).length > 0 && (
