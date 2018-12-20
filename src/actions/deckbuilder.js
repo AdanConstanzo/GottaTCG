@@ -1,3 +1,6 @@
+import Dinero from 'dinero.js';
+
+
 import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, CHANGE_DECK_ENERGY_VIEW, SET_COST } from "../types";
 
 export const Code = deckbuilder => ({
@@ -40,7 +43,7 @@ export const ClearState = () => dispatch =>{
       'Trainer': 0,
       'Energy': 0
     },
-    'Cost': 0
+    'Cost':  Dinero({ amount:0 })
   }
   dispatch(Clear(empty))
 }
@@ -60,7 +63,7 @@ export const SubtractCard = (CardType,State) =>
     const ConstState = Object.assign({}, State);
     const ConstCardType = CardType;
     ConstState.Count[CardType.type] -= 1;
-    ConstState.Cost = +(Number(ConstState.Cost) - Number(CardType.price)).toFixed(12)
+    ConstState.Cost = ConstState.Cost.subtract(Dinero({ amount: Number(CardType.price.replace(".", "")) }));
     if (ConstState[CardType.type][CardType.id].quantity === 1)
       dispatch(RemoveCard(ConstCardType,ConstState));
     else {
@@ -74,8 +77,9 @@ export const AddCard = (CardType,State) =>
   dispatch => {
     const ConstState = Object.assign({}, State);
     const ConstCardType = CardType;
-    ConstState.Count[CardType.type] += 1;
-    ConstState.Cost = +(Number(ConstState.Cost) + Number(CardType.price)).toFixed(12)
+		ConstState.Count[CardType.type] += 1;
+		ConstState.Cost = ConstState.Cost.add(Dinero({ amount: Number(CardType.price.replace(".", "")) }));
+
     if (ConstState[CardType.type][CardType.id] ) {
       ConstState[CardType.type][CardType.id].quantity += 1;
     } else {
@@ -96,8 +100,8 @@ export const SetCard = (Card, Count, State) =>
   }
 export const SetCost = (Cost, State) =>
   dispatch => {
-    const ConstState = Object.assign({}, State);
-    ConstState.Cost = Cost;
+		const ConstState = Object.assign({}, State);
+    ConstState.Cost = Dinero({ amount: Number(Cost.replace("$","").replace(".","")) });
     dispatch(SettingCost(ConstState));
   }
 

@@ -1,3 +1,5 @@
+import Dinero from 'dinero.js';
+
 import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, SET_COST } from "../types";
 
 const empty = {
@@ -9,7 +11,7 @@ const empty = {
         'Trainer': 0,
         'Energy': 0
     },
-    'Cost': 0
+    'Cost': Dinero({ amount:0 })
 }
 
 export default function user(state = empty, action = {}) {

@@ -66,9 +66,12 @@ class index extends React.Component {
     const { name, rotation } = this.state;
     this.setState({deckSubmitted: true, error: false});
     deckbuilder.quill = this.props.quill;
-    deckbuilder.deckEnergyView = this.props.deckEnergyView;
+		deckbuilder.deckEnergyView = this.props.deckEnergyView;
+		const cost = deckbuilder.Cost.toFormat('$0,0.00');
+		const ConstDeckBuilder = Object.assign({}, deckbuilder);
+		ConstDeckBuilder.Cost = cost;
     api.deck.CreateDeck({
-      deckbuilder,
+      deckbuilder: ConstDeckBuilder,
       name,
       rotation
     })
@@ -131,7 +134,7 @@ class index extends React.Component {
                 <h3>Total Cards: {Total}</h3>
             </Grid.Column>
             <Grid.Column>
-              <h3>Average Price: {Cost}</h3>
+              <h3>Average Price: {Cost.toFormat('$0,0.00')}</h3>
             </Grid.Column>
             <Grid.Column>
                 <Button onClick={this.onButtonSubmit('blurring')} >Submit Deck</Button>

@@ -75,13 +75,12 @@ class index extends React.Component {
   }
   // sets total price of each cards and also invokes SetStateForDeck. 
   SetPrice = (deckObject) => {
+		// setting cards for cardView component.
     const cards = ["Pokémon", "Trainer", "Energy"];
-    const cardPrice = []
-    cards.forEach(ele => {
-      cardPrice.push(this.SetStatesForDeck(deckObject.deck, ele));
-    })
-    const { deckbuilder } = this.props;
-    this.props.SetCost(cardPrice.reduce((prev, curr) => prev + curr, 0).toPrecision(4), deckbuilder);
+    cards.forEach(ele => this.SetStatesForDeck(deckObject.deck, ele))
+		// Setting cost. 
+		const { deckbuilder } = this.props;
+		this.props.SetCost(deckObject.deck.Cost, deckbuilder);
   }
   
   // sets cards from deckbuilder and assigns card to CardSelector.
@@ -110,9 +109,12 @@ class index extends React.Component {
     const { name, rotation } = this.state;
     this.setState({ deckSubmitted: true });
     deckbuilder.quill = this.props.quill;
-    deckbuilder.deckEnergyView = this.props.deckEnergyView;
+		deckbuilder.deckEnergyView = this.props.deckEnergyView;
+		const cost = deckbuilder.Cost.toFormat('$0,0.00');
+		const ConstDeckBuilder = Object.assign({}, deckbuilder);
+		ConstDeckBuilder.Cost = cost;
     api.deck.UpdateDeck({
-      deckbuilder,
+      deckbuilder: ConstDeckBuilder,
       name,
       rotation,
       _id: this.state.deck._id
@@ -175,7 +177,7 @@ class index extends React.Component {
                 <h3>Total Cards: {Total}</h3>
             </Grid.Column>
             <Grid.Column>
-              <h3>Average Price: {Cost}</h3>
+              <h3>Average Price: {Cost.toFormat('$0,0.00')}</h3>
             </Grid.Column>
             <Grid.Column>
                 <Button onClick={this.onButtonSubmit('blurring')} >Edit Deck</Button>
