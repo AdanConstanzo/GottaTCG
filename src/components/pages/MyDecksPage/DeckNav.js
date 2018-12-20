@@ -9,21 +9,24 @@ const reduceSize = (string) => string.substring(0,9).concat('...');
 const getDate = (isoDate) => returnDate(isoDate);
 
 const inlineStyle = {
-  modal : {
-    marginTop: '0px !important',
-    marginLeft: 'auto',
-    marginRight: 'auto'
-  }
+	modal: {
+		display: "inline-block !important",
+		position: "relative",
+		marginTop: "auto !important",
+		marginLeft: 'auto',
+    marginRight: 'auto',
+		top: "20%"
+	}
 };
 
 const ModalExampleCloseIcon = (props) => (
   <Modal dimmer="blurring" style={inlineStyle.modal} size="mini" open={props.open} onClose={props.close} >
-    <Header icon='info circle' content={`${props.deck.name}: deck details ` } />
+    <Header icon='info circle' content={`Deck details for: ${props.deck.name} ` } />
     <Modal.Content>
       <p>Date of creation: {getDate(props.deck.date)}</p>
       <p>Rotation: {props.deck.rotation}</p>
       <p>Votes: {props.deck.vote} </p>
-      <p>Average cost to build this deck: ${props.deck.deck.Cost}</p>
+      <p>Average cost to build this deck: {props.deck.deck.Cost}</p>
       <p>Pokémon cards count: {props.deck.deck.Count.Pokémon} </p>
       <p>Trainer cards count: {props.deck.deck.Count.Trainer} </p>
       <p>Energy cards count: {props.deck.deck.Count.Energy} </p>
@@ -50,7 +53,7 @@ ModalExampleCloseIcon.propTypes = {
     rotation: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     deck: PropTypes.shape({
-      Cost: PropTypes.number.isRequired,
+      Cost: PropTypes.string.isRequired,
       Count: PropTypes.shape({
         Pokémon: PropTypes.number.isRequired, 
         Trainer: PropTypes.number.isRequired, 
