@@ -78,7 +78,9 @@ export const AddCard = (CardType,State) =>
     const ConstState = Object.assign({}, State);
     const ConstCardType = CardType;
 		ConstState.Count[CardType.type] += 1;
-		ConstState.Cost = ConstState.Cost.add(Dinero({ amount: Number(CardType.price.replace(".", "")) }));
+		if (CardType.price != null) {
+			ConstState.Cost = ConstState.Cost.add(Dinero({ amount: Number(CardType.price.replace(".", "")) }));
+		}
 
     if (ConstState[CardType.type][CardType.id] ) {
       ConstState[CardType.type][CardType.id].quantity += 1;

@@ -24,7 +24,8 @@ const initState = {
   deckInfo: null,
   error: false,
   success: false,
-  sliderView: true,
+	sliderView: true,
+	filterModalOpen: false
 };
 
 class index extends React.Component {
@@ -85,7 +86,10 @@ class index extends React.Component {
    }
     
   toggleSlider = () => this.setState((preState) => ({ sliderView: !preState.sliderView }))
-  
+	
+	toggleFilterModal = () => this.setState({ filterModalOpen: true });
+	filterModalClose = () => this.setState({ filterModalOpen: false });
+
   close = () => {
     if (this.state.success === true && this.state.deckInfo !== null ) {
       this.setState(initState);
@@ -116,13 +120,24 @@ class index extends React.Component {
         { key: 'S', text: 'Standard', value: 'Standard' },
         { key: 'E', text: 'Expanded', value: 'Expanded' },
         { key: 'U', text: 'Unlimited', value: 'Unlimited' },
-    ]
-    const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView }  = this.state;
+		]
+		const inlineStyle = {
+			modal: {
+				display: "inline-block !important",
+				position: "relative",
+				marginTop: "auto !important",
+				marginLeft: 'auto',
+				marginRight: 'auto',
+				top: "20%"
+			}
+		};
+    const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView, filterModalOpen }  = this.state;
     return (
       <div style={{ paddingTop: "20px" }} >
         <Grid columns={5} >
           {!this.state.loading && <PokemonSet sets={this.state.sets} />}
-          {sliderView ? <Button onClick={this.toggleSlider} >Hide Cards</Button> : <Button onClick={this.toggleSlider}>Show Cards</Button>}
+					<Button onClick={this.toggleFilterModal}>Filter Cards</Button>
+					{sliderView ? <Button floated='right' onClick={this.toggleSlider} >Hide Cards</Button> : <Button floated='right' onClick={this.toggleSlider}>Show Cards</Button>}
         </Grid>
         <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>
             {Object.keys(cards[0]).length > 0 && (
@@ -210,6 +225,19 @@ class index extends React.Component {
                   </Message>
               )}
             </Form>
+          </Modal.Content>
+        </Modal>
+				<Modal 
+						dimmer="blurring"
+            style={inlineStyle.modal}
+            size="large"
+            open={filterModalOpen}
+						onClose={this.filterModalClose}
+						closeIcon
+        >
+          <Modal.Content>
+            <h1>Hello World</h1>
+						<Button onClick={this.filterModalClose} >Close Me</Button>
           </Modal.Content>
         </Modal>
       </div>
