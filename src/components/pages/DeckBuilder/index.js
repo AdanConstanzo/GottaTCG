@@ -10,6 +10,7 @@ import CardSlider  from './cardSlider';
 import { ClearState, AddCard } from '../../../actions/deckbuilder';
 import EnergySelector from './EnergySelector';
 import QuillEditor from './quillEditor';
+import FilterCards from './FilterCards';
 
 const initState = {
   loading: true,
@@ -25,7 +26,10 @@ const initState = {
   error: false,
   success: false,
 	sliderView: true,
-	filterModalOpen: false
+	filterModalOpen: true,
+	filterSets: [],
+	sets: [],
+	color: []
 };
 
 class index extends React.Component {
@@ -36,8 +40,37 @@ class index extends React.Component {
   }
 
   componentDidMount() {
+
     api.sets.getAll()
-      .then(sets => this.setState({ loading: false, sets }))
+      .then(sets => {
+
+				// function to return an object how semantic wants it for dorpdown navs.
+				// this is only for sets.
+				function returnObjectFunction(ele) {
+					return {
+						key: ele.code,
+						value: ele.code,
+						text: ele.name,
+					}
+				}
+				// our fitlerd set
+				const filterSets = sets.map(returnObjectFunction);
+				this.setState({ loading: false, sets, filterSets });
+				
+			});
+		api.pokemonType.getAllTypes()
+			.then(types => {
+				function returnObjectColor(ele) {
+					return {
+						key: ele.pokemonType,
+						value: ele.pokemonType,
+						text: ele.pokemonType,
+					}
+				}
+				const color = types.map(returnObjectColor);
+				this.setState({ color });
+			})
+
   }
 
   onCardClick = (e) => {
@@ -96,7 +129,7 @@ class index extends React.Component {
     } else {
       this.setState({ open: false, error: false, success: false });
     }
-  }
+	}
 
   render(){
 
@@ -121,21 +154,12 @@ class index extends React.Component {
         { key: 'E', text: 'Expanded', value: 'Expanded' },
         { key: 'U', text: 'Unlimited', value: 'Unlimited' },
 		]
-		const inlineStyle = {
-			modal: {
-				display: "inline-block !important",
-				position: "relative",
-				marginTop: "auto !important",
-				marginLeft: 'auto',
-				marginRight: 'auto',
-				top: "20%"
-			}
-		};
-    const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView, filterModalOpen }  = this.state;
+		
+    const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView, filterModalOpen, loading, sets, filterSets, color }  = this.state;
     return (
       <div style={{ paddingTop: "20px" }} >
         <Grid columns={5} >
-          {!this.state.loading && <PokemonSet sets={this.state.sets} />}
+          {!loading && <PokemonSet sets={sets} />}
 					<Button onClick={this.toggleFilterModal}>Filter Cards</Button>
 					{sliderView ? <Button floated='right' onClick={this.toggleSlider} >Hide Cards</Button> : <Button floated='right' onClick={this.toggleSlider}>Show Cards</Button>}
         </Grid>
@@ -227,23 +251,12 @@ class index extends React.Component {
             </Form>
           </Modal.Content>
         </Modal>
-				<Modal 
-						dimmer="blurring"
-            style={inlineStyle.modal}
-            size="large"
-            open={filterModalOpen}
-						onClose={this.filterModalClose}
-						closeIcon
-        >
-          <Modal.Content>
-            <h1>Hello World</h1>
-						<Button onClick={this.filterModalClose} >Close Me</Button>
-          </Modal.Content>
-        </Modal>
+							{ (!loading && color.length > 0) && <FilterCards  color={color} filterModalOpen={filterModalOpen} filterSets={filterSets} filterModalClose={this.filterModalClose} /> }
       </div>
     )
   }
 }
+
 
 function mapStateToProps(state) {
   return {

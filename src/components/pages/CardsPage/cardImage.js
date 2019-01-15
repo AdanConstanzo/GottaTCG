@@ -22,7 +22,7 @@ class CardImage extends React.Component{
     }
     return(
       <span>
-        <a href="" onClick={this.onClick} > <img style={style} src={image_url} alt={name} /> </a>
+        <a href="blank" onClick={this.onClick} > <img style={style} src={image_url} alt={name} /> </a>
         <PokemonModal dimmer='blurring' open={open} close={this.close} card={card} />
       </span>
     )
