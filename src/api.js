@@ -43,7 +43,11 @@ export default {
     getCardById: id =>
       axios
         .get(`/api/cards/findCardById?id=${id}`)
-        .then(res => res.data.card)
+				.then(res => res.data.card),
+		generateSetByFilter: filterSettings => 
+			axios
+				.post(`/api/cards/findCardsByFitler`, { sets: filterSettings.sets, type: filterSettings.type, color: filterSettings.color })
+				.then(res => res.data)
   },
   collection: {
     setValueToCard: collectionObj =>

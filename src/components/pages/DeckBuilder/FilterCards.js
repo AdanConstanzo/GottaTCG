@@ -1,25 +1,37 @@
 import React from 'react';
 import { Grid, Input, Modal, Button, Segment, Divider, Dropdown } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-
+import api from '../../../api';
 
 class index extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-			
+			"sets": [],
+			"type": "",
+			"color": [],
 		};
   }
 
   componentDidMount() {
-	
+		
 	}
 
-	FilterState = (type) => (e, { value }) => {
-		console.log(type);
-		console.log(e.target.textContent);
-		console.log(value);
+	// Function that sets the correct filter for our cards.
+	// type is our type of card.
+	// value is outcome after we add/sub to our list.
+	FilterState = (type) => (e, { value }) => this.setState({ [type]:  value});
+
+	SubmitFilter = () => {
+		api.cards.generateSetByFilter(this.state)
+		  .then(cards => {
+				// change slider cards here
+				this.props.filterModalClose();
+				console.log(cards);
+			}, (err) => {
+				console.log(err);
+			})
 	}
 
   render(){
@@ -36,7 +48,7 @@ class index extends React.Component {
 		};
 
 		const { color, filterModalOpen, filterSets, filterModalClose } = this.props;
-		const Type = [ { key: 'Pokémons', value: 'Pokémons', text: 'Pokémons' }, { key: 'Trainers', value: 'Trainers', text: 'Trainers' }, { key: 'Energy', value: 'Energy', text: 'Energy' }];
+		const Type = [ { key: 'Pokémon', value: 'Pokémon', text: 'Pokémon' }, { key: 'Trainer', value: 'Trainer', text: 'Trainer' }, { key: 'Energy', value: 'Energy', text: 'Energy' }];
 
 		return (
       <Modal 
@@ -70,7 +82,7 @@ class index extends React.Component {
 										<Dropdown onChange={this.FilterState('color')} placeholder='Color' fluid multiple search selection options={color} />
 									</Grid.Column>
 								</Grid.Row>
-								<Button floated="right" >Filter</Button>
+								<Button floated="right" onClick={this.SubmitFilter}  >Filter</Button>
 							</Grid>
 						</Segment>
           </Modal.Content>
