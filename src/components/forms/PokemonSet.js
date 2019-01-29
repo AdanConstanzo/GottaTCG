@@ -16,12 +16,12 @@ class PokemonSet extends React.Component {
     
 
     componentDidMount() {
-        this.props.SetCode({ set: this.props.sets[0].code });
+        this.props.SetCode({ code: this.props.sets[0].code });
         this.props.GetCardsBySet(this.props.sets[0].code)
     }
 
     assign = (e,data) => {
-        this.props.SetCode({set: data.data});
+        this.props.SetCode({code: data.data});
         this.props.GetCardsBySet(data.data)
 				this.setState({focus: data.children});
 				if ( this.props.filterOn !== null ) {

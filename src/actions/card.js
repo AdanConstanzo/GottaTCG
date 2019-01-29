@@ -15,10 +15,10 @@ export const SetCard = card => ({
 export const SetCurrentCard = cardId => dispatch =>
     dispatch(SetCard(cardId));
 
-export const GetCardsBySet = setCode => dispatch =>
+export const GetCardsBySet = (setCode) => dispatch =>
     api.cards.getCardsFromSet(setCode)
         .then(cards => 
-            dispatch(SetCards(cards))
+            dispatch(SetCards({[setCode]: cards}))
 				);
-export const SetFilterCards = SetOfCards => dispatch =>
-		dispatch(SetCards(SetOfCards));
+export const SetFilterCards = (setCode, SetOfCards) => dispatch =>
+		dispatch(SetCards({ [setCode]: SetOfCards }));

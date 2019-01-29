@@ -24,7 +24,7 @@ class CardsPage extends React.Component {
     
     
     render() {
-        const {cards} = this.props
+        const {cards, set} = this.props
         const style = {
             cards:{
                 "overflowY": "scroll",
@@ -34,14 +34,16 @@ class CardsPage extends React.Component {
         }
         return(
             <div>
+								<h1>Hello {set}</h1>
                 <Grid columns={5} >
                     <Grid.Row>
                         {this.state.loaded === true && <PokemonSet filterOn={null} sets={this.state.sets} />}
                     </Grid.Row>
                     <Grid.Row style={style.cards}>
+											
                         {/* Set must have more than 2. */}
-                        {cards.length > 1  &&
-                            (cards.map((card, count) => <Grid.Column key={count} ><PokemonCardImage card={card} /></Grid.Column>))}
+                        {(set !== "" && cards[set] !== undefined)  &&
+                            (cards[set].map((card, count) => <Grid.Column key={count} ><PokemonCardImage card={card} /></Grid.Column>))}
                     </Grid.Row>
                 </Grid>
             </div>
@@ -54,12 +56,10 @@ CardsPage.propTypes = {
     cards: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-
-function mapStateToProps(state){
-    return {
-        cards: state.cards
-    };
-}
+const mapStateToProps = (state) => ({
+  cards: state.cards,
+	set: state.set
+});
 
 
 export default connect(mapStateToProps)(CardsPage);
