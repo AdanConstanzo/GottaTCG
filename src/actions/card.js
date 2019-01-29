@@ -19,4 +19,6 @@ export const GetCardsBySet = setCode => dispatch =>
     api.cards.getCardsFromSet(setCode)
         .then(cards => 
             dispatch(SetCards(cards))
-        );
+				);
+export const SetFilterCards = SetOfCards => dispatch =>
+		dispatch(SetCards(SetOfCards));

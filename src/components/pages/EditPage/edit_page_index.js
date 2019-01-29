@@ -164,7 +164,7 @@ class index extends React.Component {
     return(
       <div style={{ paddingTop: "20px" }} >
         <Grid columns={5} >
-          {sets.length > 0 && <PokemonSet sets={sets} />}
+          {sets.length > 0 && <PokemonSet filterOn={null} sets={sets} />}
           {sliderView ? <Button onClick={this.toggleSlider} >Hide Slider</Button> : <Button onClick={this.toggleSlider}>Show Slider</Button>}
         </Grid>
         <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>

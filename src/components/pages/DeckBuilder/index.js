@@ -29,7 +29,8 @@ const initState = {
 	filterModalOpen: true,
 	filterSets: [],
 	sets: [],
-	color: []
+	color: [],
+	FilterIsOn: false
 };
 
 class index extends React.Component {
@@ -131,6 +132,12 @@ class index extends React.Component {
     }
 	}
 
+	filterOn = (val) => this.setState({ FilterIsOn: val });
+
+	removeFilter = () => {
+		this.setState({ FilterIsOn: false })
+	}
+
   render(){
 
     const { cards, deckbuilder } = this.props;
@@ -155,12 +162,12 @@ class index extends React.Component {
         { key: 'U', text: 'Unlimited', value: 'Unlimited' },
 		]
 		
-    const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView, filterModalOpen, loading, sets, filterSets, color }  = this.state;
+    const { open, dimmer, rotation, name, deckSubmitted, deckInfo, error, success, global, sliderView, filterModalOpen, loading, sets, filterSets, color, FilterIsOn }  = this.state;
     return (
       <div style={{ paddingTop: "20px" }} >
         <Grid columns={5} >
-          {!loading && <PokemonSet sets={sets} />}
-					<Button onClick={this.toggleFilterModal}>Filter Cards</Button>
+          {!loading && <PokemonSet filterOn={this.filterOn} sets={sets} />}
+					{ FilterIsOn === false ? <Button onClick={this.toggleFilterModal}>Filter Cards</Button> : <Button  color="red" onClick={this.removeFilter}  >Remove Filter</Button> }
 					{sliderView ? <Button floated='right' onClick={this.toggleSlider} >Hide Cards</Button> : <Button floated='right' onClick={this.toggleSlider}>Show Cards</Button>}
         </Grid>
         <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>
@@ -251,7 +258,7 @@ class index extends React.Component {
             </Form>
           </Modal.Content>
         </Modal>
-							{ (!loading && color.length > 0) && <FilterCards  color={color} filterModalOpen={filterModalOpen} filterSets={filterSets} filterModalClose={this.filterModalClose} /> }
+							{ (!loading && color.length > 0) && <FilterCards filterOn={this.filterOn}  color={color} filterModalOpen={filterModalOpen} filterSets={filterSets} filterModalClose={this.filterModalClose} /> }
       </div>
     )
   }

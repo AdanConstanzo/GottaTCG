@@ -1,7 +1,10 @@
 import React from 'react';
 import { Grid, Input, Modal, Button, Segment, Divider, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import api from '../../../api';
+import { SetFilterCards } from '../../../actions/card';
 
 class index extends React.Component {
 
@@ -28,6 +31,8 @@ class index extends React.Component {
 		  .then(cards => {
 				// change slider cards here
 				this.props.filterModalClose();
+				this.props.SetFilterCards(cards.cards);
+				this.props.filterOn(true);
 				console.log(cards);
 			}, (err) => {
 				console.log(err);
@@ -96,6 +101,8 @@ index.propTypes = {
 	filterSets: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 	filterModalOpen: PropTypes.bool.isRequired,
 	filterModalClose: PropTypes.func.isRequired,
+	SetFilterCards: PropTypes.func.isRequired,
+	filterOn: PropTypes.func.isRequired
 };
 
-export default index;
+export default connect(null, { SetFilterCards })(index);;

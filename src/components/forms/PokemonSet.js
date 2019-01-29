@@ -23,7 +23,10 @@ class PokemonSet extends React.Component {
     assign = (e,data) => {
         this.props.SetCode({set: data.data});
         this.props.GetCardsBySet(data.data)
-        this.setState({focus: data.children});
+				this.setState({focus: data.children});
+				if ( this.props.filterOn !== null ) {
+					this.props.filterOn(false);
+				}
     }
 
     render() {
@@ -54,5 +57,6 @@ PokemonSet.propTypes = {
         "release_date": PropTypes.string.isRequired,
     }).isRequired).isRequired,
     SetCode: PropTypes.func.isRequired,
-    GetCardsBySet: PropTypes.func.isRequired
+		GetCardsBySet: PropTypes.func.isRequired,
+		filterOn: PropTypes.func,
 };

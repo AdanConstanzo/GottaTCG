@@ -36,7 +36,7 @@ class CardsPage extends React.Component {
             <div>
                 <Grid columns={5} >
                     <Grid.Row>
-                        {this.state.loaded === true && <PokemonSet sets={this.state.sets} />}
+                        {this.state.loaded === true && <PokemonSet filterOn={null} sets={this.state.sets} />}
                     </Grid.Row>
                     <Grid.Row style={style.cards}>
                         {/* Set must have more than 2. */}
