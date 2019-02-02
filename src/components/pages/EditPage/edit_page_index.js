@@ -135,7 +135,7 @@ class index extends React.Component {
   render(){
 
     const { deck, sliderView, sets, deckInfo, deckSubmitted, dimmer, error, success, rotation, open, name, global } = this.state;
-    const { cards, deckbuilder } = this.props;
+    const { cards, deckbuilder, set } = this.props;
     const { Pokémon, Trainer, Energy, Cost } = deckbuilder;
     const PCount = deckbuilder.Count.Pokémon;
     const TCount = deckbuilder.Count.Trainer;
@@ -168,8 +168,8 @@ class index extends React.Component {
           {sliderView ? <Button onClick={this.toggleSlider} >Hide Slider</Button> : <Button onClick={this.toggleSlider}>Show Slider</Button>}
         </Grid>
         <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>
-            {Object.keys(cards[0]).length > 0 && (
-                <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
+            {(set !== "" && cards[set] !== undefined) && (
+                <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards[set]} />
             )}
         </div>
         <Grid columns={3}>
@@ -281,7 +281,8 @@ function mapStateToProps(state) {
     cards: state.cards,
     deckbuilder: state.deckbuilder,
     quill: state.quill,
-    deckEnergyView: state.deckEnergyView
+		deckEnergyView: state.deckEnergyView,
+		set: state.set
   }
 }
 

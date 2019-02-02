@@ -15,10 +15,22 @@ export const SetCard = card => ({
 export const SetCurrentCard = cardId => dispatch =>
     dispatch(SetCard(cardId));
 
-export const GetCardsBySet = (setCode) => dispatch =>
-    api.cards.getCardsFromSet(setCode)
-        .then(cards => 
-            dispatch(SetCards({[setCode]: cards}))
-				);
+export const GetCardsBySet = (setCode, State) => 
+	dispatch => {
+		const ConstState = Object.assign({}, State);
+		if (ConstState[setCode] !== undefined) {
+			dispatch(SetCards(ConstState));
+			console.log("Cached.");
+		} else {
+			console.log("fetching cards from GetCardBySet")
+			api.cards.getCardsFromSet(setCode)
+        .then(cards => {
+					ConstState[setCode] = cards;
+					console.log("Dispathign cards.");
+					dispatch(SetCards(ConstState));
+				} );
+		}
+	}
+
 export const SetFilterCards = (setCode, SetOfCards) => dispatch =>
 		dispatch(SetCards({ [setCode]: SetOfCards }));

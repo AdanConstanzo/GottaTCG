@@ -21,12 +21,13 @@ class PokemonSet extends React.Component {
     }
 
     assign = (e,data) => {
-        this.props.SetCode({code: data.data});
-        this.props.GetCardsBySet(data.data)
-				this.setState({focus: data.children});
-				if ( this.props.filterOn !== null ) {
-					this.props.filterOn(false);
-				}
+			const {cards} = this.props;
+			this.props.SetCode({code: data.data});
+			this.props.GetCardsBySet(data.data, cards);
+			this.setState({focus: data.children});
+			if ( this.props.filterOn !== null ) {
+				this.props.filterOn(false);
+			}
     }
 
     render() {
@@ -43,7 +44,13 @@ class PokemonSet extends React.Component {
     }
 }
 
-export default connect(null, { SetCode, GetCardsBySet })(PokemonSet);
+const mapStateToProps = (state) => ({
+  cards: state.cards,
+});
+
+
+
+export default connect(mapStateToProps, { SetCode, GetCardsBySet })(PokemonSet);
 
 PokemonSet.propTypes = {
     sets: PropTypes.arrayOf(PropTypes.shape({

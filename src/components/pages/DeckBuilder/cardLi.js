@@ -7,11 +7,13 @@ import { AddCard, SubtractCard } from '../../../actions/deckbuilder';
 import PokemonModal from "../../PokemonCard/PokemonModal";
 import api from '../../../api';
 
+// This componenet is an item on a card list. 
 class cardLi extends React.Component {
   constructor(props) {
     super(props);
-    // check to see if card is currently in card props (redux). (mainly used for edit deckbuilder)
-    if (this.props.cards.filter(ele => ele.id === this.props.card.id)[0] === undefined) {
+		// check to see if card is currently in card props (redux). (mainly used for edit deckbuilder)
+
+		if (this.CheckAllCards(this.props.cards, this.props.card) === true) {
       api.cards.getCardById(this.props.card.id).then(card => this.setState({ card }));
       this.state = {
         display: true,
@@ -19,14 +21,27 @@ class cardLi extends React.Component {
         card: null
       };
     } else {
-      this.state = {
+			const { cards, card } = this.props
+			const mapOfArrays = Object.keys(cards).map(ele => cards[ele]);
+			const allCards = [].concat(...mapOfArrays);
+			const filterCard = allCards.filter(ele => ele.id === card.id)[0];
+			this.state = {
         display: true,
         open: false,
-        card: this.props.cards.filter(ele => ele.id === this.props.card.id)[0]  
+        card: filterCard 
       };
     }
   }
-    
+	
+	CheckAllCards = (cards, card) => {
+		if (cards.constructor === Array) {
+			return true
+		} else if (Object.keys(cards).length === 0) {
+			return true;
+		}
+		return Object.keys(cards).forEach(key => cards[key].filter(ele => ele.id === card.id)[0] === undefined);
+	}
+
   addCard = () => {
     const { deckbuilder, card} = this.props;
     const { src, alt, type, id, price } = card;
@@ -107,7 +122,7 @@ class cardLi extends React.Component {
 function mapStateToProps(state){
   return{
     deckbuilder: state.deckbuilder,
-    cards: state.cards
+    cards: state.cards,
   }
 }
 

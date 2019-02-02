@@ -26,7 +26,7 @@ const initState = {
   error: false,
   success: false,
 	sliderView: true,
-	filterModalOpen: true,
+	filterModalOpen: false,
 	filterSets: [],
 	sets: [],
 	color: [],
@@ -140,7 +140,7 @@ class index extends React.Component {
 
   render(){
 
-    const { cards, deckbuilder } = this.props;
+    const { cards, deckbuilder, set } = this.props;
     const { Pokémon, Trainer, Energy, Cost } = deckbuilder;
     const PCount = deckbuilder.Count.Pokémon;
     const TCount = deckbuilder.Count.Trainer;
@@ -171,9 +171,12 @@ class index extends React.Component {
 					{sliderView ? <Button floated='right' onClick={this.toggleSlider} >Hide Cards</Button> : <Button floated='right' onClick={this.toggleSlider}>Show Cards</Button>}
         </Grid>
         <div style={{marginBottom: "5em", marginTop: "2em", display: sliderView?"":"none"}}>
-            {Object.keys(cards[0]).length > 0 && (
+            {/* {Object.keys(cards[0]).length > 0 && (
                 <CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards} />
-            )}
+						)} */}
+						{(set !== "" && cards[set] !== undefined) && 
+							<CardSlider onCardClick={this.onCardClick} settings={settings} cards={cards[set]} />
+						}
         </div>
         <Grid columns={3}>
             <Grid.Column>
@@ -269,7 +272,8 @@ function mapStateToProps(state) {
   return {
     cards: state.cards,
     deckbuilder: state.deckbuilder,
-    quill: state.quill,
+		quill: state.quill,
+		set: state.set,
     deckEnergyView: state.deckEnergyView
   }
 }
@@ -280,7 +284,8 @@ index.propTypes = {
   deckbuilder: PropTypes.shape({}).isRequired,
   ClearState: PropTypes.func.isRequired,
   deckEnergyView: PropTypes.shape({}).isRequired,
-  quill: PropTypes.string.isRequired
+	quill: PropTypes.string.isRequired,
+	set: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, { AddCard, ClearState })(index);
