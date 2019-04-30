@@ -32,5 +32,11 @@ export const GetCardsBySet = (setCode, State) =>
 		}
 	}
 
-export const SetFilterCards = (setCode, SetOfCards) => dispatch =>
-		dispatch(SetCards({ [setCode]: SetOfCards }));
+export const SetFilterCards = (filterCode, SetOfCards, State) => 
+	dispatch => {
+		const ConstState = Object.assign({}, State);
+		ConstState[filterCode] = SetOfCards;
+
+		dispatch(SetCards(ConstState));
+	}
+		

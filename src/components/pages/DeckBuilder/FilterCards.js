@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import api from '../../../api';
 import { SetFilterCards } from '../../../actions/card';
+import { SetCode } from '../../../actions/set';
+
 
 class index extends React.Component {
 
@@ -29,15 +31,21 @@ class index extends React.Component {
 	SubmitFilter = () => {
 		api.cards.generateSetByFilter(this.state)
 		  .then(cards => {
+
+				const code = this.CreateFilterCode();
+				
 				// change slider cards here
 				this.props.filterModalClose();
-				this.props.SetFilterCards(cards.cards);
+				this.props.SetFilterCards(code, cards.cards, this.props.cards);
+				this.props.SetCode({ code });
 				this.props.filterOn(true);
 				console.log(cards);
 			}, (err) => {
 				console.log(err);
 			})
 	}
+
+	CreateFilterCode = () => this.state.sets.join('-').concat(`-${this.state.type}`).concat(`-${this.state.color.join('-')}`)
 
   render(){
 
@@ -96,6 +104,11 @@ class index extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  cards: state.cards,
+});
+
+
 index.propTypes = {
 	color: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 	filterSets: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
@@ -105,4 +118,4 @@ index.propTypes = {
 	filterOn: PropTypes.func.isRequired
 };
 
-export default connect(null, { SetFilterCards })(index);;
+export default connect(mapStateToProps, { SetFilterCards, SetCode })(index);;
