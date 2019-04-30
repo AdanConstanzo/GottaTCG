@@ -18,7 +18,7 @@ class cardSlider extends React.Component {
   }
 
   onMouseLeave = () => this.setState({ isHover: false });
-    
+  // testing something.
   render(){
     const { settings, cards, onCardClick } = this.props;
     return (
