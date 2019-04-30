@@ -28,9 +28,9 @@ router.get("/findCardById", (req, res) => {
 
 // Finds array of cards by name. Using regex.
 router.get("/findCardsByName", (req, res) => {
-    Card.find({ name: { "$regex": req.query.name, "$options": "i" } }, (err, card) => {
+    Card.find({ name: { "$regex": req.query.name, "$options": "i" } }, (err, cards) => {
         if (err) return err;
-        if (card.length > 0) return res.send({card});
+        if (cards.length > 0) return res.send({cards});
         return res.status(404).json({ error: { global: `No card found with name: ${req.query.name}` } })
     });
 });

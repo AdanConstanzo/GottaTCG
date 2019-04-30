@@ -1,3 +1,9 @@
+/**
+ * 
+ * Code for slider componenet in deckbuilder page
+ * 
+ */
+
 import React from 'react';
 import Slider from 'react-slick'
 import PropTypes from 'prop-types';

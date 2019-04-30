@@ -47,7 +47,11 @@ export default {
 		generateSetByFilter: filterSettings => 
 			axios
 				.post(`/api/cards/findCardsByFitler`, { sets: filterSettings.sets, type: filterSettings.type, color: filterSettings.color })
-				.then(res => res.data)
+        .then(res => res.data.cards),
+    getCardsByName: name => 
+      axios
+        .get(`/api/cards/findCardsByName?name=${name}`)
+        .then(res => res.data.cards)
   },
   collection: {
     setValueToCard: collectionObj =>

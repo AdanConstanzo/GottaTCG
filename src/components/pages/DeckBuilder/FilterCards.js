@@ -7,20 +7,21 @@ import api from '../../../api';
 import { SetFilterCards } from '../../../actions/card';
 import { SetCode } from '../../../actions/set';
 
+const orignalState = {
+	"sets": [],
+	"type": "",
+	"color": [],
+	"CardName": ""
+};
 
 class index extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-			"sets": [],
-			"type": "",
-			"color": [],
-		};
+    this.state = orignalState;
   }
 
   componentDidMount() {
-		
 	}
 
 	// Function that sets the correct filter for our cards.
@@ -28,21 +29,59 @@ class index extends React.Component {
 	// value is outcome after we add/sub to our list.
 	FilterState = (type) => (e, { value }) => this.setState({ [type]:  value});
 
-	SubmitFilter = () => {
-		api.cards.generateSetByFilter(this.state)
-		  .then(cards => {
+	CheckIfCached = (KeyCode) => {
+		if (this.props.cards[KeyCode] !== undefined) {
+			return true;
+		}
+		return false;
+	}
 
-				const code = this.CreateFilterCode();
-				
-				// change slider cards here
-				this.props.filterModalClose();
-				this.props.SetFilterCards(code, cards.cards, this.props.cards);
-				this.props.SetCode({ code });
-				this.props.filterOn(true);
-				console.log(cards);
+	// sets cards and set on redux.
+	// turns off filter modal. 
+	// sets this component's state to orignalState.
+	SetCardsOnReduxFromModal = (code, cards)  => {
+		this.props.filterModalClose();
+		this.props.SetFilterCards(code, cards, this.props.cards);
+		this.props.SetCode({ code });
+		this.props.filterOn(true);
+		// Setting our state to original state.
+		this.setState(orignalState);
+	}
+
+	SubmitFilter = () => {
+		// Creating code from our filter for Redux to uniquely create key.
+		const code = this.CreateFilterCode();
+		// checks if cards are already cached.
+		if (this.CheckIfCached(code)) {
+			console.log(`${code} is cached!`);
+			this.SetCardsOnReduxFromModal(code, this.props.cards[code])
+		} else { /* cards are not cached. */
+			console.log(`Fetching from db your new cards with this code: ${code}`);
+			api.cards.generateSetByFilter(this.state)
+		  .then(cards => {
+				this.SetCardsOnReduxFromModal(code, cards);
 			}, (err) => {
 				console.log(err);
 			})
+		}
+		
+	}
+
+	SubmitFilterByCardName = () => {
+
+		const code = this.state.CardName;
+		if (this.CheckIfCached(code)) {
+			console.log(`${code} is cached!`);
+			this.SetCardsOnReduxFromModal(code, this.props.cards[code])
+		} else {
+			console.log(`Fetching from db your new cards with this code: ${code}`);
+			api.cards.getCardsByName(this.state.CardName)
+			.then(cards => {
+				this.SetCardsOnReduxFromModal(code, cards);				
+			}, (err) => {
+				console.log(err);
+			})
+		}		
 	}
 
 	CreateFilterCode = () => this.state.sets.join('-').concat(`-${this.state.type}`).concat(`-${this.state.color.join('-')}`)
@@ -76,10 +115,11 @@ class index extends React.Component {
 						<Segment padded placeholder textAlign='center'>
 							<h1>Search a Card</h1>
 							<Input
-								action={{ color: 'blue', content: 'Search' }}
+								action={{ color: 'blue', content: 'Search', onClick: () => this.SubmitFilterByCardName() }}
 								icon='search'
 								iconPosition='left'
 								placeholder='Pikachu'
+								onChange={this.FilterState('CardName')}
 							/>
 							<Divider horizontal>Or</Divider>
 							<h1>Filter One Out</h1>
@@ -115,7 +155,9 @@ index.propTypes = {
 	filterModalOpen: PropTypes.bool.isRequired,
 	filterModalClose: PropTypes.func.isRequired,
 	SetFilterCards: PropTypes.func.isRequired,
-	filterOn: PropTypes.func.isRequired
+	filterOn: PropTypes.func.isRequired,
+	SetCode: PropTypes.func.isRequired,
+	cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
 export default connect(mapStateToProps, { SetFilterCards, SetCode })(index);;
