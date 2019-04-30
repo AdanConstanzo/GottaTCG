@@ -1,3 +1,3 @@
 # GottaTCG
 
-A deckbuidler website based on the pokemon TCG
+A deck builder website based on the Pokémon trading card game.
