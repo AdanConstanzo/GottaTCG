@@ -1,5 +1,3 @@
-# react-ptcg
+# GottaTCG
 
-Front-end for pokemon tcg website.
-
-yarn start to start development server on port 3000.
+A deckbuidler website based on the pokemon TCG
