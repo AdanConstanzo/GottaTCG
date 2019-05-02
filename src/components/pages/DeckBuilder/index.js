@@ -20,6 +20,8 @@ import { SetCode } from '../../../actions/set';
 import EnergySelector from './EnergySelector';
 import QuillEditor from './quillEditor';
 import FilterCards from './FilterCards';
+import SortableList from './sortable-list';
+
 
 const initState = {
   loading: true,
@@ -39,7 +41,8 @@ const initState = {
   filterSets: [],
   sets: [],
   color: [],
-  FilterIsOn: false
+  FilterIsOn: false,
+  items: [1, 2, 3, 4, 5, 6]
 };
 
 class index extends React.Component {
