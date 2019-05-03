@@ -1,7 +1,7 @@
 import Dinero from 'dinero.js';
 
 
-import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, CHANGE_DECK_ENERGY_VIEW, SET_COST } from "../types";
+import { ADD_CARD, REMOVE_CARD, SUBTRACT_CARD, CLEAR_DECK_STATE, CHANGE_DECK_ENERGY_VIEW, SET_COST, SET_CARDS } from "../types";
 
 export const Code = deckbuilder => ({
   type: ADD_CARD,
@@ -20,6 +20,11 @@ export const Subtract = deckbuilder => ({
 
 export const Clear = deckbuilder => ({
   type: CLEAR_DECK_STATE,
+  deckbuilder
+})
+
+export const SetCards = deckbuilder => ({
+  type: SET_CARDS,
   deckbuilder
 })
 
@@ -105,6 +110,12 @@ export const SetCost = (Cost, State) =>
 		const ConstState = Object.assign({}, State);
     ConstState.Cost = Dinero({ amount: Number(Cost.replace("$","").replace(".","")) });
     dispatch(SettingCost(ConstState));
+  }
+export const SetStateCards = (Cards, type, State) => 
+  dispatch => {
+    const ConstState = Object.assign({}, State);
+    ConstState[type] = Cards;
+    dispatch(SetCards(ConstState));
   }
 
 export const returnDate = (isoDate) =>{

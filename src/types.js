@@ -14,3 +14,4 @@ export const CHANGE_DECK_ENERGY_VIEW = "CHANGE_DECK_ENERGY_VIEW";
 export const SET_QUILL_VALUE = "SET_QUILL_VALUE";
 export const ADD_DECKS_ON_TYPE = "ADD_DECKS_ON_TYPE";
 export const SET_COST = "SET_COST";
+export const SET_CARDS = "SET_CARDS";
