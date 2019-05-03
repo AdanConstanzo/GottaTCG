@@ -40,9 +40,9 @@ export const SettingCost = deckbuilder => ({
 
 export const ClearState = () => dispatch =>{
   const empty = {
-    'Pokémon': {},
-    'Trainer': {},
-    'Energy': {},
+    'Pokémon': [],
+    'Trainer': [],
+    'Energy': [],
     'Count': {
       'Pokémon': 0,
       'Trainer': 0,
@@ -80,19 +80,31 @@ export const SubtractCard = (CardType,State) =>
 
 export const AddCard = (CardType,State) => 
   dispatch => {
+
     const ConstState = Object.assign({}, State);
     const ConstCardType = CardType;
+    
+    if (ConstState[CardType.type].length === 0) {
+      ConstState[`${CardType.type}-order`] = CardType.id;
+    }
 		ConstState.Count[CardType.type] += 1;
 		if (CardType.price != null) {
 			ConstState.Cost = ConstState.Cost.add(Dinero({ amount: Number(CardType.price.replace(".", "")) }));
-		}
-
-    if (ConstState[CardType.type][CardType.id] ) {
-      ConstState[CardType.type][CardType.id].quantity += 1;
-    } else {
-      ConstCardType.quantity = 1;
-      ConstState[CardType.type][CardType.id] = ConstCardType;
     }
+    let indexOfCard = null;
+    ConstState[CardType.type].forEach((ele, i) => {
+      if (ele.id === CardType.id) {
+        indexOfCard = i;
+      }
+    });
+
+    if (indexOfCard !== null) {
+      ConstState[CardType.type][indexOfCard].quantity += 1;
+    } else if (indexOfCard === null) {
+      ConstCardType.quantity = 1;
+      ConstState[CardType.type].push(CardType);
+    }
+    console.log("AddCard state: ", ConstState)
     dispatch(Code(ConstState));
   }
 
@@ -115,6 +127,8 @@ export const SetStateCards = (Cards, type, State) =>
   dispatch => {
     const ConstState = Object.assign({}, State);
     ConstState[type] = Cards;
+    console.log(ConstState[type])
+    console.log("SetStateCards new cards!: ", ConstState);
     dispatch(SetCards(ConstState));
   }
 

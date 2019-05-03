@@ -52,6 +52,7 @@ class cardLi extends React.Component {
       id,
       price
     }
+
     this.props.AddCard(obj, deckbuilder);
     this.setState({ deckbuilder });
   }
@@ -80,7 +81,7 @@ class cardLi extends React.Component {
 
   render(){
       const { deckbuilder, card } = this.props;
-      const { src, alt, id, type, price }  = card;
+      const { src, alt, id, type, price, quantity }  = card;
       const { display, open } = this.state;
       if (display) {
           return (
@@ -89,7 +90,7 @@ class cardLi extends React.Component {
                       <List.Header>{alt}</List.Header>
                           <Grid columns={4} >
                               <Grid.Column>
-                              {deckbuilder[type][id].quantity} x {id}  @ {price} 
+                              {quantity} x {id}  @ {price} 
                               </Grid.Column>
                               <Grid.Column>
                                   <img 

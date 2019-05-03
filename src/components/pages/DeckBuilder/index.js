@@ -215,7 +215,7 @@ class index extends React.Component {
               sliderView={sliderView}
             />
           </Grid.Column>
-          <Grid.Column>
+          {/* <Grid.Column>
             <CardSelector
               selection="Trainers"
               type='Trainer'
@@ -232,7 +232,7 @@ class index extends React.Component {
               cards={Energy}
               sliderView={sliderView}
             />
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid>
         <Modal
           dimmer={dimmer}
