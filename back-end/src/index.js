@@ -14,6 +14,7 @@ import types from './routes/pokemon_type';
 import decks from './routes/decks';
 import voting from './routes/voting';
 import priceCards from './routes/priceCards';
+import comment from './routes/comment';
 
 dotenv.config();
 const app = express();
@@ -42,6 +43,7 @@ app.use("/api/types", types);
 app.use("/api/decks", decks);
 app.use('/api/voting', voting);
 app.use("/api/priceCards", priceCards);
+app.use("/api/comment", comment);
 
 // app.get("/*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "index.html"));

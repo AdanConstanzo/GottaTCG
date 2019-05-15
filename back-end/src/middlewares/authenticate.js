@@ -19,6 +19,6 @@ export default (req, res, next) => {
             }
         });
     } else {
-        res.status(401).json({ errors: { global: "No token" } });
+        res.status(401).json({ errors: { global: "No token, user is not logged in!", message: "User is not logged in!" } });
     }
 };

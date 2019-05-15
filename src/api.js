@@ -1,36 +1,6 @@
 import axios from "axios";
 
 export default {
-  user: {
-    login: credentials =>
-      axios.post("/api/auth", { credentials }).then(res => res.data.user),
-    signup: user =>
-      axios.post("/api/users", { user }).then(res => res.data),
-    confirm: token =>
-      axios
-        .post("/api/auth/confirmation", { token })
-        .then(res => res.data.user),
-    resetPasswordRequest: email =>
-      axios.post("/api/auth/reset_password_request", { email }),
-    validateToken: token => axios.post("/api/auth/validate_token", { token }),
-    resetPassword: data => axios.post("/api/auth/reset_password", { data }),
-    publicData: userId => 
-      axios
-        .get(`/api/users/public?id=${userId}`)
-        .then(res => res.data),
-    userAcount: () => 
-      axios
-        .get("/api/users/")
-        .then(res => res.data.user),
-    UploadUserImage: (image,UserId) =>
-      axios
-        .post(`/api/users/userImage?UserId=${UserId}`,  image )
-        .then(res => res.data),
-    Edit: (user) =>
-      axios
-        .put('/api/users/', user)
-        .then(res => res.data)
-  },
   cards: {
     getCardsFromSet: set => 
       axios
@@ -71,10 +41,15 @@ export default {
         .get('/api/collection/getCollection')
         .then(res => res.data.collection)
   },
-  pokemonType: {
-    getAllTypes: () => axios
-      .get('/api/types/all')
-      .then(res => res.data.types)
+  comments: {
+    postComment: comment => 
+      axios
+        .post('/api/comment/', comment)
+        .then(res => res.data.comment_response),
+    getComments: deckId => 
+      axios
+        .get(`/api/comment/?deckId=${deckId}`)
+        .then(res => res.data.comments)
   },
   deck: {
     CreateDeck: deckObject =>
@@ -114,6 +89,47 @@ export default {
         .put('/api/decks/', deckObject)
         .then(res => res.data.deck)
   },
+  sets: {
+    getAll : () =>
+      axios
+        .get("/api/sets/getAll")
+        .then(res => res.data.sets)
+  },
+  user: {
+    login: credentials =>
+      axios.post("/api/auth", { credentials }).then(res => res.data.user),
+    signup: user =>
+      axios.post("/api/users", { user }).then(res => res.data),
+    confirm: token =>
+      axios
+        .post("/api/auth/confirmation", { token })
+        .then(res => res.data.user),
+    resetPasswordRequest: email =>
+      axios.post("/api/auth/reset_password_request", { email }),
+    validateToken: token => axios.post("/api/auth/validate_token", { token }),
+    resetPassword: data => axios.post("/api/auth/reset_password", { data }),
+    publicData: userId => 
+      axios
+        .get(`/api/users/public?id=${userId}`)
+        .then(res => res.data),
+    userAcount: () => 
+      axios
+        .get("/api/users/")
+        .then(res => res.data.user),
+    UploadUserImage: (image,UserId) =>
+      axios
+        .post(`/api/users/userImage?UserId=${UserId}`,  image )
+        .then(res => res.data),
+    Edit: (user) =>
+      axios
+        .put('/api/users/', user)
+        .then(res => res.data)
+  },
+  pokemonType: {
+    getAllTypes: () => axios
+      .get('/api/types/all')
+      .then(res => res.data.types)
+  },
   voting: {
     LookVote: (deckId) =>
       axios
@@ -127,11 +143,5 @@ export default {
       axios
         .get(`/api/voting/voteCount?deckId=${deckId}`)
         .then(res => res.data.count)
-  },
-  sets: {
-    getAll : () =>
-      axios
-        .get("/api/sets/getAll")
-        .then(res => res.data.sets)
   }
 };
